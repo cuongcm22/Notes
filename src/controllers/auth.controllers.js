@@ -15,7 +15,7 @@ class UserController {
       const totalItems = await User.countDocuments();
 
       // Lấy danh sách người dùng với phân trang
-      const arrayUser = await User.find({}, { _id: 0, __v: 0, password: 0 }).skip(skip).limit(limit).sort({ _id: -1 });;
+      const arrayUser = await User.find({}, { _id: 0, __v: 0 }).skip(skip).limit(limit).sort({ _id: -1 });;
 
       // Tính toán thông tin phân trang
       const totalPages = Math.ceil(totalItems / limit);
