@@ -55,7 +55,7 @@ block content
       .overflow-x-auto
         .inline-block.min-w-full.align-middle
           .overflow-hidden.shadow
-            table.min-w-full.divide-y.divide-gray-200.table-fixed(class='dark:divide-gray-600')
+            table.min-w-full.divide-y.divide-gray-200.table-fixed#table-rendered(class='dark:divide-gray-600')
               thead.bg-gray-100(class='dark:bg-gray-700')
                 tr
                   th.p-4(scope='col')
@@ -774,4 +774,17 @@ block content
             a.text-gray-900.bg-white.border.border-gray-200.font-medium.inline-flex.items-center.rounded-lg.text-base.px-3.text-center(href='#', class='hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 py-2.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700', data-modal-toggle='delete-user-modal')
               | No, cancel
 
-    
+
+    .flex.flex-col.items-center.mt-3.mb-3
+      span.text-sm.text-gray-700.mb-3(class='dark:text-gray-400')
+        | Showing 
+        span#start-record 1
+        |  to 
+        span#end-record 10
+        |  of 
+        span#total-records 100
+        |  Entries
+      nav(aria-label='Page navigation example')
+        ul#pagination.flex.items-center.-space-x-px.h-10.text-base
+          // Pagination items will be inserted here
+  script(src='/js/admin/admin.dashboard.js')

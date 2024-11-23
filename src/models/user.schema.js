@@ -14,10 +14,21 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  // Check user online or offline
+  status: {
+    type: Boolean,
+    default: false
+  },
   role: {
     type: String,
     enum: ['Admin', 'User', 'Guest'], // 3 vai trò chính
     default: 'User',
+  },
+  phone: {
+    type: String,
+  },
+  address: {
+    type: String,
   },
   createdAt: {
     type: Date,

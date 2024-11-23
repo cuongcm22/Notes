@@ -1,8 +1,7 @@
-
 const mongoose = require('mongoose');
+const User = require('../../src/models/user.schema');
 
-const User = require('../../src/models/userSchema');
-// Kết nối tới MongoDB
+// Connect to MongoDB
 mongoose
   .connect('mongodb://localhost:27017/admin_dashboard', {
     useNewUrlParser: true,
@@ -15,20 +14,34 @@ mongoose
     console.error('Error connecting to MongoDB', err);
   });
 
+// Function to generate random user data
+const generateRandomUser = (index) => {
+  const roles = ['Admin', 'User', 'Guest'];
+  const role = roles[Math.floor(Math.random() * roles.length)];
+
+  return {
+    name: `User ${index}`,
+    email: `user${index}@example.com`,
+    password: `password${index}`,
+    role: role,
+    status: Math.random() < 0.5, // Randomly set online/offline status
+    phone: `123456789${index}`,
+    address: `Address ${index}`,
+  };
+};
+
+// Add 50 users to the database
 const addUsers = async () => {
   try {
-    // Dữ liệu mẫu cho 5 người dùng
-    const users = [
-      { name: 'Admin User', email: 'admin@example.com', password: 'adminpass', role: 'Admin' },
-      { name: 'Regular User 1', email: 'user1@example.com', password: 'user1pass', role: 'User' },
-      { name: 'Regular User 2', email: 'user2@example.com', password: 'user2pass', role: 'User' },
-      { name: 'Guest User 1', email: 'guest1@example.com', password: 'guest1pass', role: 'Guest' },
-      { name: 'Guest User 2', email: 'guest2@example.com', password: 'guest2pass', role: 'Guest' },
-    ];
+    // Generate 50 users
+    const users = [];
+    for (let i = 1; i <= 50; i++) {
+      users.push(generateRandomUser(i));
+    }
 
-    // Thêm dữ liệu vào MongoDB
+    // Insert the users into MongoDB
     await User.insertMany(users);
-    console.log('Successfully added 5 users');
+    console.log('Successfully added 50 users');
   } catch (err) {
     console.error('Error adding users:', err);
   } finally {
@@ -36,5 +49,5 @@ const addUsers = async () => {
   }
 };
 
-// Gọi hàm thêm người dùng
+// Call the function to add users
 addUsers();
