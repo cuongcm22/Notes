@@ -163,27 +163,35 @@ block content
             form(action='#')
               .grid.grid-cols-6.gap-6
                 .col-span-6(class='sm:col-span-3')
-                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='first-name', class='dark:text-white')
-                    | First
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='addModal-name', class='dark:text-white')
                     | Name
-                  input#first-name.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='text', name='first-name', class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='Bonnie', required='')
+                  input#addModal-name.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='text', name='first-name', class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='Bonnie', required='')
                 .col-span-6(class='sm:col-span-3')
-                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='last-name', class='dark:text-white')
-                    | Last
-                    | Name
-                  input#last-name.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='text', name='last-name', class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='Green', required='')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='addModal-phone', class='dark:text-white')
+                    | Phone
+                  input#addModal-phone.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='text', name='last-name', class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='Green', required='')
                 .col-span-6(class='sm:col-span-3')
-                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='email', class='dark:text-white') Email
-                  input#email.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='email', name='email', class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='example@company.com', required='')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='addModal-email', class='dark:text-white') Email
+                  input#addModal-email.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='email', name='email', class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='example@company.com', required='')
                 .col-span-6(class='sm:col-span-3')
-                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='position', class='dark:text-white') Position
-                  input#position.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='text', name='position', class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='e.g. React developer', required='')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='addModal-password', class='dark:text-white') Password
+                  input#addModal-password.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='email', name='email', class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='', required='')
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='addModal-address', class='dark:text-white') Address
+                  input#addModal-address.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='email', name='email', class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='1 Dien Bien Phu', required='')
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='addModal-role', class='dark:text-white') Role
+                  select#addModal-role.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(class='focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')
+                    option(selected='') --Select--
+                    option(value='US') Admin
+                    option(value='CA') User
+                    option(value='FR') Guest
                 .col-span-6
                   label.block.mb-2.text-sm.font-medium.text-gray-900(for='biography', class='dark:text-white') Biography
                   textarea#biography.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='👨‍💻Full-stack web developer. Open-source contributor.')
           // Modal footer
           .items-center.p-6.border-t.border-gray-200.rounded-b(class='dark:border-gray-700')
-            button.text-white.bg-primary-700.font-medium.rounded-lg.text-sm.px-5.text-center(class='hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800', type='submit') Add user
+            button.text-white.bg-primary-700.font-medium.rounded-lg.text-sm.px-5.text-center(data-modal-target='addModal-popup', data-modal-toggle='addModal-popup', class='hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800', type='submit') Add user
     // Delete User Modal
     #delete-user-modal.fixed.left-0.right-0.z-50.items-center.justify-center.hidden.overflow-x-hidden.overflow-y-auto.top-4.h-modal(class='md:inset-0 sm:h-full')
       .relative.w-full.h-full.max-w-md.px-4(class='md:h-auto')
@@ -206,5 +214,21 @@ block content
             a.text-gray-900.bg-white.border.border-gray-200.font-medium.inline-flex.items-center.rounded-lg.text-base.px-3.text-center(href='#', class='hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 py-2.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700', data-modal-toggle='delete-user-modal')
               | No, cancel
 
+    // Popup
+
+    #addModal-popup.hidden.overflow-y-auto.overflow-x-hidden.fixed.top-0.right-0.left-0.z-50.justify-center.items-center.w-full.max-h-full(tabindex='-1', class='md:inset-0 h-[calc(100%-1rem)]')
+      .relative.p-4.w-full.max-w-md.max-h-full
+        .relative.bg-white.rounded-lg.shadow(class='dark:bg-gray-700')
+          button.absolute.top-3.text-gray-400.bg-transparent.rounded-lg.text-sm.w-8.h-8.ms-auto.inline-flex.justify-center.items-center(type='button', class='end-2.5 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white', data-modal-hide='addModal-popup')
+            svg.w-3.h-3(aria-hidden='true', xmlns='http://www.w3.org/2000/svg', fill='none', viewBox='0 0 14 14')
+              path(stroke='currentColor', stroke-linecap='round', stroke-linejoin='round', stroke-width='2', d='m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6')
+            span.sr-only Close modal
+          .p-4.text-center(class='md:p-5')
+            svg.mx-auto.mb-4.text-gray-400.w-12.h-12(class='dark:text-gray-200', aria-hidden='true', xmlns='http://www.w3.org/2000/svg', fill='none', viewBox='0 0 20 20')
+              path(stroke='currentColor', stroke-linecap='round', stroke-linejoin='round', stroke-width='2', d='M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z')
+            h3.mb-5.text-lg.font-normal.text-gray-500(class='dark:text-gray-400') Are you sure you want create this user?
+            button.text-white.bg-red-600.font-medium.rounded-lg.text-sm.inline-flex.items-center.px-5.text-center(data-modal-hide='addModal-popup', type='button', class='hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 py-2.5')
+              | Yes, I&apos;m sure
+            button.px-5.ms-3.text-sm.font-medium.text-gray-900.bg-white.rounded-lg.border.border-gray-200(data-modal-hide='addModal-popup', type='button', class='py-2.5 focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700') No, cancel
 
   script(src='/js/admin/admin.dashboard.js')
