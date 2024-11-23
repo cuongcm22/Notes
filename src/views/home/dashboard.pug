@@ -1,7 +1,7 @@
 extends ../layouts/base
 
 block content
-  #main-content.relative.w-full.h-full.overflow-y-auto.bg-gray-50(class='lg:ml-64 dark:bg-gray-900')
+  #main-content.relative.w-full.h-full.overflow-y-auto.bg-gray-50(class='lg:ml-64 dark:bg-gray-900' style="height: 100vh")
     .p-4.bg-white.block.items-center.justify-between.border-b.border-gray-200(class='sm:flex lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700')
       .w-full.mb-1
         .mb-4
@@ -191,7 +191,8 @@ block content
                   textarea#biography.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='👨‍💻Full-stack web developer. Open-source contributor.')
           // Modal footer
           .items-center.p-6.border-t.border-gray-200.rounded-b(class='dark:border-gray-700')
-            button.text-white.bg-primary-700.font-medium.rounded-lg.text-sm.px-5.text-center(data-modal-target='addModal-popup', data-modal-toggle='addModal-popup', class='hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800', type='submit') Add user
+            button#addModal-popup-btn-placeholder.text-white.bg-primary-700.font-medium.rounded-lg.text-sm.px-5.text-center(class='hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800') Add user
+            button#addModal-popup-btn-submit.text-white.bg-primary-700.font-medium.rounded-lg.text-sm.px-5.text-center(data-modal-target='addModal-popup', data-modal-toggle='addModal-popup', class='hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800' hidden) Add user
     // Delete User Modal
     #delete-user-modal.fixed.left-0.right-0.z-50.items-center.justify-center.hidden.overflow-x-hidden.overflow-y-auto.top-4.h-modal(class='md:inset-0 sm:h-full')
       .relative.w-full.h-full.max-w-md.px-4(class='md:h-auto')

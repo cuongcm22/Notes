@@ -621,6 +621,24 @@ html
       height: 200%;
       }
 
+  style.
+    /* width */
+    ::-webkit-scrollbar {
+    width: 0px;
+    }
+    /* Track */
+    ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    }
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+    background: #888;
+    }
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    }
+
   body
     block header
       include header
@@ -629,6 +647,10 @@ html
       #sidebarBackdrop.fixed.inset-0.z-10.hidden(class='bg-gray-900/50 dark:bg-gray-900/90')
       
       block content
+      //- Conponent
+      block component
+        include ../_components/_popup
     //- Bao gồm footer
     block footer
       include footer
+
