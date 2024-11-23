@@ -9,6 +9,9 @@ router.get('/getall', UserController.getAllUsers);
 // Route để tạo một người dùng mới
 router.post('/create', UserController.createUser);
 
+// Cập nhật thông tin người dùng
+router.put('/update', UserController.updateUser);
+
 // Route để xóa một người dùng dựa trên email
 router.delete('/delete/:email', UserController.deleteUser);
 

@@ -73,9 +73,39 @@ class UserController {
 
       res.send(AlertCommon.danger('Người dùng đã được xóa thành công!'))
     } catch (error) {
-      res.status(500).json({ message: 'Lỗi server', error });
+      res.send(errorServer)
     }
   }
+
+  async updateUser(req, res) {
+    const { email, name, password, role, phone, address } = req.body;
+  
+    try {
+      // Kiểm tra xem người dùng có tồn tại không
+      const existingUser = await User.findOne({ email });
+      if (!existingUser) {
+        return res.send(AlertCommon.danger('Không được sửa email!'));
+      }
+  
+      // Cập nhật thông tin người dùng
+      existingUser.name = name || existingUser.name;
+      existingUser.password = password || existingUser.password;
+      existingUser.role = role || existingUser.role;
+      existingUser.phone = phone || existingUser.phone;
+      existingUser.address = address || existingUser.address;
+  
+      // Lưu lại thông tin đã cập nhật
+      await existingUser.save();
+  
+      // Trả về thông báo thành công
+      res.send(AlertCommon.info('Thông tin người dùng đã được cập nhật thành công'));
+    } catch (error) {
+      // Nếu có lỗi trong quá trình thực hiện
+      console.error(error);
+      res.send(AlertCommon.danger('Đã có lỗi xảy ra khi cập nhật người dùng'));
+    }
+  }
+  
 }
 
 // Khởi tạo instance của UserController

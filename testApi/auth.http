@@ -23,3 +23,19 @@ delete http://localhost:3000/api/v1/auth/delete/johndoe@example.com
 Content-Type: application/json
 
 ###
+
+### Update user
+
+PUT http://localhost:3000/api/v1/auth/update
+Content-Type: application/json
+
+{
+  "email": "meo123",
+  "name": "Meo ngu hoc",
+  "password": "UpdatedPassword123",
+  "role": "Admin",
+  "phone": "5678",
+  "address": "Updated address"
+}
+
+### 

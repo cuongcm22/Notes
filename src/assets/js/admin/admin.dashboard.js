@@ -1,14 +1,14 @@
-var currentPage = ''
+var currentPage = 1
 
 var checkClickPagination = false
 var spinnerTable = document.getElementById('spinner-table')
 spinnerTable.classList.add('hidden')
 
 function openEditModal(userEmail) {
-  console.log('Clicked');
+  
   // Fetch the user data by ID or use the data already fetched
   const user = arrayUser.find(user => user.email === userEmail); // Assuming `users` is a global list of users
-  console.log(user);
+ 
   // Populate modal fields with user data
   document.getElementById('modal-name').value = user.name;
   document.getElementById('modal-phone').value = user.phone;
@@ -35,8 +35,6 @@ async function fetchUsers(page = 1, limit = 5) {
 
     const response = await axios.get(`http://localhost:3000/api/v1/auth/getall?page=${page}&limit=${limit}`);
     var { arrayUser, pagination } = response.data;
-    console.log(arrayUser.length);
-
 
     arrayUser.forEach(user => {
       const row = document.createElement('tr');
@@ -228,21 +226,8 @@ function confirmAddUser() {
   // Sử dụng axios để gửi request tới server
   axios.post('http://localhost:3000/api/v1/auth/create', userData)
     .then(response => {
-      // Khi nhận được phản hồi từ server, bạn chèn HTML alert vào trang
-      const alertHTML = response.data; // Lấy HTML alert từ server
-    
-      // Tạo một div chứa alert và thêm vào body
-      const alertContainer = document.createElement('div');
-      alertContainer.innerHTML = alertHTML;
-      document.body.appendChild(alertContainer);
 
-      // Có thể thêm một chức năng để ẩn alert sau vài giây
-      fetchUsers(currentPage, 5);
-      document.getElementById('btnHiddenAddUserModal').click()
-
-      setTimeout(() => {
-        alertContainer.remove();
-      }, 5000); // Ẩn sau 5 giây
+      retreiveAlertData(response)
       
     })
     .catch(error => {
@@ -270,23 +255,9 @@ function confirmDeleteUser(email) {
       // Gửi yêu cầu DELETE tới server
       axios.delete(`http://localhost:3000/api/v1/auth/delete/${email}`)
           .then(response => {
-              // Nếu xóa thành công, đóng modal và làm mới trang
-              btnHiddenPopupDelete.click()  // Ẩn modal
-              // Khi nhận được phản hồi từ server, bạn chèn HTML alert vào trang
-              const alertHTML = response.data; // Lấy HTML alert từ server
-            
-              // Tạo một div chứa alert và thêm vào body
-              const alertContainer = document.createElement('div');
-              alertContainer.innerHTML = alertHTML;
-              document.body.appendChild(alertContainer);
-
-              // Có thể thêm một chức năng để ẩn alert sau vài giây
-              fetchUsers(currentPage, 5);
-              setTimeout(() => {
-                alertContainer.remove();
-                // window.location.reload()
-              }, 5000); // Ẩn sau 5 giây
-              
+            retreiveAlertData(response)
+            // Nếu xóa thành công, đóng modal và làm mới trang
+            btnHiddenPopupDelete.click()  // Ẩn modal\
           })
           .catch(error => {
               // Nếu có lỗi, đóng modal và hiển thị thông báo lỗi
@@ -301,4 +272,59 @@ function confirmDeleteUser(email) {
   cancelBtn.onclick = function() {
       modal.classList.add('hidden'); // Ẩn modal nếu người dùng chọn hủy
   }
+}
+
+function confirmUpdateUser() {
+  // Lấy dữ liệu từ các trường trong modal
+  const name = document.getElementById('modal-name').value;
+  const phone = document.getElementById('modal-phone').value;
+  const email = document.getElementById('modal-email').value;
+  const role = document.getElementById('modal-role').value;
+  const password = document.getElementById('modal-password').value;
+  const address = document.getElementById('modal-address') ? document.getElementById('modal-address').value : '';
+
+  // Kiểm tra nếu thông tin cần thiết đã có
+  if (!email || !name || !password || !role || !phone) {
+    alert('Vui lòng điền đầy đủ thông tin!');
+    return;
+  }
+
+  // Tạo đối tượng dữ liệu để gửi đi
+  const updatedUser = {
+    email, // Email dùng để xác định người dùng
+    name,
+    password,
+    role,
+    phone,
+    address
+  };
+
+  // Gửi PUT request để cập nhật thông tin người dùng
+  axios.put('http://localhost:3000/api/v1/auth/update', updatedUser)
+    .then(response => {
+      retreiveAlertData(response)
+      document.getElementById('btnHiddenConfirmEditUser').click()
+    })
+    .catch(error => {
+      // Hiển thị thông báo lỗi nếu có sự cố
+      alert('Đã có lỗi xảy ra khi cập nhật người dùng!');
+      console.error(error);
+    });
+}
+
+function retreiveAlertData(response) {
+  const alertHTML = response.data; // Lấy HTML alert từ server
+  // Tạo một div chứa alert và thêm vào body
+  const alertContainer = document.createElement('div');
+  alertContainer.innerHTML = alertHTML;
+  document.body.appendChild(alertContainer);
+
+  // Có thể thêm một chức năng để ẩn alert sau vài giây
+  // fetchUsers(currentPage, 5);
+  document.getElementById('pagination').querySelectorAll('li')[currentPage].querySelector('a').click()
+
+  setTimeout(() => {
+    alertContainer.remove();
+    // window.location.reload()
+  }, 5000); // Ẩn sau 5 giây
 }
