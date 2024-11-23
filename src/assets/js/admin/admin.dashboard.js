@@ -1,4 +1,6 @@
 var checkClickPagination = false
+var spinnerTable = document.getElementById('spinner-table')
+spinnerTable.classList.add('hidden')
 
 function openEditModal(userEmail) {
   console.log('Clicked');
@@ -25,13 +27,15 @@ window.openEditModal = openEditModal
 
 async function fetchUsers(page = 1, limit = 5) {
   try {
+    spinnerTable.classList.remove('hidden')
+    // Render table data
+    const tableBody = document.querySelector('#table-rendered tbody');
+    tableBody.innerHTML = ''; // Clear existing data
+
     const response = await axios.get(`http://localhost:3000/api/v1/auth/getall?page=${page}&limit=${limit}`);
     var { arrayUser, pagination } = response.data;
     console.log(arrayUser.length);
 
-    // Render table data
-    const tableBody = document.querySelector('#table-rendered tbody');
-    tableBody.innerHTML = ''; // Clear existing data
 
     arrayUser.forEach(user => {
       const row = document.createElement('tr');
@@ -66,8 +70,8 @@ async function fetchUsers(page = 1, limit = 5) {
             ${user.status ? '<Active></Active>' : '<offline></offline>'}
           </div>
         </td>
-        <td class="col-action p-4 space-x-2 whitespace-nowrap" onclick="openEditModal('${user.email}')"> 
-            <button type="button" data-modal-toggle="edit-user-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+        <td class="col-action p-4 space-x-2 whitespace-nowrap"> 
+            <button onclick="openEditModal('${user.email}')" type="button" data-modal-toggle="edit-user-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                 <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path></svg>
                 Edit user
             </button>
@@ -79,6 +83,8 @@ async function fetchUsers(page = 1, limit = 5) {
       
       `;
       tableBody.appendChild(row);
+
+      spinnerTable.classList.add('hidden')
     });
 
 
@@ -88,16 +94,89 @@ async function fetchUsers(page = 1, limit = 5) {
     document.getElementById('total-records').innerText = pagination.totalItems;
 
     const paginationContainer = document.getElementById('pagination');
-    paginationContainer.innerHTML = '';
+    paginationContainer.innerHTML = ''; // Clear previous pagination
 
-    for (let i = 1; i <= pagination.totalPages; i++) {
+    const totalPages = pagination.totalPages;
+    const currentPage = pagination.currentPage;
+
+    // First, create a "Previous" button
+    const prevLi = document.createElement('li');
+    prevLi.classList.add('page-item');
+    prevLi.innerHTML = `
+    <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+      onclick="handlePageClick(${currentPage - 1})">
+      <span class="sr-only">Previous</span>
+      <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 1-4 4 4 4"></path>
+      </svg>
+    </a>
+  `;
+    paginationContainer.appendChild(prevLi);
+
+    // Determine which page numbers to display
+    let pageNumbers = [];
+
+    if (totalPages <= 6) {
+      // If there are 6 or fewer pages, show all of them
+      for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+      }
+    } else {
+      // If there are more than 6 pages, limit to 4 visible page numbers, plus first and last pages
+      pageNumbers.push(1); // Always show the first page
+
+      if (currentPage > 3) {
+        pageNumbers.push('...');
+      }
+
+      // Show pages around the current page (up to 2 before and after)
+      let startPage = Math.max(2, currentPage - 2);
+      let endPage = Math.min(totalPages - 1, currentPage + 2);
+
+      // Add pages in range
+      for (let i = startPage; i <= endPage; i++) {
+        pageNumbers.push(i);
+      }
+
+      if (currentPage < totalPages - 2) {
+        pageNumbers.push('...');
+      }
+
+      pageNumbers.push(totalPages); // Always show the last page
+    }
+
+    // Create page number links
+    pageNumbers.forEach((page, index) => {
       const li = document.createElement('li');
       li.classList.add('page-item');
-      li.innerHTML = `
-        <a href="#" class="page-link ${i === pagination.currentPage ? 'text-blue-600 bg-blue-50' : ''}" onclick="handlePageClick(${i})">${i}</a>
+
+      if (page === '...') {
+        li.classList.add('disabled');
+        li.innerHTML = `<span class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white
+          ">...</span>`;
+      } else {
+        li.innerHTML = `
+        <a href="#" class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white
+          ${page === currentPage ? 'text-blue-600 bg-blue-50' : ''}"
+          onclick="handlePageClick(${page})">${page}</a>
       `;
+      }
       paginationContainer.appendChild(li);
-    }
+    });
+
+    // Create a "Next" button
+    const nextLi = document.createElement('li');
+    nextLi.classList.add('page-item');
+    nextLi.innerHTML = `
+    <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+      onclick="handlePageClick(${currentPage + 1})">
+      <span class="sr-only">Next</span>
+      <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"></path>
+      </svg>
+    </a>
+  `;
+    paginationContainer.appendChild(nextLi);
 
     window.arrayUser = arrayUser;
 
