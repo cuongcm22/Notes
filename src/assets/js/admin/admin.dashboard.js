@@ -1,3 +1,5 @@
+var currentPage = ''
+
 var checkClickPagination = false
 var spinnerTable = document.getElementById('spinner-table')
 spinnerTable.classList.add('hidden')
@@ -14,12 +16,11 @@ function openEditModal(userEmail) {
   document.getElementById('modal-role').value = user.role;
   document.getElementById('modal-password').value = user.password || ''; // Add a biography field if required
 
-  // Show modal
-  document.getElementById('edit-user-modal').className = 'fixed inset-0 z-50 items-center justify-center overflow-x-hidden overflow-y-auto top-4 h-modal flex'
   if (checkClickPagination) {
+    document.getElementById('edit-user-modal').className = 'fixed inset-0 z-50 items-center justify-center overflow-x-hidden overflow-y-auto top-4 h-modal flex'
     document.getElementById('edit-user-modal').querySelectorAll('button')[0].click()
+    document.getElementById('edit-user-modal').classList.remove('hidden');
   }
-  document.getElementById('edit-user-modal').classList.remove('hidden');
 
 }
 
@@ -75,7 +76,7 @@ async function fetchUsers(page = 1, limit = 5) {
                 <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path></svg>
                 Edit user
             </button>
-            <button type="button" data-modal-toggle="delete-user-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
+            <button onclick="confirmDeleteUser('${user.email}')" type="button" data-modal-toggle="delete-user-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
                 <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
                 Delete user
             </button>
@@ -187,8 +188,117 @@ async function fetchUsers(page = 1, limit = 5) {
 
 function handlePageClick(page) {
   checkClickPagination = true
+  currentPage = page
   fetchUsers(page, 5);
 }
 
 // Initial data fetch
 fetchUsers(1, 5);
+
+
+// =========== Add user ==========
+
+function confirmAddUser() {
+  // Lấy giá trị từ các trường input trong modal
+  const name = document.getElementById('addModal-name').value;
+  const phone = document.getElementById('addModal-phone').value;
+  const email = document.getElementById('addModal-email').value;
+  const password = document.getElementById('addModal-password').value;
+  const address = document.getElementById('addModal-address').value;
+  const role = document.getElementById('addModal-role').value;
+  const biography = document.getElementById('biography').value;
+
+  // Kiểm tra tính hợp lệ của dữ liệu, nếu cần
+  if (!name || !phone || !email || !password || !address || !role) {
+    alert('Vui lòng điền đầy đủ thông tin.');
+    return;
+  }
+
+  // Tạo object chứa dữ liệu người dùng
+  const userData = {
+    name: name,
+    email: email,
+    password: password,
+    role: role,
+    phone: phone,
+    address: address,
+    biography: biography
+  };
+
+  // Sử dụng axios để gửi request tới server
+  axios.post('http://localhost:3000/api/v1/auth/create', userData)
+    .then(response => {
+      // Khi nhận được phản hồi từ server, bạn chèn HTML alert vào trang
+      const alertHTML = response.data; // Lấy HTML alert từ server
+    
+      // Tạo một div chứa alert và thêm vào body
+      const alertContainer = document.createElement('div');
+      alertContainer.innerHTML = alertHTML;
+      document.body.appendChild(alertContainer);
+
+      // Có thể thêm một chức năng để ẩn alert sau vài giây
+      fetchUsers(currentPage, 5);
+      document.getElementById('btnHiddenAddUserModal').click()
+
+      setTimeout(() => {
+        alertContainer.remove();
+      }, 5000); // Ẩn sau 5 giây
+      
+    })
+    .catch(error => {
+      console.error("Error:", error);
+    });
+}
+
+
+function confirmDeleteUser(email) {
+ 
+  // Mở modal xác nhận xóa
+  const modal = document.getElementById('delete-user-modal');
+  // Tìm nút "Yes, I'm sure" trong modal
+  const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+  const btnHiddenPopupDelete = document.getElementById('btnHiddenPopupDeleteUserModal')
+
+  if (checkClickPagination) {
+    document.getElementById('delete-user-modal').className = 'fixed left-0 right-0 z-50 items-center justify-center overflow-x-hidden overflow-y-auto top-4 h-modal md:inset-0 sm:h-full flex'
+    btnHiddenPopupDelete.click()
+    document.getElementById('delete-user-modal').classList.remove('hidden');
+  }
+
+  // Gán sự kiện click vào nút xác nhận xóa
+  confirmDeleteBtn.onclick = function() {
+      // Gửi yêu cầu DELETE tới server
+      axios.delete(`http://localhost:3000/api/v1/auth/delete/${email}`)
+          .then(response => {
+              // Nếu xóa thành công, đóng modal và làm mới trang
+              btnHiddenPopupDelete.click()  // Ẩn modal
+              // Khi nhận được phản hồi từ server, bạn chèn HTML alert vào trang
+              const alertHTML = response.data; // Lấy HTML alert từ server
+            
+              // Tạo một div chứa alert và thêm vào body
+              const alertContainer = document.createElement('div');
+              alertContainer.innerHTML = alertHTML;
+              document.body.appendChild(alertContainer);
+
+              // Có thể thêm một chức năng để ẩn alert sau vài giây
+              fetchUsers(currentPage, 5);
+              setTimeout(() => {
+                alertContainer.remove();
+                // window.location.reload()
+              }, 5000); // Ẩn sau 5 giây
+              
+          })
+          .catch(error => {
+              // Nếu có lỗi, đóng modal và hiển thị thông báo lỗi
+              modal.classList.add('hidden');
+              console.error("Error deleting user:", error);
+              alert("There was an error deleting the user.");
+          });
+  }
+
+  // Nếu người dùng nhấn nút "No, cancel", đóng modal
+  const cancelBtn = modal.querySelector('[data-modal-toggle="delete-user-modal"]');
+  cancelBtn.onclick = function() {
+      modal.classList.add('hidden'); // Ẩn modal nếu người dùng chọn hủy
+  }
+}

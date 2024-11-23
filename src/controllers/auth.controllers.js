@@ -2,6 +2,10 @@ const {
   User
 } = require('../models/models'); // Đường dẫn đến User Model
 
+const AlertCommon = require('../common/alert.common')
+
+const errorServer = AlertCommon.danger('Có lỗi xảy ra, vui lòng liên hệ admin để giải quyết!')
+
 class UserController {
   // Lấy danh sách tất cả người dùng
   async getAllUsers(req, res) {
@@ -43,16 +47,17 @@ class UserController {
       // Kiểm tra xem email đã tồn tại chưa
       const existingUser = await User.findOne({ email });
       if (existingUser) {
-        return res.status(400).json({ message: 'Email đã được sử dụng' });
+        return res.send(AlertCommon.danger('Email đã được sử dụng'))
       }
 
       // Tạo người dùng mới
       const newUser = new User({ name, email, password, role });
       await newUser.save();
 
-      res.status(201).json({ message: 'Người dùng đã được tạo thành công', user: newUser });
+      res.send(AlertCommon.info('Người dùng đã được tạo thành công'))
     } catch (error) {
-      res.status(500).json({ message: 'Lỗi server', error });
+      
+      res.send(errorServer)
     }
   }
 
@@ -63,10 +68,10 @@ class UserController {
     try {
       const deletedUser = await User.findOneAndDelete({ email });
       if (!deletedUser) {
-        return res.status(404).json({ message: 'Không tìm thấy người dùng với email này' });
+        return res.send(AlertCommon.danger('Không tìm thấy người dùng với email này!'))
       }
 
-      res.status(200).json({ message: 'Người dùng đã được xóa thành công', user: deletedUser });
+      res.send(AlertCommon.danger('Người dùng đã được xóa thành công!'))
     } catch (error) {
       res.status(500).json({ message: 'Lỗi server', error });
     }

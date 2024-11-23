@@ -7,9 +7,9 @@ const UserController = require('../controllers/auth.controllers');
 router.get('/getall', UserController.getAllUsers);
 
 // Route để tạo một người dùng mới
-router.post('/users', UserController.createUser);
+router.post('/create', UserController.createUser);
 
 // Route để xóa một người dùng dựa trên email
-router.delete('/users/:email', UserController.deleteUser);
+router.delete('/delete/:email', UserController.deleteUser);
 
 module.exports = router;

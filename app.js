@@ -2,9 +2,13 @@ require('dotenv').config();
 
 const express = require("express");
 const path = require('path');
+const methodOverride = require('method-override');
 
 const app = express();
 const colors = require('colors');
+
+// Sử dụng method-override để xử lý các form có phương thức PUT, DELETE
+app.use(methodOverride('_method'));
 
 // Connect mongodb
 const connectDB = require('./src/config/database'); 
