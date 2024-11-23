@@ -7,6 +7,15 @@ const AlertCommon = require('../common/alert.common')
 const errorServer = AlertCommon.danger('Có lỗi xảy ra, vui lòng liên hệ admin để giải quyết!')
 
 class UserController {
+  async showAdminManageUserPage(req, res) {
+    try {
+      res.render('admin/admin.dashboard')
+    } 
+    catch (error) {
+      res.render('404')
+    }
+  }
+
   // Lấy danh sách tất cả người dùng
   async getAllUsers(req, res) {
     try {

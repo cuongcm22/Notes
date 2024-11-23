@@ -1,0 +1,235 @@
+extends ../layouts/base
+
+block content
+  #main-content.relative.w-full.h-full.overflow-y-auto.bg-gray-50(class='lg:ml-64 dark:bg-gray-900' style="height: 100vh")
+    .p-4.bg-white.block.items-center.justify-between.border-b.border-gray-200(class='sm:flex lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700')
+      .w-full.mb-1
+        .mb-4
+          nav.flex.mb-5(aria-label='Breadcrumb')
+            ol.inline-flex.items-center.space-x-1.text-sm.font-medium(class='md:space-x-2')
+              li.inline-flex.items-center
+                a.inline-flex.items-center.text-gray-700(href='#', class='hover:text-primary-600 dark:text-gray-300 dark:hover:text-white')
+                  svg.w-5.h-5(class='mr-2.5', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
+                    path(d='M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z')
+                                      Home
+              li
+                .flex.items-center
+                  svg.w-6.h-6.text-gray-400(fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
+                    path(fill-rule='evenodd', d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z', clip-rule='evenodd')
+                  a.ml-1.text-gray-700(href='#', class='hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white') Users
+              li
+                .flex.items-center
+                  svg.w-6.h-6.text-gray-400(fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
+                    path(fill-rule='evenodd', d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z', clip-rule='evenodd')
+                  span.ml-1.text-gray-400(class='md:ml-2 dark:text-gray-500', aria-current='page') List
+          h1.text-xl.font-semibold.text-gray-900(class='sm:text-2xl dark:text-white') All users
+        div(class='sm:flex')
+          .items-center.hidden.mb-3(class='sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700')
+            form(class='lg:pr-3', action='#', method='GET')
+              label.sr-only(for='users-search') Search
+              .relative.mt-1(class='lg:w-64 xl:w-96')
+                input#users-search.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='text', name='email', class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='Search for users')
+            .flex.pl-0.mt-3.space-x-1(class='sm:pl-2 sm:mt-0')
+              a.inline-flex.justify-center.p-1.text-gray-500.rounded.cursor-pointer(href='#', class='hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white')
+                svg.w-6.h-6(fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
+                  path(fill-rule='evenodd', d='M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z', clip-rule='evenodd')
+              a.inline-flex.justify-center.p-1.text-gray-500.rounded.cursor-pointer(href='#', class='hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white')
+                svg.w-6.h-6(fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
+                  path(fill-rule='evenodd', d='M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z', clip-rule='evenodd')
+              a.inline-flex.justify-center.p-1.text-gray-500.rounded.cursor-pointer(href='#', class='hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white')
+                svg.w-6.h-6(fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
+                  path(fill-rule='evenodd', d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z', clip-rule='evenodd')
+              a.inline-flex.justify-center.p-1.text-gray-500.rounded.cursor-pointer(href='#', class='hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white')
+                svg.w-6.h-6(fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
+                  path(d='M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z')
+          .flex.items-center.ml-auto.space-x-2(class='sm:space-x-3')
+            button.inline-flex.items-center.justify-center.px-3.py-2.text-sm.font-medium.text-center.text-white.rounded-lg.bg-primary-700(type='button', data-modal-toggle='add-user-modal', class='w-1/2 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800')
+              svg.w-5.h-5.mr-2.-ml-1(fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
+                path(fill-rule='evenodd', d='M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z', clip-rule='evenodd')
+              | Add user
+            a.inline-flex.items-center.justify-center.px-3.py-2.text-sm.font-medium.text-center.text-gray-900.bg-white.border.border-gray-300.rounded-lg(href='#', class='w-1/2 hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700')
+              svg.w-5.h-5.mr-2.-ml-1(fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
+                path(fill-rule='evenodd', d='M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z', clip-rule='evenodd')
+              | Export
+    .flex.flex-col
+      .overflow-x-auto
+        .inline-block.min-w-full.align-middle
+          .overflow-hidden.shadow
+            table.min-w-full.divide-y.divide-gray-200.table-fixed#table-rendered(class='dark:divide-gray-600')
+              thead.bg-gray-100(class='dark:bg-gray-700')
+                tr
+                  th.p-4(scope='col')
+                    .flex.items-center
+                      input#checkbox-all.w-4.h-4.border-gray-300.rounded.bg-gray-50(aria-describedby='checkbox-1', type='checkbox', class='focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600')
+                      label.sr-only(for='checkbox-all') checkbox
+                  th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase(scope='col', class='dark:text-gray-400')
+                    | Name
+                  th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase(scope='col', class='dark:text-gray-400')
+                    | Address
+                  th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase(scope='col', class='dark:text-gray-400')
+                    | Role
+                  th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase(scope='col', class='dark:text-gray-400')
+                    | Status
+                  th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase(scope='col', class='dark:text-gray-400')
+                    | Actions
+              tbody.bg-white.divide-y.divide-gray-200(class='dark:bg-gray-800 dark:divide-gray-700')
+                div#spinner-table.mt-5.mb-5.text-center(role='status')
+                  svg.inline.w-10.h-10.text-gray-200.animate-spin.fill-blue-600(aria-hidden='true', class='dark:text-gray-600', viewBox='0 0 100 101', fill='none', xmlns='http://www.w3.org/2000/svg')
+                    path(d='M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z', fill='currentColor')
+                    path(d='M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z', fill='currentFill')
+                  span.sr-only Loading...
+                 
+    // Pagination
+    div.flex.flex-col.items-center.mt-3.mb-3
+      span.text-sm.text-gray-700.mb-3(class='dark:text-gray-400')
+        | Showing 
+        span#start-record.font-semibold.text-gray-900(class='dark:text-white') 1
+        |  to 
+        span#end-record.font-semibold.text-gray-900(class='dark:text-white') 10
+        |  of 
+        span#total-records.font-semibold.text-gray-900(class='dark:text-white') 100
+        |  Entries
+      nav(aria-label='Page navigation example')
+      ul#pagination.flex.items-center.-space-x-px.h-10.text-base
+        li
+          a.flex.items-center.justify-center.px-4.h-10.ms-0.leading-tight.text-gray-500.bg-white.border.border-e-0.border-gray-300.rounded-s-lg(href='#', class='hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white')
+            span.sr-only Previous
+            svg.w-3.h-3(class='rtl:rotate-180', aria-hidden='true', xmlns='http://www.w3.org/2000/svg', fill='none', viewBox='0 0 6 10')
+              path(stroke='currentColor', stroke-linecap='round', stroke-linejoin='round', stroke-width='2', d='M5 1 1 5l4 4')
+        li
+          a.flex.items-center.justify-center.px-4.h-10.leading-tight.text-gray-500.bg-white.border.border-gray-300(href='#', class='hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white') 1
+        li
+          a.flex.items-center.justify-center.px-4.h-10.leading-tight.text-gray-500.bg-white.border.border-gray-300(href='#', class='hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white') 2
+        li
+          a.z-10.flex.items-center.justify-center.px-4.h-10.leading-tight.text-blue-600.border.border-blue-300.bg-blue-50(href='#', aria-current='page', class='hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white') 3
+        li
+          a.flex.items-center.justify-center.px-4.h-10.leading-tight.text-gray-500.bg-white.border.border-gray-300(href='#', class='hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white') 4
+        li
+          a.flex.items-center.justify-center.px-4.h-10.leading-tight.text-gray-500.bg-white.border.border-gray-300(href='#', class='hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white') 5
+        li
+          a.flex.items-center.justify-center.px-4.h-10.leading-tight.text-gray-500.bg-white.border.border-gray-300.rounded-e-lg(href='#', class='hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white')
+            span.sr-only Next
+            svg.w-3.h-3(class='rtl:rotate-180', aria-hidden='true', xmlns='http://www.w3.org/2000/svg', fill='none', viewBox='0 0 6 10')
+              path(stroke='currentColor', stroke-linecap='round', stroke-linejoin='round', stroke-width='2', d='m1 9 4-4-4-4')
+              
+    #edit-user-modal.fixed.inset-0.z-50.hidden.flex.items-center.justify-center.overflow-x-hidden.overflow-y-auto.top-4.h-modal(aria-hidden='true')
+      .relative.w-full.h-full.max-w-2xl.px-4(class='md:h-auto')
+        .relative.bg-white.rounded-lg.shadow(class='dark:bg-gray-800')
+          .flex.items-start.justify-between.p-5.border-b.rounded-t(class='dark:border-gray-700')
+            h3.text-xl.font-semibold(class='dark:text-white') Edit User
+            button#btnHiddenConfirmEditUser.text-gray-400.bg-transparent.rounded-lg.text-sm.ml-auto.inline-flex.items-center(type='button', class='hover:bg-gray-200 hover:text-gray-900 p-1.5 dark:hover:bg-gray-700 dark:hover:text-white', data-modal-toggle='edit-user-modal')
+              svg.w-5.h-5(fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
+                path(fill-rule='evenodd', d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z', clip-rule='evenodd')
+          .p-6.space-y-6
+            form(action='#')
+              .grid.grid-cols-6.gap-6
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='first-name', class='dark:text-white') Name
+                  input#modal-name.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='text', class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='Bonnie', required='')
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='last-name', class='dark:text-white') Phone
+                  input#modal-phone.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='text', class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='Green', required='')
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='email', class='dark:text-white') Email
+                  input#modal-email.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='email', class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='example@company.com', required='')
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='position', class='dark:text-white') Role
+                  input#modal-role.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='text', class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='React Developer', required='')
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='current-password', class='dark:text-white') Current Password
+                  input#modal-password.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='password', class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='••••••••', required='')
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='new-password', class='dark:text-white') New Password
+                  input#new-password.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='password', class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='••••••••', required='')
+                .col-span-6
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='biography', class='dark:text-white') Biography
+                  textarea#biography.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(class='p-2.5 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', rows='4', placeholder='Full-stack web developer. Open-source contributor.')
+          .items-center.p-6.border-t.border-gray-200.rounded-b(class='dark:border-gray-700')
+            button.text-white.bg-primary-700.font-medium.rounded-lg.text-sm.px-5(type='submit', class='py-2.5 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800' onclick="confirmUpdateUser()") Save
+    // Add User Modal
+    #add-user-modal.fixed.left-0.right-0.z-50.items-center.justify-center.hidden.overflow-x-hidden.overflow-y-auto.top-4.h-modal(class='md:inset-0 sm:h-full')
+      .relative.w-full.h-full.max-w-2xl.px-4(class='md:h-auto')
+        // Modal content
+        .relative.bg-white.rounded-lg.shadow(class='dark:bg-gray-800')
+          // Modal header
+          .flex.items-start.justify-between.p-5.border-b.rounded-t(class='dark:border-gray-700')
+            h3.text-xl.font-semibold(class='dark:text-white')
+              | Add new user
+            button#btnHiddenAddUserModal.text-gray-400.bg-transparent.rounded-lg.text-sm.ml-auto.inline-flex.items-center(type='button', class='hover:bg-gray-200 hover:text-gray-900 p-1.5 dark:hover:bg-gray-700 dark:hover:text-white', data-modal-toggle='add-user-modal')
+              svg.w-5.h-5(fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
+                path(fill-rule='evenodd', d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z', clip-rule='evenodd')
+          // Modal body
+          .p-6.space-y-6
+            form(action='#')
+              .grid.grid-cols-6.gap-6
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='addModal-name', class='dark:text-white')
+                    | Name
+                  input#addModal-name.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='text', name='first-name', class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='Bonnie', required='')
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='addModal-phone', class='dark:text-white')
+                    | Phone
+                  input#addModal-phone.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='text', name='last-name', class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='Green', required='')
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='addModal-email', class='dark:text-white') Email
+                  input#addModal-email.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='email', name='email', class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='example@company.com', required='')
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='addModal-password', class='dark:text-white') Password
+                  input#addModal-password.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='email', name='email', class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='', required='')
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='addModal-address', class='dark:text-white') Address
+                  input#addModal-address.shadow-sm.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(type='email', name='email', class='sm:text-sm focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='1 Dien Bien Phu', required='')
+                .col-span-6(class='sm:col-span-3')
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='addModal-role', class='dark:text-white') Role
+                  select#addModal-role.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(class='focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')
+                    option(selected='') --Select--
+                    option(value='Admin') Admin
+                    option(value='User') User
+                    option(value='Guest') Guest
+                .col-span-6
+                  label.block.mb-2.text-sm.font-medium.text-gray-900(for='biography', class='dark:text-white') Biography
+                  textarea#biography.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500', placeholder='👨‍💻Full-stack web developer. Open-source contributor.')
+          // Modal footer
+          .items-center.p-6.border-t.border-gray-200.rounded-b(class='dark:border-gray-700')
+            button#addModal-popup-btn-placeholder.text-white.bg-primary-700.font-medium.rounded-lg.text-sm.px-5.text-center(class='hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800' onclick="confirmAddUser()") Add user
+            button#addModal-popup-btn-submit.text-white.bg-primary-700.font-medium.rounded-lg.text-sm.px-5.text-center(data-modal-target='addModal-popup', data-modal-toggle='addModal-popup', class='hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800' hidden) Add user
+    // Delete User Modal
+    #delete-user-modal.fixed.left-0.right-0.z-50.items-center.justify-center.hidden.overflow-x-hidden.overflow-y-auto.top-4.h-modal(class='md:inset-0 sm:h-full')
+      .relative.w-full.h-full.max-w-md.px-4(class='md:h-auto')
+        // Modal content
+        .relative.bg-white.rounded-lg.shadow(class='dark:bg-gray-800')
+          // Modal header
+          .flex.justify-end.p-2
+            button#btnHiddenPopupDeleteUserModal.text-gray-400.bg-transparent.rounded-lg.text-sm.ml-auto.inline-flex.items-center(type='button', class='hover:bg-gray-200 hover:text-gray-900 p-1.5 dark:hover:bg-gray-700 dark:hover:text-white', data-modal-toggle='delete-user-modal')
+              svg.w-5.h-5(fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
+                path(fill-rule='evenodd', d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z', clip-rule='evenodd')
+          // Modal body
+          .p-6.pt-0.text-center
+            svg.w-16.h-16.mx-auto.text-red-600(fill='none', stroke='currentColor', viewBox='0 0 24 24', xmlns='http://www.w3.org/2000/svg')
+              path(stroke-linecap='round', stroke-linejoin='round', stroke-width='2', d='M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z')
+            h3.mt-5.mb-6.text-lg.text-gray-500(class='dark:text-gray-400')
+              | Are you sure you want to delete
+              | this user?
+            a#confirmDeleteBtn.text-white.bg-red-600.font-medium.rounded-lg.text-base.inline-flex.items-center.px-3.text-center.mr-2(href='#', class='hover:bg-red-800 focus:ring-4 focus:ring-red-300 py-2.5 dark:focus:ring-red-800')
+              | Yes, I&apos;m sure
+            a.text-gray-900.bg-white.border.border-gray-200.font-medium.inline-flex.items-center.rounded-lg.text-base.px-3.text-center(href='#', class='hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 py-2.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700', data-modal-toggle='delete-user-modal')
+              | No, cancel
+
+    // Popup
+
+    #addModal-popup.hidden.overflow-y-auto.overflow-x-hidden.fixed.top-0.right-0.left-0.z-50.justify-center.items-center.w-full.max-h-full(tabindex='-1', class='md:inset-0 h-[calc(100%-1rem)]')
+      .relative.p-4.w-full.max-w-md.max-h-full
+        .relative.bg-white.rounded-lg.shadow(class='dark:bg-gray-700')
+          button.absolute.top-3.text-gray-400.bg-transparent.rounded-lg.text-sm.w-8.h-8.ms-auto.inline-flex.justify-center.items-center(type='button', class='end-2.5 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white', data-modal-hide='addModal-popup')
+            svg.w-3.h-3(aria-hidden='true', xmlns='http://www.w3.org/2000/svg', fill='none', viewBox='0 0 14 14')
+              path(stroke='currentColor', stroke-linecap='round', stroke-linejoin='round', stroke-width='2', d='m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6')
+            span.sr-only Close modal
+          .p-4.text-center(class='md:p-5')
+            svg.mx-auto.mb-4.text-gray-400.w-12.h-12(class='dark:text-gray-200', aria-hidden='true', xmlns='http://www.w3.org/2000/svg', fill='none', viewBox='0 0 20 20')
+              path(stroke='currentColor', stroke-linecap='round', stroke-linejoin='round', stroke-width='2', d='M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z')
+            h3.mb-5.text-lg.font-normal.text-gray-500(class='dark:text-gray-400') Are you sure you want create this user?
+            button.text-white.bg-red-600.font-medium.rounded-lg.text-sm.inline-flex.items-center.px-5.text-center(data-modal-hide='addModal-popup', type='button', class='hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 py-2.5')
+              | Yes, I&apos;m sure
+            button.px-5.ms-3.text-sm.font-medium.text-gray-900.bg-white.rounded-lg.border.border-gray-200(data-modal-hide='addModal-popup', type='button', class='py-2.5 focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700') No, cancel
+  
+  script(src='/js/admin/admin.dashboard.js')
