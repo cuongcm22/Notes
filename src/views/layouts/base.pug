@@ -625,9 +625,8 @@ html
     .flex.pt-16.overflow-hidden.bg-gray-50(class='dark:bg-gray-900')
       include navbar
       #sidebarBackdrop.fixed.inset-0.z-10.hidden(class='bg-gray-900/50 dark:bg-gray-900/90')
-      //- Bao gồm nội dung của trang
-      #main-content.relative.w-full.h-full.overflow-hidden.bg-gray-50(class='lg:ml-64 dark:bg-gray-900')
-        block content
+      
+      block content
     //- Bao gồm footer
     block footer
       include footer

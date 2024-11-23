@@ -1,0 +1,3 @@
+### Get all user with pagination
+
+get http://localhost:3000/api/v1/auth/getall?page=1&limit=5
