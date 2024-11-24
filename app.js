@@ -40,9 +40,11 @@ app.set('views', path.join(__dirname, 'src/views'));
 
 const authRouter = require('./src/routes/auth.routes')
 const noteRouter = require('./src/routes/note.routes')
+const uploadRouter = require('./src/routes/upload.routes')
 
 app.use(process.env.API_VER + 'auth', authRouter)
 app.use(process.env.API_VER + 'note', noteRouter)
+app.use(process.env.API_VER + 'upload', uploadRouter)
 
 // ============================
 

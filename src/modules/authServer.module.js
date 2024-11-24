@@ -8,7 +8,6 @@ const authServer = async (req, res, next) => {
     let token = null
 
     const cookie = req.headers.cookie;
-    
     const cookieArray = cookie.split("; ");
     cookieArray.forEach(cookie => {
       const [key, value] = cookie.split('=');
@@ -16,9 +15,10 @@ const authServer = async (req, res, next) => {
         token = value;
       }
     });
-
+    console.log(token);
     if (!token) {
-      return res.status(401).redirect('/api/v1/auth/signin')
+      console.log('Chek');
+      return res.redirect('/api/v1/auth/signin')
     }
     // Verify JWT Token
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);

@@ -17,11 +17,11 @@ block content
         link(href='https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css', rel='stylesheet')
         script(src='https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js')
 
-        label.block.mb-2.text-sm.font-medium.text-gray-900(for='small-input', class='dark:text-white') Title
-        input#small-input.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')
+        label.block.mb-2.text-sm.font-medium.text-gray-900(for='titleField', class='dark:text-white') Title
+        input#titleField.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')
 
-        label.block.mb-2.text-sm.font-medium.text-gray-900.mt-3(for='message', class='dark:text-white') Description
-        textarea#message.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', placeholder='Write your thoughts here...')
+        label.block.mb-2.text-sm.font-medium.text-gray-900.mt-3(for='descField', class='dark:text-white') Description
+        textarea#descField.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', placeholder='Write your thoughts here...')
 
         textarea#summernote(style="z-index:0")
         // Example Button to trigger sending content
@@ -48,22 +48,23 @@ block content
             });
         // Include Axios only
         script(src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js')
+
         script.
-            // Function to send the content of the summernote editor
-            function sendContent() {
-            // Get the HTML content of the summernote editor (the content inside the textarea)
-            var content = document.getElementById('summernote').value;
-            // Prepare the data to send in the request
-            var formData = new URLSearchParams();
-            formData.append('editor', content);
-            // Send a POST request with the content using axios
-            axios.post('http://localhost:3000/api/v1/note/create', formData)
-            .then(function (response) {
-            console.log('Content successfully sent!', response.data);
+            document.getElementById('sendButton').addEventListener('click', function() {
+            // Lấy giá trị từ các input field
+            const title = document.getElementById('titleField').value;
+            const desc = document.getElementById('descField').value;
+            const htmleditor = document.getElementById('summernote').value; // Nếu summernote là textarea
+            // Tạo dữ liệu để gửi đi (dạng x-www-form-urlencoded)
+            const formData = new URLSearchParams();
+            formData.append('title', title);
+            formData.append('desc', desc);
+            formData.append('htmleditor', htmleditor);
+            // Gửi yêu cầu POST tới server với Axios
+            axios.post('http://localhost:3000/api/v1/note/create', formData, {
+            headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+            },
             })
-            .catch(function (error) {
-            console.error('Error sending content:', error);
             });
-            }
-            // Example: Attach the sendContent function to a button click
-            document.getElementById('sendButton').addEventListener('click', sendContent);

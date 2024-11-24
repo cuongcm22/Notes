@@ -1,6 +1,13 @@
 const fs = require('fs');
 const path = require('path');
 const cheerio = require('cheerio');
+const checkRole = require('../common/roleCheck.common')
+const uploadHTMLEditor = require('../modules/uploadHTMLEditor.module')
+
+const {
+    User,
+    Note
+} = require('../models/models')
 
 // Đường dẫn mới tới thư mục upload
 const uploadFolder = path.join(__dirname, '..', 'upload');  // Cập nhật đường dẫn
@@ -17,42 +24,50 @@ class NoteControllers {
           }
     }
 
-    async uploadHTMLEditor(req, res) {
+    async uploadNotePage(req, res) {
         try {
-            const editorContent = req.body.editor;
+            console.log('Create note route');
+            const userSession = req.usersession
+            checkRole.checkAdmin(userSession.role, res)
+            const user = await User.findOne({email: userSession.email})
 
-            // Sử dụng Cheerio để xử lý HTML
-            const $ = cheerio.load(editorContent);
-            // Xóa các phần tử không mong muốn
-            $('div, svg').remove();
-
-            // Lấy nội dung HTML đã được xử lý
-            const cleanContent = $.html();
+            const { title, desc, htmleditor } = req.body;
+    
+            // Kiểm tra xem htmleditor có tồn tại trong request hay không
+            if (!htmleditor) {
+                return res.status(400).json({ message: 'HTML editor content is required' });
+            }
+    
+            // Gửi nội dung HTML lên route uploadHTMLEditor để xử lý
+            const htmlResponse = await uploadHTMLEditor({ body: { editor: htmleditor } }, res);
             
-            // Tạo tên file dựa trên số lượng file trong thư mục và timestamp
-            const fileIndex = fs.readdirSync(uploadFolder).length + 1;
-            const timestamp = Math.floor(new Date().getTime() / 1000) + 7;
-            const filename = `Editor_${fileIndex}_${timestamp}.html`;
-            const filepath = path.join(uploadFolder, filename);
-        
-            // Ghi nội dung vào file
-            fs.writeFile(filepath, cleanContent, 'utf8', (err) => {
-                if (err) {
-                    // Nếu có lỗi khi ghi file, trả về lỗi
-                    return res.status(500).json({ message: "Lỗi khi tạo file!" });
-                }
-                
-                // Nếu thành công, trả về thông báo thành công
-                return res.json({ message: `File ${filename} đã được tạo thành công!` });
-            });
-            
-            // Không cần trả về response ở đây nữa, vì nó đã được gửi trong callback của fs.writeFile
-        }
-        catch (error) {
-            // Xử lý lỗi chung nếu có
-            return res.status(500).json({ message: 'Lỗi khi xử lý yêu cầu' });
+            if (htmlResponse && htmlResponse.location) {
+                // Nếu việc tạo file HTML thành công, tiến hành tạo note mới
+                const newNote = new Note({
+                    userID: user,
+                    title,
+                    desc,
+                    editorURI: htmlResponse.location, // Lưu đường dẫn file HTML vào editorURI
+                });
+    
+                // Lưu note vào cơ sở dữ liệu
+                await newNote.save();
+    
+                return res.status(201).json({
+                    message: 'Note created successfully',
+                    note: newNote,
+                });
+            } else {
+                // Nếu upload file thất bại, trả về lỗi
+                return res.status(500).json({ message: 'Failed to upload HTML content' });
+            }
+        } catch (error) {
+            // Bắt lỗi và trả về phản hồi nếu có lỗi xảy ra
+            console.error(error);
+            return res.status(500).json({ message: 'Error while creating note', error: error.message });
         }
     }
+
 }
 
 const noteControllers = new NoteControllers()
