@@ -3,8 +3,8 @@ html
   head
     title #{title}
     link(rel="stylesheet", href="css/reset.css")
+
     //- Flowbite css
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.js' integrity='sha512-LThUFuq6Y8DTeSxG7VgJQu+3slKAhZ1u3z1EJdZESaVuQIEJ7TXC/DV8xNNEDFW01iWF4tUuzeC4RdiyrRPdRw==' crossorigin='anonymous' referrerpolicy='no-referrer')
     link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.css' integrity='sha512-aHc6FOiM/2Ko2Au1xqzHo++VfZGZI7cgUJptweRq1j2qrPF8UZdO+3MScBvQwPpclaxEDMBJ4bAuulsIz1Y8uA==' crossorigin='anonymous' referrerpolicy='no-referrer')
     //- Axios
     script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js', integrity='sha512-DdX/YwF5e41Ok+AI81HI8f5/5UsoxCVT9GKYZRIzpLxb8Twz4ZwPPX+jQMwMhNQ9b5+zDEefc+dcvQoPWGNZ3g==', crossorigin='anonymous', referrerpolicy='no-referrer')
@@ -42,6 +42,7 @@ html
     meta(property='og:type' content='website')
     meta(property='og:image' content='https://flowbite-admin-dashboard.vercel.app/images/og-image.png')
     meta(property='og:image:type' content='image/png')
+
     script.
       if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.documentElement.classList.add('dark');
@@ -647,7 +648,8 @@ html
       #sidebarBackdrop.fixed.inset-0.z-10.hidden(class='bg-gray-900/50 dark:bg-gray-900/90')
       
       block content
-    
+    //- Script
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.js' integrity='sha512-LThUFuq6Y8DTeSxG7VgJQu+3slKAhZ1u3z1EJdZESaVuQIEJ7TXC/DV8xNNEDFW01iWF4tUuzeC4RdiyrRPdRw==' crossorigin='anonymous' referrerpolicy='no-referrer')
     //- Bao gồm footer
     block footer
       include footer
