@@ -27,7 +27,7 @@ block content
         #summernote(style="z-index:0")
         script.
             $('#summernote').summernote({
-            placeholder: 'Hello Bootstrap 4',
+            placeholder: 'Write something here',
             tabsize: 2,
             height: 500,
             toolbar: [
@@ -46,7 +46,7 @@ block content
             });
 
         // Example Button to trigger sending content
-        button#sendButton Send Content
+        button#sendButton.btn.btn-primary.w-100.mt-3(type='button') Save note
 
         script.
             document.getElementById('sendButton').addEventListener('click', function() {
