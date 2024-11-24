@@ -6,9 +6,21 @@ const cheerio = require('cheerio');
 const uploadFolder = path.join(__dirname, '..', 'upload');  // Cập nhật đường dẫn
 
 class NoteControllers {
-    async createCkeditor(req, res) {
+
+    async showCreateNotePage(req, res) {
+        try {
+      
+            res.render('notes/create.note.pug')
+          } 
+          catch (error) {
+            res.render('404')
+          }
+    }
+
+    async uploadHTMLEditor(req, res) {
         try {
             const editorContent = req.body.editor;
+
             // Sử dụng Cheerio để xử lý HTML
             const $ = cheerio.load(editorContent);
             // Xóa các phần tử không mong muốn

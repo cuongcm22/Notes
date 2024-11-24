@@ -8,7 +8,7 @@ const authServer = async (req, res, next) => {
     let token = null
 
     const cookie = req.headers.cookie;
-    console.log(cookie);
+    
     const cookieArray = cookie.split("; ");
     cookieArray.forEach(cookie => {
       const [key, value] = cookie.split('=');
@@ -18,7 +18,7 @@ const authServer = async (req, res, next) => {
     });
 
     if (!token) {
-      return res.status(401).json({ message: 'Authentication required' });
+      return res.status(401).redirect('/api/v1/auth/signin')
     }
     // Verify JWT Token
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);

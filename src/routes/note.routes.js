@@ -1,12 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const uploadModule = require('../modules/uploadModule')
-const authenServer = require('../modules/authServer')
+const uploadModule = require('../modules/settingMulter.module')
+const authServer = require('../modules/authServer.module')
 
 
 const { noteControllers } = require('../controllers/note.controllers')
 
-// Show signin page
-// router.post('/create', authenServer.authenToken, uploadModule, noteControllers.createCkeditor)
+// Show createNote Page
+router.get('/create', noteControllers.showCreateNotePage)
+
+// Upload note file 
+// router.post('/create', authServer, uploadModule, noteControllers.uploadHTMLEditor)
+router.post('/create', uploadModule, noteControllers.uploadHTMLEditor)
 
 module.exports = router

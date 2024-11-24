@@ -4,19 +4,19 @@ class CheckRole {
         this.res = res
     }
 
-    checkAdmin() {
+    checkAdmin(role, res) {
         if (role != 'Admin') {
             return res.render('404')
         }
     }
 
-    checkUser() {
+    checkUser(role, res) {
         if (role != 'User') {
             return res.render('404')
         }
     }
 
-    checkGuest() {
+    checkGuest(role, res) {
         if (role != 'Guest') {
             return res.render('404')
         }

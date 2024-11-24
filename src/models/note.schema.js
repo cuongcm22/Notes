@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const noteSchema = new mongoose.Schema({
-  title: {type: String},
+  title: {type: String, require: true},
   desc: {type: String},
-  ckeditorURI: {type: String, require: true, },
+  editorURI: {type: String, require: true, },
   imageURI: {type: String, default: ''},
   createdAt: {
     type: Date,

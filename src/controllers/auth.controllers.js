@@ -89,10 +89,13 @@ class AuthController {
       const user = await User.findOne({ email });
       
       if (!user) {
-        return res.status(201).send(AlertCommon.danger('Đăng nhập thất bại, email hoặc mật khẩu không đúng!'));
+        return res.status(201).send(AlertCommon.danger('Đăng nhập thất bại, không tìm thấy email!'));
       }
       
       // Compare password with hashed password
+      if (password != user.password) {
+        return res.status(201).send(AlertCommon.danger('Đăng nhập thất bại, sai mật khẩu!'));
+      }
       // const isMatch = await bcrypt.compare(password, user.password);
       // if (!isMatch) {
         //   return res.status(400).json({ message: 'Invalid email or password' });
@@ -117,9 +120,7 @@ class AuthController {
         maxAge: 3600000, // 1 hour
       });
       
-      
-      res.json({ message: 'Login successful', token });
-      // return res.status(200).send(AlertCommon.info('Đăng nhập thành công, đang tự động chuyển hướng về trang chủ trong 5 giây'))
+      return res.status(200).send(AlertCommon.info('Đăng nhập thành công, đang tự động chuyển hướng về trang chủ trong 5 giây'))
 
     } catch (error) {
       return res.status(500).send(errorServer)
@@ -141,7 +142,8 @@ class UserController {
 
   async showAdminManageUserPage(req, res) {
     try {
-      checkRole(req.session.role, res)
+   
+      checkRole.checkAdmin(req.usersession.role, res)
 
       res.render('admin/admin.dashboard.pug')
     } 
@@ -153,7 +155,7 @@ class UserController {
   // Lấy danh sách tất cả người dùng
   async getAllUsers(req, res, next) {
     try {
-      checkRole(req.session.role, res)
+      checkRole.checkAdmin(req.usersession.role, res)
 
       // Lấy tham số từ query string
       const page = parseInt(req.query.page, 10) || 1; // Trang hiện tại (mặc định là 1)
@@ -186,7 +188,7 @@ class UserController {
 
   // Tạo một người dùng mới
   async createUser(req, res) {
-    checkRole(req.session.role, res)
+    checkRole.checkAdmin(req.usersession.role, res)
 
     const { name, email, password, role } = req.body;
 
@@ -210,7 +212,7 @@ class UserController {
 
   // Xóa một người dùng dựa trên email
   async deleteUser(req, res) {
-    checkRole(req.session.role, res)
+    checkRole.checkAdmin(req.usersession.role, res)
 
     const { email } = req.params;
 
@@ -227,7 +229,7 @@ class UserController {
   }
 
   async updateUser(req, res) {
-    checkRole(req.session.role, res)
+    checkRole.checkAdmin(req.usersession.role, res)
 
     const { email, name, password, role, phone, address } = req.body;
   
@@ -258,7 +260,6 @@ class UserController {
   }
   
 }
-
 
 authController = new AuthController();
 userController = new UserController();

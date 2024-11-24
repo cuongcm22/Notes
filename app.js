@@ -7,6 +7,12 @@ const methodOverride = require('method-override');
 const app = express();
 const colors = require('colors');
 
+// Enable cors
+const cors = require('cors');
+app.use(cors({
+  origin: '*',
+}));
+
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
