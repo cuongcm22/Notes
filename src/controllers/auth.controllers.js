@@ -138,8 +138,11 @@ class AuthController {
 }
 
 class UserController {
+
   async showAdminManageUserPage(req, res) {
     try {
+      checkRole(req.session.role, res)
+
       res.render('admin/admin.dashboard.pug')
     } 
     catch (error) {
@@ -150,13 +153,8 @@ class UserController {
   // Lấy danh sách tất cả người dùng
   async getAllUsers(req, res, next) {
     try {
-  
-      console.log(req.user);
-      
-      
+      checkRole(req.session.role, res)
 
-      console.log(req.user);
-      
       // Lấy tham số từ query string
       const page = parseInt(req.query.page, 10) || 1; // Trang hiện tại (mặc định là 1)
       const limit = parseInt(req.query.limit, 10) || 20; // Số lượng người dùng mỗi trang (mặc định là 20)
@@ -188,6 +186,8 @@ class UserController {
 
   // Tạo một người dùng mới
   async createUser(req, res) {
+    checkRole(req.session.role, res)
+
     const { name, email, password, role } = req.body;
 
     try {
@@ -210,6 +210,8 @@ class UserController {
 
   // Xóa một người dùng dựa trên email
   async deleteUser(req, res) {
+    checkRole(req.session.role, res)
+
     const { email } = req.params;
 
     try {
@@ -225,6 +227,8 @@ class UserController {
   }
 
   async updateUser(req, res) {
+    checkRole(req.session.role, res)
+
     const { email, name, password, role, phone, address } = req.body;
   
     try {

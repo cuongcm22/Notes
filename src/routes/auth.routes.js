@@ -31,15 +31,15 @@ router.post('/register', authController.register)
 router.get('/management/users', authServer, userController.showAdminManageUserPage)
 
 // Route để lấy danh sách người dùng
-router.get('/getall', userController.getAllUsers);
+router.get('/getall', authServer, userController.getAllUsers);
 
 // Route để tạo một người dùng mới
-router.post('/create', userController.createUser);
+router.post('/create', authServer, userController.createUser);
 
 // Cập nhật thông tin người dùng
-router.put('/update', userController.updateUser);
+router.put('/update', authServer, userController.updateUser);
 
 // Route để xóa một người dùng dựa trên email
-router.delete('/delete/:email', userController.deleteUser);
+router.delete('/delete/:email', authServer, userController.deleteUser);
 
 module.exports = router;
