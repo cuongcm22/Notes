@@ -48,7 +48,7 @@ class AuthController {
   }
 
   // Register a new user
-  static async register(req, res) {
+  async register(req, res) {
     try {
       const { name, email, password, phone, address } = req.body;
 
@@ -59,13 +59,13 @@ class AuthController {
       }
 
       // Hash password before saving
-      const hashedPassword = await bcrypt.hash(password, 10);
+      // const hashedPassword = await bcrypt.hash(password, 10);
 
       // Create new user
       const user = new User({
         name,
         email,
-        password: hashedPassword,
+        password: password,
         phone,
         address
       });
@@ -79,21 +79,22 @@ class AuthController {
   }
 
   // Sign In an existing user
-  static async signIn(req, res) {
+  async signIn(req, res) {
     try {
       const { email, password } = req.body;
-
+  
       // Find user by email
       const user = await User.findOne({ email });
+  
       if (!user) {
-        return res.status(400).json({ message: 'Invalid email or password' });
+        return res.status(201).send(AlertCommon.danger('Đăng nhập thất bại, email hoặc mật khẩu không đúng!'));
       }
 
       // Compare password with hashed password
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-        return res.status(400).json({ message: 'Invalid email or password' });
-      }
+      // const isMatch = await bcrypt.compare(password, user.password);
+      // if (!isMatch) {
+      //   return res.status(400).json({ message: 'Invalid email or password' });
+      // }
 
       // Generate JWT token
       const token = jwt.sign(
@@ -104,15 +105,15 @@ class AuthController {
 
       // Send token as cookie
       res.cookie('token', token, { httpOnly: true, secure: true, maxAge: 3600000 }); // 1 hour expiry
-      return res.status(200).json({ message: 'Login successful' });
+      return res.status(200).send(AlertCommon.info('Đăng nhập thành công, đang tự động chuyển hướng về trang chủ trong 5 giây'))
 
     } catch (error) {
-      return res.status(500).json({ message: 'Server error', error: error.message });
+      return res.status(500).send(errorServer)
     }
   }
 
   // Sign Out (delete token)
-  static signOut(req, res) {
+  async signOut(req, res) {
     try {
       res.clearCookie('token');
       return res.status(200).json({ message: 'Logged out successfully' });

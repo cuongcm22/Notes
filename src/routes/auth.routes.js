@@ -16,6 +16,13 @@ router.get('/resetpw', authController.showResetPasswordPage)
 // Show forgot password page
 router.get('/forgotpw', authController.showForgotPasswordPage)
 
+// Sigin route
+router.post('/login', authController.signIn)
+
+// Register route
+router.post('/register', authController.register)
+
+// 
 
 // ====#==== User ====#====
 // Display admin management user page

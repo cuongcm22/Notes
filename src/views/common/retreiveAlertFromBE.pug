@@ -1,0 +1,20 @@
+script.
+    function retreiveAlertData(response) {
+        const alertHTML = response.data; // Lấy HTML alert từ server
+        // Tạo một div chứa alert và thêm vào body
+        const alertContainer = document.createElement('div');
+        alertContainer.innerHTML = alertHTML;
+        document.body.appendChild(alertContainer);
+
+        setTimeout(() => {
+            alertContainer.remove();
+            // window.location.reload()
+        }, 3000); // Ẩn sau 5 giây
+
+        console.log(response)
+        if (response.status == 200) {
+            return true
+        } else {return false}
+    }
+
+    window.retreiveAlertData = retreiveAlertData
