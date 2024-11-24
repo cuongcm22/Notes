@@ -79,12 +79,12 @@ block content
     
     #main-content.relative.w-full.h-full.overflow-y-auto.bg-gray-50.p-3.pt-5(class='lg:ml-64 dark:bg-gray-900' style="height: 100vh")
         .relative.font-inter.antialiased
-            main.relative.min-h-screen.flex.flex-col.justify-center.bg-slate-50.overflow-hidden
-                .w-full.max-w-5xl.px-4.py-24(class='md:px-6')
+            main.relative.bg-slate-50(class="bg-gray-50 dark:bg-gray-900")
+                .w-full.max-w-5xl.px-4.py-10(class='md:px-6')
                     .space-y-20
-                        h2.font-bold.text-lg.mb-4 Notebooks
+                        h2.font-bold.text-lg.mb-4(class="dark:text-white" style="font-size: 30px;") Notebooks
                         // With columns
-                        #card-container
+                        #card-container(style="margin-top: 35px")
     
     script.
       var arrayImages = !{JSON.stringify(arrayImages)};
