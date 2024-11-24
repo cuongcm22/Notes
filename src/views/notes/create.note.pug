@@ -1,6 +1,7 @@
 extends ../layouts/base
 
 block content
+    include ../common/retreiveAlertFromBE
 
     style.
         .note-editor {
@@ -49,6 +50,9 @@ block content
 
         script.
             document.getElementById('sendButton').addEventListener('click', function() {
+            // Ngừng sự kiện mặc định (nếu có)
+            event.preventDefault();
+
             // Lấy giá trị từ các input field
             const title = document.getElementById('titleField').value;
             const desc = document.getElementById('descField').value;
@@ -65,4 +69,16 @@ block content
                     'Accept': 'application/json',
                     },
                 })
-            });
+                .then(response => {
+                    const status = retreiveAlertData(response)
+
+                    if (status) {
+                        setTimeout(() => {
+                            window.location.href = "/api/v1/note/list"
+                        }, 4000)
+                    }
+                })
+                .catch(error => {
+
+                })
+            })

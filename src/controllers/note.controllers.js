@@ -9,6 +9,10 @@ const {
     Note
 } = require('../models/models')
 
+const AlertCommon = require('../common/alert.common')
+const errorServer = AlertCommon.danger('Có lỗi xảy ra, vui lòng liên hệ admin để giải quyết!')
+const randomImage = require('../common/selectRandomImage.common')
+
 // Đường dẫn mới tới thư mục upload
 const uploadFolder = path.join(__dirname, '..', 'upload');  // Cập nhật đường dẫn
 
@@ -26,7 +30,7 @@ class NoteControllers {
 
     async uploadNotePage(req, res) {
         try {
-            console.log('Create note route');
+           
             const userSession = req.usersession
             checkRole.checkAdmin(userSession.role, res)
             const user = await User.findOne({email: userSession.email})
@@ -35,7 +39,7 @@ class NoteControllers {
     
             // Kiểm tra xem htmleditor có tồn tại trong request hay không
             if (!htmleditor) {
-                return res.status(400).json({ message: 'HTML editor content is required' });
+                return res.status(201).render('500')
             }
     
             // Gửi nội dung HTML lên route uploadHTMLEditor để xử lý
@@ -47,33 +51,47 @@ class NoteControllers {
                     userID: user,
                     title,
                     desc,
+                    imageURI: randomImage(),
                     editorURI: htmlResponse.location, // Lưu đường dẫn file HTML vào editorURI
                 });
     
                 // Lưu note vào cơ sở dữ liệu
                 await newNote.save();
     
-                return res.status(201).json({
-                    message: 'Note created successfully',
-                    note: newNote,
-                });
+                return res.status(200).send(AlertCommon.info('Lưu thành công!'))
             } else {
                 // Nếu upload file thất bại, trả về lỗi
-                return res.status(500).json({ message: 'Failed to upload HTML content' });
+                return res.status(201).send(AlertCommon.danger('Lỗi khi tạo mới!'))
             }
         } catch (error) {
             // Bắt lỗi và trả về phản hồi nếu có lỗi xảy ra
             console.error(error);
-            return res.status(500).json({ message: 'Error while creating note', error: error.message });
+            return res.render('500')
         }
     }
 
     async showListNotesPage(req, res) {
         try {
-          res.render('notes/list.note.pug')
-        } 
-        catch (error) {
-          res.render('404')
+            // Lấy thông tin người dùng từ session
+            const userSession = req.usersession;
+            const user = await User.findOne({ email: userSession.email });
+    
+            if (!user) {
+                return res.render('404', { message: 'User not found' });
+            }
+            
+            // Lấy tất cả các note của người dùng dựa trên userID
+            const notes = await Note.find({ userID: user._id });
+    
+            // Tạo các mảng cần thiết: arrayImages, titles, descs
+            const arrayImages = notes.map(note => note.imageURI);
+            const titles = notes.map(note => note.title);
+            const descs = notes.map(note => note.desc);
+           
+            res.render('notes/list.note.pug', { arrayImages, titles, descs });
+        } catch (error) {
+            console.error(error);
+            res.render('404', { message: 'An error occurred while fetching the notes' });
         }
     }
 
