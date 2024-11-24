@@ -68,6 +68,15 @@ class NoteControllers {
         }
     }
 
+    async showListNotesPage(req, res) {
+        try {
+          res.render('notes/list.note.pug')
+        } 
+        catch (error) {
+          res.render('404')
+        }
+    }
+
 }
 
 const noteControllers = new NoteControllers()

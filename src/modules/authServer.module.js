@@ -15,9 +15,9 @@ const authServer = async (req, res, next) => {
         token = value;
       }
     });
-    console.log(token);
+    
     if (!token) {
-      console.log('Chek');
+      
       return res.redirect('/api/v1/auth/signin')
     }
     // Verify JWT Token
@@ -28,8 +28,8 @@ const authServer = async (req, res, next) => {
     next();
 
   } catch (error) {
-    console.error('JWT Error:', error);
-    return res.status(401).json({ message: 'Invalid or expired token' });
+
+    return res.redirect('/api/v1/auth/signin')
   }
 };
 

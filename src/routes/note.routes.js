@@ -7,10 +7,12 @@ const authServer = require('../modules/authServer.module')
 const { noteControllers } = require('../controllers/note.controllers')
 
 // Show createNote Page
-router.get('/create', noteControllers.showCreateNotePage)
+router.get('/create', authServer, noteControllers.showCreateNotePage)
 
 // Upload note file 
 // router.post('/create', authServer, settingMulter, noteControllers.uploadHTMLEditor)
 router.post('/create', authServer, noteControllers.uploadNotePage)
+
+router.get('/list', authServer, noteControllers.showListNotesPage)
 
 module.exports = router

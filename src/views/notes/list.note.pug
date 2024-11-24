@@ -1,0 +1,41 @@
+extends ../layouts/base
+
+block content
+    script(src='https://cdn.tailwindcss.com')
+    script.
+      tailwind.config = {
+      darkMode: 'class',
+      theme: {
+      extend: {
+      fontFamily: {
+      inter: ['Inter', 'sans-serif'],
+      },
+      },
+      },
+      };
+    script(src='https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js')
+    #main-content.relative.w-full.h-full.overflow-y-auto.bg-gray-50.p-3.pt-5(class='lg:ml-64 dark:bg-gray-900' style="height: 100vh")
+        .relative.font-inter.antialiased
+            main.relative.min-h-screen.flex.flex-col.justify-center.bg-slate-50.overflow-hidden
+                .w-full.max-w-5xl.mx-auto.px-4.py-24(class='md:px-6')
+                .space-y-20
+                    
+                    h2.font-bold.text-lg.mb-4 With CSS Columns
+                    // With columns
+                    .columns-2.gap-4.space-y-4(class='md:columns-4')
+                        img.w-full.rounded-xl.shadow(src='https://cruip-tutorials.vercel.app/masonry/masonry-01.jpg', width='232', height='290', alt='Image 01')
+                        img.w-full.rounded-xl.shadow(src='https://cruip-tutorials.vercel.app/masonry/masonry-02.jpg', width='232', height='290', alt='Image 02')
+                        img.w-full.rounded-xl.shadow(src='https://cruip-tutorials.vercel.app/masonry/masonry-03.jpg', width='232', height='174', alt='Image 03')
+                        img.w-full.rounded-xl.shadow(src='https://cruip-tutorials.vercel.app/masonry/masonry-04.jpg', width='232', height='155', alt='Image 04')
+                        img.w-full.rounded-xl.shadow(src='https://cruip-tutorials.vercel.app/masonry/masonry-05.jpg', width='232', height='349', alt='Image 05')
+                        img.w-full.rounded-xl.shadow(src='https://cruip-tutorials.vercel.app/masonry/masonry-06.jpg', width='232', height='250', alt='Image 06')
+                        img.w-full.rounded-xl.shadow(src='https://cruip-tutorials.vercel.app/masonry/masonry-07.jpg', width='232', height='349', alt='Image 07')
+                        img.w-full.rounded-xl.shadow(src='https://cruip-tutorials.vercel.app/masonry/masonry-08.jpg', width='232', height='155', alt='Image 08')
+                        img.w-full.rounded-xl.shadow(src='https://cruip-tutorials.vercel.app/masonry/masonry-09.jpg', width='232', height='250', alt='Image 09')
+                        img.w-full.rounded-xl.shadow(src='https://cruip-tutorials.vercel.app/masonry/masonry-10.jpg', width='232', height='290', alt='Image 10')
+                        img.w-full.rounded-xl.shadow(src='https://cruip-tutorials.vercel.app/masonry/masonry-11.jpg', width='232', height='155', alt='Image 11')
+                        img.w-full.rounded-xl.shadow(src='https://cruip-tutorials.vercel.app/masonry/masonry-12.jpg', width='232', height='309', alt='Image 12')
+            // Page footer
+            footer.absolute.left-6.right-6.bottom-4.text-center(class='md:left-12 md:right-auto md:bottom-8 md:text-left')
+                a.text-xs.text-slate-500(class='hover:underline', href='https://cruip.com') &copy;Cruip - Tailwind CSS templates
+            
