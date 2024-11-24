@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const authServer = require('../modules/authServer')
 
 const {authController, userController} = require('../controllers/auth.controllers'); 
 
@@ -27,7 +28,7 @@ router.post('/register', authController.register)
 // ====#==== User ====#====
 // Display admin management user page
 
-router.get('/management/users', userController.showAdminManageUserPage)
+router.get('/management/users', authServer, userController.showAdminManageUserPage)
 
 // Route để lấy danh sách người dùng
 router.get('/getall', userController.getAllUsers);

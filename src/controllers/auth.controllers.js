@@ -2,6 +2,8 @@ const {
   User
 } = require('../models/models'); // Đường dẫn đến User Model
 
+const checkRole = require('../common/roleCheck.common')
+
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const AlertCommon = require('../common/alert.common')
@@ -85,27 +87,39 @@ class AuthController {
   
       // Find user by email
       const user = await User.findOne({ email });
-  
+      
       if (!user) {
         return res.status(201).send(AlertCommon.danger('Đăng nhập thất bại, email hoặc mật khẩu không đúng!'));
       }
-
+      
       // Compare password with hashed password
       // const isMatch = await bcrypt.compare(password, user.password);
       // if (!isMatch) {
-      //   return res.status(400).json({ message: 'Invalid email or password' });
-      // }
-
-      // Generate JWT token
-      const token = jwt.sign(
-        { email: user.email, userId: user._id },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '1h' }
-      );
-
-      // Send token as cookie
-      res.cookie('token', token, { httpOnly: true, secure: true, maxAge: 3600000 }); // 1 hour expiry
-      return res.status(200).send(AlertCommon.info('Đăng nhập thành công, đang tự động chuyển hướng về trang chủ trong 5 giây'))
+        //   return res.status(400).json({ message: 'Invalid email or password' });
+        // }
+        
+      // Create JWT Payload (only name and email)
+      const payload = {
+        name: user.name,
+        email: user.email,
+        role: user.role
+      };
+      
+      // Sign JWT Token
+      const token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+      
+      
+      // Set the token in a cookie
+      res.cookie('token', token, {
+        httpOnly: true, // Prevent access from JavaScript
+        secure: process.env.NODE_ENV === 'production', // Set secure flag for production
+        sameSite: 'strict', // Prevent CSRF
+        maxAge: 3600000, // 1 hour
+      });
+      
+      
+      res.json({ message: 'Login successful', token });
+      // return res.status(200).send(AlertCommon.info('Đăng nhập thành công, đang tự động chuyển hướng về trang chủ trong 5 giây'))
 
     } catch (error) {
       return res.status(500).send(errorServer)
@@ -134,8 +148,15 @@ class UserController {
   }
 
   // Lấy danh sách tất cả người dùng
-  async getAllUsers(req, res) {
+  async getAllUsers(req, res, next) {
     try {
+  
+      console.log(req.user);
+      
+      
+
+      console.log(req.user);
+      
       // Lấy tham số từ query string
       const page = parseInt(req.query.page, 10) || 1; // Trang hiện tại (mặc định là 1)
       const limit = parseInt(req.query.limit, 10) || 20; // Số lượng người dùng mỗi trang (mặc định là 20)

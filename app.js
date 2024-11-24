@@ -7,6 +7,9 @@ const methodOverride = require('method-override');
 const app = express();
 const colors = require('colors');
 
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 // Sử dụng method-override để xử lý các form có phương thức PUT, DELETE
 app.use(methodOverride('_method'));
 
@@ -30,8 +33,10 @@ app.set('views', path.join(__dirname, 'src/views'));
 // ===#=== Route config ===#===
 
 const authRouter = require('./src/routes/auth.routes')
+const noteRouter = require('./src/routes/note.routes')
 
 app.use(process.env.API_VER + 'auth', authRouter)
+app.use(process.env.API_VER + 'note', noteRouter)
 
 // ============================
 
