@@ -22,10 +22,10 @@ async function getContentHtmlFile(noteId) {
     if (!fs.existsSync(htmlFilePath)) {
       throw new Error('HTML file not found for the given Note ID');
     }
-    console.log(htmlFilePath);
+
     // Đọc nội dung file HTML
     const htmlContent = fs.readFileSync(htmlFilePath, 'utf8');
-    console.log(htmlContent);
+   
     // Trả về nội dung của file HTML
     return htmlContent;
 
