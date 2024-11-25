@@ -16,15 +16,7 @@ const writeFileAsync = (filepath, content) => {
 
 async function uploadHTMLEditor(req, res) {
     try {
-        const editorContent = req.body.editor;
-
-        // Use Cheerio to parse the HTML
-        const $ = cheerio.load(editorContent);
-        // Remove unwanted elements (like div and svg)
-        $('div, svg').remove();
-
-        // Get the cleaned HTML content
-        const cleanContent = $.html();
+        const editorContent = req.body.editor; // Nội dung HTML mà bạn gửi lên
 
         // Generate a unique file name
         const fileIndex = fs.readdirSync(uploadFolder).length + 1;
@@ -33,7 +25,7 @@ async function uploadHTMLEditor(req, res) {
         const filepath = path.join(uploadFolder, filename);
 
         // Wait for the file to be written asynchronously
-        await writeFileAsync(filepath, cleanContent);
+        await writeFileAsync(filepath, editorContent);
 
         // Return the success message with file location after writing is done
         return {
