@@ -33,7 +33,7 @@ async function fetchUsers(page = 1, limit = 5) {
     const tableBody = document.querySelector('#table-rendered tbody');
     tableBody.innerHTML = ''; // Clear existing data
 
-    const response = await axios.get(`http://localhost:3000/api/v1/auth/getall?page=${page}&limit=${limit}`);
+    const response = await axios.get(`/api/v1/auth/getall?page=${page}&limit=${limit}`);
     var { arrayUser, pagination } = response.data;
 
     arrayUser.forEach(user => {
@@ -224,7 +224,7 @@ function confirmAddUser() {
   };
 
   // Sử dụng axios để gửi request tới server
-  axios.post('http://localhost:3000/api/v1/auth/create', userData)
+  axios.post('/api/v1/auth/create', userData)
     .then(response => {
 
       retreiveAlertData(response)
@@ -253,7 +253,7 @@ function confirmDeleteUser(email) {
   // Gán sự kiện click vào nút xác nhận xóa
   confirmDeleteBtn.onclick = function() {
       // Gửi yêu cầu DELETE tới server
-      axios.delete(`http://localhost:3000/api/v1/auth/delete/${email}`)
+      axios.delete(`/api/v1/auth/delete/${email}`)
           .then(response => {
             retreiveAlertData(response)
             // Nếu xóa thành công, đóng modal và làm mới trang
@@ -300,7 +300,7 @@ function confirmUpdateUser() {
   };
 
   // Gửi PUT request để cập nhật thông tin người dùng
-  axios.put('http://localhost:3000/api/v1/auth/update', updatedUser)
+  axios.put('/api/v1/auth/update', updatedUser)
     .then(response => {
       retreiveAlertData(response)
       document.getElementById('btnHiddenConfirmEditUser').click()

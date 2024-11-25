@@ -19,5 +19,10 @@ router.get('/list', authServer, noteControllers.showListNotesPage)
 // Get content notes
 router.get('/get/:noteid', noteControllers.getContentHtmlFile)
 
+// show Edit content notes page
+router.get('/edit/:noteid', noteControllers.showEditNotesPage)
+
+// Update content notes
+router.post('/edit/:noteid', noteControllers.updateContentNotes)
 
 module.exports = router

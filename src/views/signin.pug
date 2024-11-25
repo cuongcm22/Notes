@@ -69,7 +69,7 @@ script.
         };
 
         // Gửi yêu cầu POST bằng axios
-        axios.post('http://localhost:3000/api/v1/auth/login', data, {
+        axios.post('/api/v1/auth/login', data, {
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -80,7 +80,7 @@ script.
             if (status) {
                 setTimeout(() => {
                     window.location.href = "/"
-                }, 4000)
+                }, 2500)
             }
         })
         .catch(error => {

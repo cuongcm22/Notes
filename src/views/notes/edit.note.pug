@@ -19,15 +19,15 @@ block content
 
 
         label.block.mb-2.text-sm.font-medium.text-gray-900(for='titleField', class='dark:text-white') Title
-        input#titleField.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')
+        input#titleField.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', value=title)
 
         label.block.mb-2.text-sm.font-medium.text-gray-900.mt-3(for='descField', class='dark:text-white') Description
-        textarea#descField.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', placeholder='Write your thoughts here...')
+        textarea#descField.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')
 
         #summernote(style="z-index:0")
         script.
             $('#summernote').summernote({
-            placeholder: 'Write something here',
+            placeholder: '',
             tabsize: 2,
             height: 500,
             toolbar: [
@@ -46,40 +46,16 @@ block content
             });
 
         // Example Button to trigger sending content
-        button#sendButton.btn.btn-primary.w-100.mt-3(type='button') Save note
+        button#saveButton.btn.btn-primary.w-100.mt-3(type='button') Save note
 
         script.
-            document.getElementById('sendButton').addEventListener('click', function() {
-            // Ngừng sự kiện mặc định (nếu có)
-            event.preventDefault();
+            const noteid = !{JSON.stringify(noteid)}
+            const desc = !{JSON.stringify(desc)}
+            const htmlContent = !{JSON.stringify(htmlContent)}
 
-            // Lấy giá trị từ các input field
-            const title = document.getElementById('titleField').value;
-            const desc = document.getElementById('descField').value;
-            //- const htmleditor = document.getElementById('summernote').value; // Nếu summernote là textarea
-            const htmleditor = document.querySelector('.note-editable').innerHTML; // Nếu summernote là textarea
-            // Tạo dữ liệu để gửi đi (dạng x-www-form-urlencoded)
-            const formData = new URLSearchParams();
-            formData.append('title', title);
-            formData.append('desc', desc);
-            formData.append('htmleditor', htmleditor);
-            // Gửi yêu cầu POST tới server với Axios
-            axios.post('/api/v1/note/create', formData, {
-            headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'Accept': 'application/json',
-                    },
-                })
-                .then(response => {
-                    const status = retreiveAlertData(response)
+            document.querySelector('#descField').value = desc
+            document.querySelector('.note-editable').innerHTML = htmlContent
 
-                    if (status) {
-                        setTimeout(() => {
-                            window.location.href = "/api/v1/note/list"
-                        }, 2500)
-                    }
-                })
-                .catch(error => {
+        script(src='/js/notes/edit.note.js')
 
-                })
-            })
+        

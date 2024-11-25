@@ -22,13 +22,16 @@ function displayCardMasonry(arrayImages, titles, descs) {
         const title1 = document.createElement('h2');
         title1.textContent = truncateText(titles[index] || 'No Title', 20); // Giới hạn 20 ký tự
         title1.className = 'absolute inset-x-0 bottom-3 left-1/2 transform -translate-x-1/2 text-xs font-bold text-white bg-black bg-opacity-50 px-4 py-2 rounded shadow text-center transition-opacity group-hover:opacity-0';
+        title1.style = `
+            min-width: 140px
+        `
         // Tạo figcaption chứa Title 2 và desc
         const figcaption = document.createElement('figcaption');
         figcaption.className = 'absolute inset-0 flex flex-col justify-end items-center p-4 bg-black bg-opacity-50 text-white transition-transform transform translate-y-full hover:translate-y-0';
         // Tạo Title 2 (ẩn khi không hover)
         const title2 = document.createElement('h2');
         title2.textContent = truncateText(titles[index] || 'No Title', 20); // Giới hạn 20 ký tự
-        title2.className = 'text-lg font-bold text-center w-full';
+        title2.className = 'text-base font-bold text-center w-full';
         // Tạo Description (ẩn khi không hover)
         const desc = document.createElement('p');
         desc.textContent = truncateText(descs[index] || 'No Description', 100); // Giới hạn 100 ký tự
@@ -80,7 +83,7 @@ displayCardMasonry(arrayImages, titles, descs);
 function openModalAndRetrieveContent(title, id) {
     console.log('Checked!');
     // Tạo URL API từ noteID
-    const apiUrl = `http://localhost:3000/api/v1/note/get/${id}`;
+    const apiUrl = `/api/v1/note/get/${id}`;
   
     // Sử dụng axios để gửi request GET
     axios.get(apiUrl)
@@ -91,9 +94,11 @@ function openModalAndRetrieveContent(title, id) {
         // Cập nhật nội dung modal với thông tin từ note
         document.getElementById('modal-title').innerText = title;
         document.getElementById('modal-content').innerHTML = htmlContent;
-  
-        // Hiển thị modal (nếu cần, tùy thuộc vào cách bạn sử dụng modal)
-        // $('#modal').modal('show');  // Giả sử bạn đang dùng jQuery với Bootstrap modal, nếu không bạn có thể thay đổi đoạn này
+        
+        
+        document.getElementById('btnEditNote').addEventListener('click', () => {
+            window.location.href = `/api/v1/note/edit/${id}`;
+        })
       })
       .catch(error => {
         console.error("There was an error fetching the note:", error);
