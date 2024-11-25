@@ -11,7 +11,8 @@ function displayCardMasonry(arrayImages, titles, descs) {
         figure.className = 'relative card w-full rounded-xl overflow-hidden shadow group';
         // Chỉ thêm sự kiện click, hàm openModalAndRetrieveContent sẽ được gọi khi click vào figure
         figure.addEventListener("click", function() {
-            openModalAndRetrieveContent(notesID[index]);
+            openModalAndRetrieveContent(titles[index], notesID[index]);
+            openModal();
         });
         const img = document.createElement('img');
         img.src = url;
@@ -76,7 +77,8 @@ displayCardMasonry(arrayImages, titles, descs);
 // Open modal
 
 // Hàm mở modal và lấy nội dung từ API
-function openModalAndRetrieveContent(id) {
+function openModalAndRetrieveContent(title, id) {
+    console.log('Checked!');
     // Tạo URL API từ noteID
     const apiUrl = `http://localhost:3000/api/v1/note/get/${id}`;
   
@@ -84,22 +86,23 @@ function openModalAndRetrieveContent(id) {
     axios.get(apiUrl)
       .then(response => {
         // Lấy dữ liệu trả về từ API
-        const note = response.data;
-  
+        const htmlContent = response.data.htmlContent;
+        // console.log(htmlContent);
         // Cập nhật nội dung modal với thông tin từ note
-        document.getElementById('modal-title').innerText = note.title;
-        document.getElementById('modal-content').innerHTML = `
-          <h3>${note.title}</h3>
-          <p>${note.desc || 'No description available.'}</p>
-          <div><img src="${note.imageURI || ''}" alt="Note Image" style="max-width: 100%; height: auto;" /></div>
-          <a href="${note.editorURI}" target="_blank">Edit this note</a>
-        `;
+        document.getElementById('modal-title').innerText = title;
+        document.getElementById('modal-content').innerHTML = htmlContent;
   
         // Hiển thị modal (nếu cần, tùy thuộc vào cách bạn sử dụng modal)
-        $('#modal').modal('show');  // Giả sử bạn đang dùng jQuery với Bootstrap modal, nếu không bạn có thể thay đổi đoạn này
+        // $('#modal').modal('show');  // Giả sử bạn đang dùng jQuery với Bootstrap modal, nếu không bạn có thể thay đổi đoạn này
       })
       .catch(error => {
         console.error("There was an error fetching the note:", error);
       });
   }
   
+  // Hàm mở modal
+function openModal() {
+    const btnOpenModal = document.getElementById('btn-openmodal');
+
+    btnOpenModal.click()
+}

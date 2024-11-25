@@ -105,10 +105,10 @@ class NoteControllers {
     async getContentHtmlFile(req, res) {
         try {
             const noteID = req.params.noteid
-            console.log(req.params);
-            const htmlcontent = getContentHtmlFileModule(noteID)
-
-            res.status(200).json({htmlcontent})
+            
+            const htmlContent= await getContentHtmlFileModule(noteID)
+            // console.log(htmlContent);
+            res.status(200).json({htmlContent})
         } catch (error) {
             console.error(error);
             res.render('500', { message: 'An error occurred while fetching the notes' });

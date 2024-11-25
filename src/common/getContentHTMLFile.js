@@ -27,7 +27,8 @@ async function getContentHtmlFile(noteId) {
     const htmlContent = fs.readFileSync(htmlFilePath, 'utf8');
    
     // Trả về nội dung của file HTML
-    return htmlContent;
+    // return {title: note.title, descs: note.descs, htmlContent: htmlContent};
+    return htmlContent
 
   } catch (error) {
     console.error('Error fetching note HTML content:', error);
