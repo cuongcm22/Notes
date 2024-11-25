@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
 const noteSchema = new mongoose.Schema({
+  noteID: {
+    type: String, require: true, unique: true
+  },
   userID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -9,7 +12,7 @@ const noteSchema = new mongoose.Schema({
   title: {type: String, require: true},
   desc: {type: String},
   editorURI: {type: String, require: true, },
-  imageURI: {type: String, default: 'https://moonsterleather.com/cdn/shop/articles/journal_vs_notebook_1920x.jpg'},
+  imageURI: {type: String},
   createdAt: {
     type: Date,
     default: Date.now,

@@ -12,6 +12,8 @@ const {
 const AlertCommon = require('../common/alert.common')
 const errorServer = AlertCommon.danger('Có lỗi xảy ra, vui lòng liên hệ admin để giải quyết!')
 const randomImage = require('../common/selectRandomImage.common')
+const getContentHtmlFileModule = require('../common/getContentHTMLFile.js')
+const generateID = require('../common/generateID.js')
 
 // Đường dẫn mới tới thư mục upload
 const uploadFolder = path.join(__dirname, '..', 'upload');  // Cập nhật đường dẫn
@@ -41,13 +43,17 @@ class NoteControllers {
             if (!htmleditor) {
                 return res.status(201).render('500')
             }
-    
+            
             // Gửi nội dung HTML lên route uploadHTMLEditor để xử lý
             const htmlResponse = await uploadHTMLEditor({ body: { editor: htmleditor } }, res);
             
             if (htmlResponse && htmlResponse.location) {
+
+                const noteID = await generateID(Note, 'noteID');
+
                 // Nếu việc tạo file HTML thành công, tiến hành tạo note mới
                 const newNote = new Note({
+                    noteID: noteID,
                     userID: user,
                     title,
                     desc,
@@ -82,16 +88,30 @@ class NoteControllers {
             
             // Lấy tất cả các note của người dùng dựa trên userID
             const notes = await Note.find({ userID: user._id });
-    
+            
+            const notesID = notes.map(note => note.noteID)
             // Tạo các mảng cần thiết: arrayImages, titles, descs
             const arrayImages = notes.map(note => note.imageURI);
             const titles = notes.map(note => note.title);
             const descs = notes.map(note => note.desc);
            
-            res.render('notes/list.note.pug', { arrayImages, titles, descs });
+            res.render('notes/list.note.pug', { notesID, arrayImages, titles, descs });
         } catch (error) {
             console.error(error);
-            res.render('404', { message: 'An error occurred while fetching the notes' });
+            res.render('500', { message: 'An error occurred while fetching the notes' });
+        }
+    }
+
+    async getContentHtmlFile(req, res) {
+        try {
+            const noteID = req.params.noteid
+            console.log(req.params);
+            const htmlcontent = getContentHtmlFileModule(noteID)
+
+            res.status(200).json({htmlcontent})
+        } catch (error) {
+            console.error(error);
+            res.render('500', { message: 'An error occurred while fetching the notes' });
         }
     }
 

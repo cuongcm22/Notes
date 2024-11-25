@@ -56,7 +56,8 @@ block content
             // Lấy giá trị từ các input field
             const title = document.getElementById('titleField').value;
             const desc = document.getElementById('descField').value;
-            const htmleditor = document.getElementById('summernote').value; // Nếu summernote là textarea
+            //- const htmleditor = document.getElementById('summernote').value; // Nếu summernote là textarea
+            const htmleditor = document.querySelector('.note-editable').innerHTML; // Nếu summernote là textarea
             // Tạo dữ liệu để gửi đi (dạng x-www-form-urlencoded)
             const formData = new URLSearchParams();
             formData.append('title', title);

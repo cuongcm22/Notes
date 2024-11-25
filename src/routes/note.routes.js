@@ -13,8 +13,11 @@ router.get('/create', authServer, noteControllers.showCreateNotePage)
 // router.post('/create', authServer, settingMulter, noteControllers.uploadHTMLEditor)
 router.post('/create', authServer, noteControllers.uploadNotePage)
 
+// Show list note page
 router.get('/list', authServer, noteControllers.showListNotesPage)
 
+// Get content notes
+router.get('/get/:noteid', noteControllers.getContentHtmlFile)
 
 
 module.exports = router

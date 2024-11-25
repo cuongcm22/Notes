@@ -32,6 +32,9 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(express.json({ limit: '10mb' })); // Giới hạn kích thước JSON payload
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
+
 // Cấu hình view engine là Pug
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'src/views'));

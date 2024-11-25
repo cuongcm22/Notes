@@ -27,12 +27,12 @@ function selectRandomImage() {
     return `/Images/ImagesPlaceHolder/${randomImage}`;
 }
 
-// Sử dụng hàm để lấy hình ảnh ngẫu nhiên
-try {
-    const randomImagePath = selectRandomImage();
-    console.log('Đường dẫn hình ảnh ngẫu nhiên:', randomImagePath);
-} catch (error) {
-    console.error(error.message);
-}
+// // Sử dụng hàm để lấy hình ảnh ngẫu nhiên
+// try {
+//     const randomImagePath = selectRandomImage();
+//     console.log('Đường dẫn hình ảnh ngẫu nhiên:', randomImagePath);
+// } catch (error) {
+//     console.error(error.message);
+// }
 
 module.exports = selectRandomImage
