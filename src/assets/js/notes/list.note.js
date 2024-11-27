@@ -1,3 +1,6 @@
+const spinner = document.getElementById('spinner-modal')
+spinner.classList.add('hidden')
+
 function truncateText(text, maxLength) {
     return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
 }
@@ -80,8 +83,10 @@ displayCardMasonry(arrayImages, titles, descs);
 // Open modal
 
 // Hàm mở modal và lấy nội dung từ API
-function openModalAndRetrieveContent(title, id) {
-    console.log('Checked!');
+async function openModalAndRetrieveContent(title, id) {
+    document.getElementById('modal-title').innerText = ''
+    document.getElementById('modal-content').innerHTML = ''
+    spinner.classList.remove('hidden')
     // Tạo URL API từ noteID
     const apiUrl = `/api/v1/note/get/${id}`;
   
@@ -91,10 +96,10 @@ function openModalAndRetrieveContent(title, id) {
         // Lấy dữ liệu trả về từ API
         const htmlContent = response.data.htmlContent;
         // console.log(htmlContent);
+        spinner.classList.add('hidden')
         // Cập nhật nội dung modal với thông tin từ note
         document.getElementById('modal-title').innerText = title;
         document.getElementById('modal-content').innerHTML = htmlContent;
-        
         
         document.getElementById('btnEditNote').addEventListener('click', () => {
             window.location.href = `/api/v1/note/edit/${id}`;

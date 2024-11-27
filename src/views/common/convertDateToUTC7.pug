@@ -1,0 +1,21 @@
+script.
+    function convertDateToUTC7(dateStr) {
+        // Tạo đối tượng Date từ chuỗi đầu vào
+        var date = new Date(dateStr);
+    
+        // Chuyển đổi sang múi giờ UTC+7
+        date.setHours(date.getHours() + 7);
+    
+        // Lấy các phần thông tin từ đối tượng Date
+        var day = String(date.getDate()).padStart(2, '0');  // Ngày (thêm 0 nếu số nhỏ hơn 10)
+        var month = String(date.getMonth() + 1).padStart(2, '0');  // Tháng (thêm 0 nếu số nhỏ hơn 10)
+        var year = date.getFullYear();  // Năm
+        var hours = String(date.getHours()).padStart(2, '0');  // Giờ
+        var minutes = String(date.getMinutes()).padStart(2, '0');  // Phút
+        var seconds = String(date.getSeconds()).padStart(2, '0');  // Giây
+    
+        // Định dạng ngày giờ theo yêu cầu
+        return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+    }
+
+    window.convertDateToUTC7 = convertDateToUTC7

@@ -77,7 +77,7 @@ class NoteControllers {
         }
     }
 
-    async showListNotesPage(req, res) {
+    async showMasonryNotesPage(req, res) {
         try {
             // Lấy thông tin người dùng từ session
             const userSession = req.usersession;
@@ -97,6 +97,34 @@ class NoteControllers {
             const descs = notes.map(note => note.desc);
 
             res.render('notes/list.note.pug', { notesID, arrayImages, titles, descs });
+        } catch (error) {
+            console.error(error);
+            res.render('500', { message: 'An error occurred while fetching the notes' });
+        }
+    }
+
+    async showTableNotesPage(req, res) {
+        try {
+            // Lấy thông tin người dùng từ session
+            const userSession = req.usersession;
+            const user = await User.findOne({ email: userSession.email });
+
+            if (!user) {
+                return res.render('404', { message: 'User not found' });
+            }
+
+            // Lấy tất cả các note của người dùng dựa trên userID
+            const notes = await Note.find({ userID: user._id });
+
+            const notesID = notes.map(note => note.noteID)
+            // Tạo các mảng cần thiết: arrayImages, titles, descs
+            const arrayImages = notes.map(note => note.imageURI);
+            const titles = notes.map(note => note.title);
+            const descs = notes.map(note => note.desc);
+            const updatedAt = notes.map(note => note.updatedAt);
+            const createdAt = notes.map(note => note.createdAt);
+
+            res.render('notes/table.note.pug', { notesID, arrayImages, titles, descs, updatedAt, createdAt });
         } catch (error) {
             console.error(error);
             res.render('500', { message: 'An error occurred while fetching the notes' });

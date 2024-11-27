@@ -9,10 +9,18 @@ const noteSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
-  title: {type: String, require: true},
+  title: {type: String},
+  title2: {type: String},
+  title3: {type: String},
   desc: {type: String},
-  editorURI: {type: String, require: true, },
+  desc2: {type: String},
+  desc3: {type: String},
+  editorURI: {type: String},
   imageURI: {type: String},
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
