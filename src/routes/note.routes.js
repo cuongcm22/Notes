@@ -3,7 +3,6 @@ const router = express.Router();
 const settingMulter = require('../modules/settingMulter.module')
 const authServer = require('../modules/authServer.module')
 
-
 const { noteControllers } = require('../controllers/note.controllers')
 
 // Show createNote Page
@@ -20,7 +19,7 @@ router.get('/masonry', authServer, noteControllers.showMasonryNotesPage)
 router.get('/crud', authServer, noteControllers.showTableNotesPage)
 
 // Read note (pagination:total item)
-// router.get('/read/:pagination/:totalItems', authServer, noteControllers.getPaginationNote)
+router.get('/read/:pagination/:totalItems', noteControllers.getPaginationNoteRoute)
 
 // Get content notes
 router.get('/get/:noteid', authServer, noteControllers.getContentHtmlFile)

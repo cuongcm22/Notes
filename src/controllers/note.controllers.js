@@ -213,6 +213,36 @@ class NoteControllers {
         }
     }
 
+    async getPaginationNoteRoute(req, res) {
+        try {
+          
+            // Get user session
+            // const userSession = req.usersession;
+            // const user = await User.findOne({ email: userSession.email });
+            const user = await User.findOne({ email: 'user1@example.com' });
+      
+            if (!user) {
+             
+                return res.render('404', { message: 'User not found' });
+            }
+
+            // Get total items (notes count)
+            const totalItems = await Note.countDocuments({ userID: user._id });
+
+            // For now, let's assume pagination starts from page 1
+            const pagination = 1;
+
+            const paginationData = await getPaginationNote({ params: { pagination, totalItems } }, res);
+      
+            // Extract the notes and pagination info from paginationData
+            const { notes, pagination: paginationInfo } = paginationData;
+
+            return res.status(200).json({ notes, pagination: paginationInfo })
+        } catch {
+
+        }
+    }
+
 }
 
 const noteControllers = new NoteControllers()

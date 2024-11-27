@@ -29,3 +29,13 @@ title=title1&desc=desc1&htmleditor=<h1>Hello World!</h1><p>This is a test conten
 ### Test get html content
 
 get http://localhost:3000/api/v1/note/get/5c68ca1f-1027-40d6-8dff-468d231f6dc8
+
+###
+
+### Test route getPaginationNote with pagination = 1 and totalItems = 50
+GET http://localhost:3000/api/v1/note/read/1/10
+Accept: application/json
+Content-Type: application/json
+
+
+####
