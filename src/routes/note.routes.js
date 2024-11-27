@@ -19,6 +19,9 @@ router.get('/masonry', authServer, noteControllers.showMasonryNotesPage)
 // Show list note page
 router.get('/crud', authServer, noteControllers.showTableNotesPage)
 
+// Read note (pagination:total item)
+// router.get('/read/:pagination/:totalItems', authServer, noteControllers.getPaginationNote)
+
 // Get content notes
 router.get('/get/:noteid', authServer, noteControllers.getContentHtmlFile)
 

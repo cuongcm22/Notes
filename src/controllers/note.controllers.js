@@ -14,6 +14,7 @@ const AlertCommon = require('../common/alert.common')
 const errorServer = AlertCommon.danger('Có lỗi xảy ra, vui lòng liên hệ admin để giải quyết!')
 const randomImage = require('../common/selectRandomImage.common')
 const getContentHtmlFileModule = require('../common/getContentHTMLFile.js')
+const getPaginationNote = require('../common/getPagiantionsNote.js')
 const generateID = require('../common/generateID.js')
 
 // Đường dẫn mới tới thư mục upload
@@ -105,7 +106,7 @@ class NoteControllers {
 
     async showTableNotesPage(req, res) {
         try {
-            // Lấy thông tin người dùng từ session
+            // Get user session
             const userSession = req.usersession;
             const user = await User.findOne({ email: userSession.email });
 
@@ -113,18 +114,32 @@ class NoteControllers {
                 return res.render('404', { message: 'User not found' });
             }
 
-            // Lấy tất cả các note của người dùng dựa trên userID
-            const notes = await Note.find({ userID: user._id });
+            // Get total items (notes count)
+            const totalItems = await Note.countDocuments({ userID: user._id });
 
-            const notesID = notes.map(note => note.noteID)
-            // Tạo các mảng cần thiết: arrayImages, titles, descs
+            // For now, let's assume pagination starts from page 1
+            const pagination = 1;
+
+            // Call getPaginationNote directly (without fetch)
+            const paginationData = await getPaginationNote({ params: { pagination, totalItems } }, res);
+
+            // Extract the notes and pagination info from paginationData
+            const { notes, pagination: paginationInfo } = paginationData;
+
+            // Prepare the data for rendering
+            const notesID = notes.map(note => note.noteID);
             const arrayImages = notes.map(note => note.imageURI);
             const titles = notes.map(note => note.title);
             const descs = notes.map(note => note.desc);
             const updatedAt = notes.map(note => note.updatedAt);
             const createdAt = notes.map(note => note.createdAt);
 
-            res.render('notes/table.note.pug', { notesID, arrayImages, titles, descs, updatedAt, createdAt });
+            // Render the table page with the notes and pagination info
+            res.render('notes/table.note.pug', { 
+                notesID, arrayImages, titles, descs, updatedAt, createdAt,
+                pagination: paginationInfo.showing, totalPages: paginationInfo.totalPages,
+                currentPage: paginationInfo.currentPage
+            });
         } catch (error) {
             console.error(error);
             res.render('500', { message: 'An error occurred while fetching the notes' });
