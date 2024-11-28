@@ -70,9 +70,10 @@ class NoteControllers {
                 });
 
                 // Lưu note vào cơ sở dữ liệu
-                await newNote.save();
+                await newNote.save()
 
                 return res.status(200).send(AlertCommon.info('Lưu thành công!'))
+
             } else {
                 // Nếu upload file thất bại, trả về lỗi
                 return res.status(201).send(AlertCommon.danger('Lỗi khi tạo mới!'))
@@ -209,11 +210,11 @@ class NoteControllers {
             const fileUpdateResponse = await updateHTMLEditor(note.editorURI, content)
 
             if (!fileUpdateResponse) {
-                return res.render('500', { message: 'An error occurred while fetching the notes' });
+                res.render('500', { message: 'An error occurred while fetching the notes' });
             }
 
             // Trả về thông báo thành công
-            return res.status(200).send(AlertCommon.info('Cập nhật ghi chú thành công!'))
+            res.status(200).send(AlertCommon.info('Cập nhật ghi chú thành công!'))
         } catch (error) {
             console.error(error);
             res.render('500', { message: 'An error occurred while fetching the notes' });

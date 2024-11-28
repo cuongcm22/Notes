@@ -251,11 +251,11 @@ class UserController {
       await existingUser.save();
   
       // Trả về thông báo thành công
-      res.send(AlertCommon.info('Thông tin người dùng đã được cập nhật thành công'));
+      return res.send(AlertCommon.info('Thông tin người dùng đã được cập nhật thành công'));
     } catch (error) {
       // Nếu có lỗi trong quá trình thực hiện
-      console.error(error);
-      res.send(AlertCommon.danger('Đã có lỗi xảy ra khi cập nhật người dùng'));
+      // console.error(error);
+      return res.send(AlertCommon.danger('Đã có lỗi xảy ra khi cập nhật người dùng'));
     }
   }
   

@@ -147,6 +147,7 @@ async function fetchUsers(page = 1, limit = 5) {
     // Create page number links
     pageNumbers.forEach((page, index) => {
       const li = document.createElement('li');
+      li.id = `pagination-${page}`
       li.classList.add('page-item');
 
       if (page === '...') {
@@ -306,8 +307,6 @@ function confirmUpdateUser() {
       document.getElementById('btnHiddenConfirmEditUser').click()
     })
     .catch(error => {
-      // Hiển thị thông báo lỗi nếu có sự cố
-      alert('Đã có lỗi xảy ra khi cập nhật người dùng!');
       console.error(error);
     });
 }
@@ -321,10 +320,13 @@ function retreiveAlertData(response) {
 
   // Có thể thêm một chức năng để ẩn alert sau vài giây
   // fetchUsers(currentPage, 5);
-  document.getElementById('pagination').querySelectorAll('li')[currentPage].querySelector('a').click()
+  // console.log(document.getElementById('pagination').querySelectorAll('li')[currentPage]);
+  // document.getElementById('pagination').querySelectorAll('li')[currentPage].querySelector('a').click()
+
+  document.getElementById(`pagination-${currentPage}`).querySelector('a').click()
 
   setTimeout(() => {
     alertContainer.remove();
     // window.location.reload()
-  }, 5000); // Ẩn sau 5 giây
+  }, 2500); // Ẩn sau 5 giây
 }
