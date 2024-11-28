@@ -19,7 +19,7 @@ router.get('/masonry', authServer, noteControllers.showMasonryNotesPage)
 router.get('/crud', authServer, noteControllers.showTableNotesPage)
 
 // Read note (pagination:total item)
-router.get('/read/:pagination/:totalItems', noteControllers.getPaginationNoteRoute)
+router.get('/read/:pagination', noteControllers.getPaginationNoteRoute)
 
 // Get content notes
 router.get('/get/:noteid', authServer, noteControllers.getContentHtmlFile)

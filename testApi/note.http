@@ -32,8 +32,8 @@ get http://localhost:3000/api/v1/note/get/5c68ca1f-1027-40d6-8dff-468d231f6dc8
 
 ###
 
-### Test route getPaginationNote with pagination = 1 and totalItems = 50
-GET http://localhost:3000/api/v1/note/read/1/10
+### Test for Page 4 (This should return no notes, since there are only 22 items in the database)
+GET http://localhost:3000/api/v1/note/read/3
 Accept: application/json
 Content-Type: application/json
 

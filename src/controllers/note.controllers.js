@@ -230,7 +230,7 @@ class NoteControllers {
             const totalItems = await Note.countDocuments({ userID: user._id });
 
             // For now, let's assume pagination starts from page 1
-            const pagination = 1;
+            const {pagination} = req.params
 
             const paginationData = await getPaginationNote({ params: { pagination, totalItems } }, res);
       
