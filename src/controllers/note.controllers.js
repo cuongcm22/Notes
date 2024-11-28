@@ -36,7 +36,8 @@ class NoteControllers {
         try {
    
             const userSession = req.usersession
-            checkRole.checkAdmin(userSession.role, res)
+            // await checkRole.checkAdmin(userSession.role, res)
+            
             const user = await User.findOne({ email: userSession.email })
 
             const { title, title1, title2, title3, desc, desc1, desc2, desc3, htmleditor } = req.body;
@@ -223,12 +224,12 @@ class NoteControllers {
 
     async getPaginationNoteRoute(req, res) {
         try {
-          
+           
             // Get user session
             const userSession = req.usersession;
             const user = await User.findOne({ email: userSession.email });
             // const user = await User.findOne({ email: 'user1@example.com' });
-      
+
             if (!user) {
              
                 return res.render('404', { message: 'User not found' });
@@ -240,7 +241,7 @@ class NoteControllers {
             // For now, let's assume pagination starts from page 1
             const {pagination} = req.params
 
-            const paginationData = await getPaginationNote({ params: { pagination, totalItems } }, res);
+            const paginationData = await getPaginationNote({ params: { pagination, totalItems, user } }, res);
       
             // Extract the notes and pagination info from paginationData
             const { notes, pagination: paginationInfo } = paginationData;
@@ -254,13 +255,11 @@ class NoteControllers {
 
     async deleteNotes(req, res) {
         try {
-
-
             // Lấy noteID từ params hoặc body
-            const { noteID } = req.params;
-    
+            const { noteid } = req.params;
+            
             // Tìm và xóa note dựa trên noteID
-            const deletedNote = await Note.findOneAndDelete({ noteID });
+            const deletedNote = await Note.findOneAndDelete({ noteID: noteid });
     
             // Kiểm tra nếu không tìm thấy note với noteID đó
             if (!deletedNote) {

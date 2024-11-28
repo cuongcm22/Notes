@@ -1,3 +1,5 @@
+var noteIDDelete = ""
+
 const spinner = document.getElementById('spinner-modal')
 spinner.classList.add('hidden')
 
@@ -84,6 +86,12 @@ function renderContentToTable() {
             openModalAndRetrieveContent(titles[i], notesID[i])
             openModal()
         })
+
+        // Add event listener
+        document.getElementById(`deleteProductButton-${notesID[i]}`).addEventListener("click", function() {
+           
+            openDeleteModal(notesID[i])
+        })
     }
 }
 
@@ -98,16 +106,16 @@ document.addEventListener("scroll", async function () {
  
     // Kiểm tra xem người dùng đã cuộn đến cuối bảng chưa
     if (tableContainer.scrollTop + tableContainer.clientHeight >= tableContent.clientHeight) {
-        // console.log('Checked cuoi trang');
+        console.log('Checked cuoi trang');
         if (!isLoading && hasMore) {
             isLoading = true; // Đánh dấu đang tải
             currentPage++; // Tăng số trang
 
             // Gửi yêu cầu đến API
             try {
-                const response = await axios.get(`http://localhost:3000/api/v1/note/read/${currentPage}`);
+                console.log('Checked axios');
+                const response = await axios.get(`/api/v1/note/read/${currentPage}`);
                 const { notes, pagination } = response.data;
-              
                 // Nếu không có thêm dữ liệu, dừng tải
                 if (!notes || notes.length === 0) {
                     hasMore = false;
@@ -165,6 +173,15 @@ document.addEventListener("scroll", async function () {
                         openModalAndRetrieveContent(notes[i].title, notes[i].noteID)
                         openModal()
                     })
+
+                    // Add 
+                    // Add event listener
+                    document.getElementById(`deleteProductButton-${notes[i].noteID}`).addEventListener("click", function() {
+                    
+                        openDeleteModal(notes[i].noteID)
+                    })
+                    
+                    
                 }
 
             } catch (error) {
@@ -207,7 +224,7 @@ async function openModalAndRetrieveContent(title, id) {
       });
   }
   
-  // Hàm mở modal
+  // Hàm mở modal content
 function openModal() {
 
     const btnOpenModal = document.getElementById('btn-openmodal');
@@ -215,4 +232,42 @@ function openModal() {
     btnOpenModal.click()
 }
 
+function openDeleteModal(noteID) {
+    noteIDDelete = noteID
+    const btnOpenModal = document.getElementById('btn-open-delete-modal');
+
+    btnOpenModal.click()
+}
+
+
+
 window.openModal = openModal
+window.openDeleteModal = openDeleteModal
+
+
+// Delete note
+
+const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+confirmDeleteBtn.addEventListener("click", () => {
+    deleteNote(noteIDDelete)
+})
+
+function deleteNote(noteID) {
+    
+    if (!noteID || noteID == "") {
+        alert('Please enter a note ID!');
+        return;
+    }
+
+    // Gửi yêu cầu DELETE đến API
+    axios.delete(`/api/v1/note/delete/${noteID}`)
+        .then(response => {
+            retreiveAlertData(response)
+            
+
+        })
+        .catch(error => {
+            retreiveAlertData(response)
+        });
+}

@@ -20,7 +20,7 @@ async function getPaginationNote(req, res) {
         const totalPages = Math.ceil(total / perPage);
         const showingStart = skip + 1;
         const showingEnd = Math.min(skip + perPage, total);
-
+        
         // Return pagination info and notes
         return {
             notes,

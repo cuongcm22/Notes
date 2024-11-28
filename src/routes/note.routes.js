@@ -19,7 +19,7 @@ router.get('/masonry', authServer, noteControllers.showMasonryNotesPage)
 router.get('/crud', authServer, noteControllers.showTableNotesPage)
 
 // Read note (pagination:total item)
-router.get('/read/:pagination', noteControllers.getPaginationNoteRoute)
+router.get('/read/:pagination', authServer, noteControllers.getPaginationNoteRoute)
 
 // Get content notes
 router.get('/get/:noteid', authServer, noteControllers.getContentHtmlFile)
@@ -31,7 +31,7 @@ router.get('/edit/:noteid', authServer, noteControllers.showEditNotesPage)
 router.post('/edit/:noteid', authServer, noteControllers.updateContentNotes)
 
 // Delete route notes
-router.post('/delete/:noteid', authServer, noteControllers.deleteNotes)
+router.delete('/delete/:noteid', authServer, noteControllers.deleteNotes)
 
 
 module.exports = router
