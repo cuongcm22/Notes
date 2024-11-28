@@ -78,5 +78,81 @@ function renderContentToTable() {
     }
 }
 
-// Call the function to render the content when the page is ready
+let currentPage = 1; // Trang hiện tại
+let isLoading = false; // Trạng thái đang tải dữ liệu
+let hasMore = true; // Trạng thái còn dữ liệu để tải
+
+// Lắng nghe sự kiện scroll
+document.addEventListener("scroll", async function () {
+    const tableContainer = document.getElementById("tableContainer"); // Phần bao quanh bảng (phải có chiều cao cố định và cuộn)
+    const tableContent = document.getElementById("tableContent");
+
+    // Kiểm tra xem người dùng đã cuộn đến cuối bảng chưa
+    if (tableContainer.scrollTop + tableContainer.clientHeight >= tableContent.clientHeight) {
+        console.log('Checked cuoi trang');
+        if (!isLoading && hasMore) {
+            isLoading = true; // Đánh dấu đang tải
+            currentPage++; // Tăng số trang
+
+            // Gửi yêu cầu đến API
+            try {
+                const response = await axios.get(`http://localhost:3000/api/v1/note/read/${currentPage}`);
+                const { notes, pagination } = response.data;
+
+                // Nếu không có thêm dữ liệu, dừng tải
+                if (!notes || notes.length === 0) {
+                    hasMore = false;
+                    return;
+                }
+
+                // Thêm dữ liệu mới vào bảng
+                for (let i = 0; i < notes.length; i++) {
+                    const tr = document.createElement("tr");
+                    tr.classList.add("hover:bg-gray-100", "dark:hover:bg-gray-700");
+
+                    const truncatedTitle = truncateText(notes[i].title, 30); // Tiêu đề
+                    const truncatedDesc = truncateText(notes[i].description, 50); // Mô tả
+
+                    tr.innerHTML = `
+                        <td class="w-4 p-4">
+                            <div class="flex items-center">
+                                <input id="checkbox-${notes[i]._id}" type="checkbox" class="w-4 h-4 border-gray-300 rounded bg-gray-50 dark:bg-gray-700 dark:border-gray-600" aria-describedby="checkbox-1">
+                                <label for="checkbox-${notes[i]._id}" class="sr-only">checkbox</label>
+                            </div>
+                        </td>
+                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                            <div class="text-base font-semibold text-gray-900 dark:text-white">${truncatedTitle || "No Title"}</div>
+                            <div class="text-sm font-normal text-gray-500 dark:text-gray-400">${notes[i].createdAt}</div>
+                        </td>
+                        <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            ${truncatedDesc || "No Description"}
+                        </td>
+                        <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            ${notes[i].updatedAt}
+                        </td>
+                        <td class="p-4 space-x-2 whitespace-nowrap">
+                            <button id="updateProductButton-${notes[i]._id}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                Edit
+                            </button>
+                            <button id="deleteProductButton-${notes[i]._id}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
+                                Delete
+                            </button>
+                        </td>
+                    `;
+
+                    // Thêm dòng mới vào bảng
+                    tableContent.appendChild(tr);
+                }
+
+            } catch (error) {
+                console.error("Error loading notes:", error);
+            } finally {
+                isLoading = false; // Đánh dấu hoàn tất tải
+            }
+        }
+    }
+});
+
+// Gọi hàm để khởi tạo bảng
 renderContentToTable();
+
