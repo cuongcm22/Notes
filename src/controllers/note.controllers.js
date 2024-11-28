@@ -34,12 +34,12 @@ class NoteControllers {
 
     async uploadNotePage(req, res) {
         try {
-            console.log('Checked');
+   
             const userSession = req.usersession
             checkRole.checkAdmin(userSession.role, res)
             const user = await User.findOne({ email: userSession.email })
 
-            const { title, desc, htmleditor } = req.body;
+            const { title, title1, title2, title3, desc, desc1, desc2, desc3, htmleditor } = req.body;
 
             // Kiểm tra xem htmleditor có tồn tại trong request hay không
             if (!htmleditor) {
@@ -58,7 +58,13 @@ class NoteControllers {
                     noteID: noteID,
                     userID: user,
                     title,
+                    title1,
+                    title2,
+                    title3,
                     desc,
+                    desc1,
+                    desc2,
+                    desc3,
                     imageURI: randomImage(),
                     editorURI: htmlResponse.location, // Lưu đường dẫn file HTML vào editorURI
                 });
@@ -194,6 +200,7 @@ class NoteControllers {
             // Cập nhật nội dung ghi chú vào database
             note.title = title;
             note.desc = description;
+            note.updatedAt = Date.now();
 
             // Lưu thông tin mới vào MongoDB
             await note.save();

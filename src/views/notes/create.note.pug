@@ -13,37 +13,23 @@ block content
         /* CSS để tạo hiệu ứng collapse */
         .collapse-container {
         width: 100%;
-        max-width: 600px;
-        margin: 20px auto;
-        }
-
-        .collapse-btn {
-        background-color: #4CAF50; /* Màu nền */
-        color: white; /* Màu chữ */
-        padding: 10px 20px; /* Khoảng cách trong nút */
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s ease;
+        //- max-width: 600px;
+        //- margin: 20px auto;
         }
 
         .collapse-btn:hover {
-        background-color: #45a049; /* Màu nền khi hover */
+            outline: none;
         }
 
-        .collapse-content {
+        [class^="collapse-content"] {
         display: none; /* Ban đầu nội dung ẩn */
-        padding: 15px;
-        background-color: #f1f1f1;
+        //- padding: 15px;
+        //- background-color: #f1f1f1;
         margin-top: 10px;
         border-radius: 5px;
-        border: 1px solid #ddd;
+        //- border: 1px solid #ddd;
         }
 
-        .collapse-content p {
-        margin: 0;
-        }
 
 
     #main-content.relative.w-full.h-full.overflow-y-auto.bg-gray-50.p-3.pt-5(class='lg:ml-64 dark:bg-gray-900' style="height: 100vh")
@@ -54,23 +40,73 @@ block content
         link(href='https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-bs4.min.css', rel='stylesheet')
         script(src='https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-bs4.min.js')
 
-        label.block.mb-2.text-sm.font-medium.text-gray-900(for='titleField', class='dark:text-white') Title
+        label.block.mb-2.text-sm.font-medium.text-gray-900(for='titleField', class='dark:text-white') Main Title
         input#titleField.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')
 
      
         .collapse-container
-            button.collapse-btn(onclick='toggleCollapse()') M&#x1EDF;/&Dstrok;&oacute;ng
-            .collapse-content
-                p &Dstrok;&acirc;y l&agrave; n&#x1ED9;i dung &#x1EA9;n/hi&#x1EC7;n khi nh&#x1EA5;n n&uacute;t.
+            label.inline-flex.items-center.cursor-pointer.mt-3
+                input.sr-only.peer(type='checkbox', value='')
+                .collapse-btn.relative.w-9.h-5.bg-gray-200.rounded-full.peer(class="peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" onclick=`toggleCollapse("collapse-content-title1")`)
+                span.ms-3.text-sm.font-medium.text-gray-900(class='dark:text-gray-300') Title 1
+            label.inline-flex.items-center.cursor-pointer.mt-3.ml-3
+                input.sr-only.peer(type='checkbox', value='')
+                .collapse-btn.relative.w-9.h-5.bg-gray-200.rounded-full.peer(class="peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" onclick=`toggleCollapse("collapse-content-title2")`)
+                span.ms-3.text-sm.font-medium.text-gray-900(class='dark:text-gray-300') Title 2
+            label.inline-flex.items-center.cursor-pointer.mt-3.ml-3
+                input.sr-only.peer(type='checkbox', value='')
+                .collapse-btn.relative.w-9.h-5.bg-gray-200.rounded-full.peer(class="peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" onclick=`toggleCollapse("collapse-content-title3")`)
+                span.ms-3.text-sm.font-medium.text-gray-900(class='dark:text-gray-300') Title 3
+            .collapse-content-title1
+                div
+                    label.block.mb-2.text-sm.font-medium.text-gray-900(for='small-input', class='dark:text-white') Title 1
+                    input#titleField1.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')
+            .collapse-content-title2
+                div
+                    label.block.mb-2.text-sm.font-medium.text-gray-900(for='small-input', class='dark:text-white') Title 2
+                    input#titleField2.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')
+            .collapse-content-title3
+                div
+                    label.block.mb-2.text-sm.font-medium.text-gray-900(for='small-input', class='dark:text-white') Title 3
+                    input#titleField3.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')
+
+
 
         label.block.mb-2.text-sm.font-medium.text-gray-900.mt-3(for='descField', class='dark:text-white') Description
         textarea#descField.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', placeholder='Write your thoughts here...')
 
+        .collapse-container
+            label.inline-flex.items-center.cursor-pointer.mt-3
+                input.sr-only.peer(type='checkbox', value='')
+                .collapse-btn.relative.w-9.h-5.bg-gray-200.rounded-full.peer(class="peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" onclick=`toggleCollapse("collapse-content-desc1")`)
+                span.ms-3.text-sm.font-medium.text-gray-900(class='dark:text-gray-300') Desc 1
+            label.inline-flex.items-center.cursor-pointer.mt-3.ml-3
+                input.sr-only.peer(type='checkbox', value='')
+                .collapse-btn.relative.w-9.h-5.bg-gray-200.rounded-full.peer(class="peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" onclick=`toggleCollapse("collapse-content-desc2")`)
+                span.ms-3.text-sm.font-medium.text-gray-900(class='dark:text-gray-300') Desc 2
+            label.inline-flex.items-center.cursor-pointer.mt-3.ml-3
+                input.sr-only.peer(type='checkbox', value='')
+                .collapse-btn.relative.w-9.h-5.bg-gray-200.rounded-full.peer(class="peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" onclick=`toggleCollapse("collapse-content-desc3")`)
+                span.ms-3.text-sm.font-medium.text-gray-900(class='dark:text-gray-300') Desc 3
+            .collapse-content-desc1
+                div
+                    label.block.mb-2.text-sm.font-medium.text-gray-900(for='small-input', class='dark:text-white') Desc 1
+                    textarea#descField1.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', placeholder='Write your thoughts here...')
+            .collapse-content-desc2
+                div
+                    label.block.mb-2.text-sm.font-medium.text-gray-900(for='small-input', class='dark:text-white') Desc 2
+                    textarea#descField2.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', placeholder='Write your thoughts here...')
+            .collapse-content-desc3
+                div
+                    label.block.mb-2.text-sm.font-medium.text-gray-900(for='small-input', class='dark:text-white') Desc 3
+                    textarea#descField3.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', placeholder='Write your thoughts here...')
+
         #summernote(style="z-index:0")
 
         script.
-            function toggleCollapse() {
-                var content = document.querySelector('.collapse-content');
+            function toggleCollapse(content) {
+                //- var content = document.querySelector('.collapse-content');
+                var content = document.querySelector(`.${content}`);
                 if (content.style.display === 'none' || content.style.display === '') {
                     content.style.display = 'block';
                 } else {
@@ -110,13 +146,25 @@ block content
 
             // Lấy giá trị từ các input field
             const title = document.getElementById('titleField').value;
+            const title1 = document.getElementById('titleField1').value;
+            const title2 = document.getElementById('titleField2').value;
+            const title3 = document.getElementById('titleField3').value;
             const desc = document.getElementById('descField').value;
+            const desc1 = document.getElementById('descField1').value;
+            const desc2 = document.getElementById('descField2').value;
+            const desc3 = document.getElementById('descField3').value;
             //- const htmleditor = document.getElementById('summernote').value; // Nếu summernote là textarea
             const htmleditor = document.querySelector('.note-editable').innerHTML; // Nếu summernote là textarea
             // Tạo dữ liệu để gửi đi (dạng x-www-form-urlencoded)
             const formData = new URLSearchParams();
             formData.append('title', title);
+            formData.append('title1', title1);
+            formData.append('title2', title2);
+            formData.append('title3', title3);
             formData.append('desc', desc);
+            formData.append('desc1', desc1);
+            formData.append('desc2', desc2);
+            formData.append('desc3', desc3);
             formData.append('htmleditor', htmleditor);
             // Gửi yêu cầu POST tới server với Axios
             axios.post('/api/v1/note/create', formData, {

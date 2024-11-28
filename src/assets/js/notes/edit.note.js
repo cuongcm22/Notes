@@ -27,7 +27,7 @@ async function sendContentEdited() {
 
         if (status) {
             setTimeout(() => {
-                window.location.href = "/api/v1/note/table"
+                window.location.href = "/api/v1/note/crud"
             }, 2500)
         }
     } catch (error) {

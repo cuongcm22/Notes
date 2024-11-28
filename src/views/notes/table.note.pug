@@ -1,6 +1,7 @@
 extends ../layouts/base
 
 block content
+    include ../common/convertDateToUTC7.pug
 
     #main-content.relative.w-full.h-full.overflow-y-auto.bg-gray-50.p-3.pt-5(class='lg:ml-64 dark:bg-gray-900')
       .p-4.bg-white.block.items-center.justify-between.border-b.border-gray-200(class='sm:flex lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700')

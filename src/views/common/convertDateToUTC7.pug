@@ -4,7 +4,7 @@ script.
         var date = new Date(dateStr);
     
         // Chuyển đổi sang múi giờ UTC+7
-        date.setHours(date.getHours() + 7);
+        date.setHours(date.getHours());
     
         // Lấy các phần thông tin từ đối tượng Date
         var day = String(date.getDate()).padStart(2, '0');  // Ngày (thêm 0 nếu số nhỏ hơn 10)

@@ -40,7 +40,7 @@ function renderContentToTable() {
         tdTitle.classList.add("p-4", "text-sm", "font-normal", "text-gray-500", "whitespace-nowrap", "dark:text-gray-400");
         tdTitle.innerHTML = `
             <div class="text-base font-semibold text-gray-900 dark:text-white">${truncatedTitle || "No Title"}</div>
-            <div class="text-sm font-normal text-gray-500 dark:text-gray-400">${createdAt[i]}</div>
+            <div class="text-sm font-normal text-gray-500 dark:text-gray-400">${convertDateToUTC7(createdAt[i])}</div>
         `;
         tr.appendChild(tdTitle);
 
@@ -53,7 +53,7 @@ function renderContentToTable() {
         // Create Updated At cell
         const tdUpdatedAt = document.createElement("td");
         tdUpdatedAt.classList.add("p-4", "text-base", "font-medium", "text-gray-900", "whitespace-nowrap", "dark:text-white");
-        tdUpdatedAt.innerHTML = updatedAt[i];
+        tdUpdatedAt.innerHTML = convertDateToUTC7(updatedAt[i]);
         tr.appendChild(tdUpdatedAt);
 
         // Create Actions cell
@@ -107,7 +107,7 @@ document.addEventListener("scroll", async function () {
             try {
                 const response = await axios.get(`http://localhost:3000/api/v1/note/read/${currentPage}`);
                 const { notes, pagination } = response.data;
-
+              
                 // Nếu không có thêm dữ liệu, dừng tải
                 if (!notes || notes.length === 0) {
                     hasMore = false;
@@ -116,6 +116,7 @@ document.addEventListener("scroll", async function () {
 
                 // Thêm dữ liệu mới vào bảng
                 for (let i = 0; i < notes.length; i++) {
+                    console.log(notes[i].updatedAt);
                     const tr = document.createElement("tr");
                     tr.classList.add("hover:bg-gray-100", "dark:hover:bg-gray-700");
 
@@ -131,13 +132,13 @@ document.addEventListener("scroll", async function () {
                         </td>
                         <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                             <div class="text-base font-semibold text-gray-900 dark:text-white">${truncatedTitle || "No Title"}</div>
-                            <div class="text-sm font-normal text-gray-500 dark:text-gray-400">${notes[i].createdAt}</div>
+                            <div class="text-sm font-normal text-gray-500 dark:text-gray-400">${convertDateToUTC7(notes[i].createdAt)}</div>
                         </td>
                         <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             ${truncatedDesc || "No Description"}
                         </td>
                         <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            ${notes[i].updatedAt}
+                            ${convertDateToUTC7(notes[i].updatedAt)}
                         </td>
                         <td class="p-4 space-x-2 whitespace-nowrap">
                             <button id="updateProductButton-${notes[i].noteID}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
