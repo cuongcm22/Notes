@@ -5,14 +5,14 @@ const {
 
 async function getPaginationNote(req, res) {
     try {
-        const { pagination, totalItems } = req.params;
+        const { pagination, totalItems, user } = req.params;
         const page = parseInt(pagination);  // Current page
         const total = parseInt(totalItems); // Total items (passed from front-end or calculated)
         const perPage = 10;  // Number of items per page
         const skip = (page - 1) * perPage; // Number of items to skip
 
         // Query to get the notes based on the pagination and limit
-        const notes = await Note.find()
+        const notes = await Note.find({userID: user._id})
             .sort({ createdAt: -1 }) // Sort by createdAt descending (newest first)
             .skip(skip)
             .limit(perPage);

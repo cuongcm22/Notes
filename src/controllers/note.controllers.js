@@ -112,7 +112,7 @@ class NoteControllers {
 
     async showTableNotesPage(req, res) {
         try {
-            // Get user session
+            // Lấy thông tin người dùng từ session
             const userSession = req.usersession;
             const user = await User.findOne({ email: userSession.email });
 
@@ -122,12 +122,12 @@ class NoteControllers {
 
             // Get total items (notes count)
             const totalItems = await Note.countDocuments({ userID: user._id });
-
+  
             // For now, let's assume pagination starts from page 1
             const pagination = 1;
 
             // Call getPaginationNote directly (without fetch)
-            const paginationData = await getPaginationNote({ params: { pagination, totalItems } }, res);
+            const paginationData = await getPaginationNote({ params: { pagination, totalItems, user } }, res);
 
             // Extract the notes and pagination info from paginationData
             const { notes, pagination: paginationInfo } = paginationData;
@@ -224,9 +224,9 @@ class NoteControllers {
         try {
           
             // Get user session
-            // const userSession = req.usersession;
-            // const user = await User.findOne({ email: userSession.email });
-            const user = await User.findOne({ email: 'user1@example.com' });
+            const userSession = req.usersession;
+            const user = await User.findOne({ email: userSession.email });
+            // const user = await User.findOne({ email: 'user1@example.com' });
       
             if (!user) {
              
@@ -247,6 +247,31 @@ class NoteControllers {
             return res.status(200).json({ notes, pagination: paginationInfo })
         } catch {
 
+        }
+    }
+
+
+    async deleteNotes(req, res) {
+        try {
+
+
+            // Lấy noteID từ params hoặc body
+            const { noteID } = req.params;
+    
+            // Tìm và xóa note dựa trên noteID
+            const deletedNote = await Note.findOneAndDelete({ noteID });
+    
+            // Kiểm tra nếu không tìm thấy note với noteID đó
+            if (!deletedNote) {
+                return res.status(200).send(AlertCommon.info('Có lỗi xảy ra!'))
+            }
+    
+            // Trả về kết quả thành công
+            return res.status(200).send(AlertCommon.danger('Xóa note thành công!'))
+        } catch (error) {
+  
+            console.error(error);
+            res.render('500', { message: 'An error occurred while fetching the notes' });
         }
     }
 

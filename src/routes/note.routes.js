@@ -30,4 +30,8 @@ router.get('/edit/:noteid', authServer, noteControllers.showEditNotesPage)
 // Update content notes
 router.post('/edit/:noteid', authServer, noteControllers.updateContentNotes)
 
+// Delete route notes
+router.post('/delete/:noteid', authServer, noteControllers.deleteNotes)
+
+
 module.exports = router
