@@ -3,6 +3,7 @@ document.getElementById('saveButton').addEventListener('click', sendContentEdite
 
 // Hàm gửi dữ liệu đã chỉnh sửa
 async function sendContentEdited() {
+    document.getElementById('saveButton').disabled = true
     // Lấy dữ liệu từ các trường nhập liệu
     const title = document.getElementById('titleField').value;  // Tiêu đề
     const description = document.getElementById('descField').value;  // Mô tả
@@ -26,7 +27,7 @@ async function sendContentEdited() {
 
         if (status) {
             setTimeout(() => {
-                window.location.href = "/api/v1/note/list"
+                window.location.href = "/api/v1/note/table"
             }, 2500)
         }
     } catch (error) {
