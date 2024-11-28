@@ -1,3 +1,6 @@
+const spinner = document.getElementById('spinner-modal')
+spinner.classList.add('hidden')
+
 // Function to truncate text to a specified length
 function truncateText(text, maxLength) {
     if (!text) return '';  // If text is null or empty, return an empty string
@@ -75,6 +78,12 @@ function renderContentToTable() {
 
         // Append the row to the table body
         tableContent.appendChild(tr);
+
+        // Add event listener
+        document.getElementById(`updateProductButton-${notesID[i]}`).addEventListener("click", function() {
+            openModalAndRetrieveContent(titles[i], notesID[i])
+            openModal()
+        })
     }
 }
 
@@ -131,10 +140,10 @@ document.addEventListener("scroll", async function () {
                             ${notes[i].updatedAt}
                         </td>
                         <td class="p-4 space-x-2 whitespace-nowrap">
-                            <button id="updateProductButton-${notes[i]._id}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                            <button id="updateProductButton-${notes[i].noteID}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                                 Edit
                             </button>
-                            <button id="deleteProductButton-${notes[i]._id}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
+                            <button id="deleteProductButton-${notes[i].noteID}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
                                 Delete
                             </button>
                         </td>
@@ -142,6 +151,12 @@ document.addEventListener("scroll", async function () {
 
                     // Thêm dòng mới vào bảng
                     tableContent.appendChild(tr);
+
+                    // Add event listener
+                    document.getElementById(`updateProductButton-${notes[i].noteID}`).addEventListener("click", function() {
+                        openModalAndRetrieveContent(notes[i].title, notes[i].noteID)
+                        openModal()
+                    })
                 }
 
             } catch (error) {
@@ -156,3 +171,40 @@ document.addEventListener("scroll", async function () {
 // Gọi hàm để khởi tạo bảng
 renderContentToTable();
 
+// Hàm mở modal và lấy nội dung từ API
+async function openModalAndRetrieveContent(title, id) {
+    document.getElementById('modal-title').innerText = ''
+    document.getElementById('modal-content').innerHTML = ''
+    spinner.classList.remove('hidden')
+    // Tạo URL API từ noteID
+    const apiUrl = `/api/v1/note/get/${id}`;
+  
+    // Sử dụng axios để gửi request GET
+    axios.get(apiUrl)
+      .then(response => {
+        // Lấy dữ liệu trả về từ API
+        const htmlContent = response.data.htmlContent;
+        // console.log(htmlContent);
+        spinner.classList.add('hidden')
+        // Cập nhật nội dung modal với thông tin từ note
+        document.getElementById('modal-title').innerText = title;
+        document.getElementById('modal-content').innerHTML = htmlContent;
+        
+        document.getElementById('btnEditNote').addEventListener('click', () => {
+            window.location.href = `/api/v1/note/edit/${id}`;
+        })
+      })
+      .catch(error => {
+        console.error("There was an error fetching the note:", error);
+      });
+  }
+  
+  // Hàm mở modal
+function openModal() {
+
+    const btnOpenModal = document.getElementById('btn-openmodal');
+
+    btnOpenModal.click()
+}
+
+window.openModal = openModal

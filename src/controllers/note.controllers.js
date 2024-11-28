@@ -34,7 +34,7 @@ class NoteControllers {
 
     async uploadNotePage(req, res) {
         try {
-
+            console.log('Checked');
             const userSession = req.usersession
             checkRole.checkAdmin(userSession.role, res)
             const user = await User.findOne({ email: userSession.email })
