@@ -172,10 +172,13 @@ block content
             button.px-5.ms-3.text-sm.font-medium.text-gray-900.bg-white.rounded-lg.border.border-gray-200(data-modal-hide='popup-modal', type='button', class='py-2.5 focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700') No, cancel
 
     script.
-      const notesID = !{JSON.stringify(notesID)}
-      const arrayImages = !{JSON.stringify(arrayImages)};
-      const titles = !{JSON.stringify(titles)};
-      const descs = !{JSON.stringify(descs)};
-      const updatedAt = !{JSON.stringify(updatedAt)};
-      const createdAt = !{JSON.stringify(createdAt)};
+      var notesID = !{JSON.stringify(notesID)}
+      var arrayImages = !{JSON.stringify(arrayImages)};
+      var titles = !{JSON.stringify(titles)};
+      var descs = !{JSON.stringify(descs)};
+      var updatedAt = !{JSON.stringify(updatedAt)};
+      var createdAt = !{JSON.stringify(createdAt)};
+
+      var notesIDTemp, arrayImagesTemp, titlesTemp, descsTemp, updatedAtTemp, createdAtTemp
+      
     script(src='/js/notes/table.note.js')

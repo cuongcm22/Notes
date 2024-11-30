@@ -82,14 +82,14 @@ function renderContentToTable() {
         tableContent.appendChild(tr);
 
         // Add event listener
-        document.getElementById(`updateProductButton-${notesID[i]}`).addEventListener("click", function() {
+        document.getElementById(`updateProductButton-${notesID[i]}`).addEventListener("click", function () {
             openModalAndRetrieveContent(titles[i], notesID[i])
             openModal()
         })
 
         // Add event listener
-        document.getElementById(`deleteProductButton-${notesID[i]}`).addEventListener("click", function() {
-           
+        document.getElementById(`deleteProductButton-${notesID[i]}`).addEventListener("click", function () {
+
             openDeleteModal(notesID[i])
         })
     }
@@ -103,7 +103,7 @@ let hasMore = true; // Trạng thái còn dữ liệu để tải
 document.addEventListener("scroll", async function () {
     const tableContainer = document.getElementById("main-content"); // Phần bao quanh bảng (phải có chiều cao cố định và cuộn)
     const tableContent = document.getElementById("tableContent");
- 
+
     // Kiểm tra xem người dùng đã cuộn đến cuối bảng chưa
     if (tableContainer.scrollTop + tableContainer.clientHeight >= tableContent.clientHeight) {
 
@@ -113,7 +113,7 @@ document.addEventListener("scroll", async function () {
 
             // Gửi yêu cầu đến API
             try {
-  
+
                 const response = await axios.get(`/api/v1/note/read/${currentPage}`);
                 const { notes, pagination } = response.data;
                 // Nếu không có thêm dữ liệu, dừng tải
@@ -169,19 +169,19 @@ document.addEventListener("scroll", async function () {
                     tableContent.appendChild(tr);
 
                     // Add event listener
-                    document.getElementById(`updateProductButton-${notes[i].noteID}`).addEventListener("click", function() {
+                    document.getElementById(`updateProductButton-${notes[i].noteID}`).addEventListener("click", function () {
                         openModalAndRetrieveContent(notes[i].title, notes[i].noteID)
                         openModal()
                     })
 
                     // Add 
                     // Add event listener
-                    document.getElementById(`deleteProductButton-${notes[i].noteID}`).addEventListener("click", function() {
-                    
+                    document.getElementById(`deleteProductButton-${notes[i].noteID}`).addEventListener("click", function () {
+
                         openDeleteModal(notes[i].noteID)
                     })
-                    
-                    
+
+
                 }
 
             } catch (error) {
@@ -203,28 +203,28 @@ async function openModalAndRetrieveContent(title, id) {
     spinner.classList.remove('hidden')
     // Tạo URL API từ noteID
     const apiUrl = `/api/v1/note/get/${id}`;
-  
+
     // Sử dụng axios để gửi request GET
     axios.get(apiUrl)
-      .then(response => {
-        // Lấy dữ liệu trả về từ API
-        const htmlContent = response.data.htmlContent;
-        // console.log(htmlContent);
-        spinner.classList.add('hidden')
-        // Cập nhật nội dung modal với thông tin từ note
-        document.getElementById('modal-title').innerText = title;
-        document.getElementById('modal-content').innerHTML = htmlContent;
-        
-        document.getElementById('btnEditNote').addEventListener('click', () => {
-            window.location.href = `/api/v1/note/edit/${id}`;
+        .then(response => {
+            // Lấy dữ liệu trả về từ API
+            const htmlContent = response.data.htmlContent;
+            // console.log(htmlContent);
+            spinner.classList.add('hidden')
+            // Cập nhật nội dung modal với thông tin từ note
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-content').innerHTML = htmlContent;
+
+            document.getElementById('btnEditNote').addEventListener('click', () => {
+                window.location.href = `/api/v1/note/edit/${id}`;
+            })
         })
-      })
-      .catch(error => {
-        console.error("There was an error fetching the note:", error);
-      });
-  }
-  
-  // Hàm mở modal content
+        .catch(error => {
+            console.error("There was an error fetching the note:", error);
+        });
+}
+
+// Hàm mở modal content
 function openModal() {
 
     const btnOpenModal = document.getElementById('btn-openmodal');
@@ -254,7 +254,7 @@ confirmDeleteBtn.addEventListener("click", () => {
 })
 
 function deleteNote(noteID) {
-    
+
     if (!noteID || noteID == "") {
         alert('Please enter a note ID!');
         return;
@@ -264,7 +264,7 @@ function deleteNote(noteID) {
     axios.delete(`/api/v1/note/delete/${noteID}`)
         .then(response => {
             retreiveAlertData(response)
-            
+
 
         })
         .catch(error => {
@@ -275,36 +275,48 @@ function deleteNote(noteID) {
 // ==== Search =====
 let selectedIndex = 'title'; // Default index is 'title'
 
-  // Set the selected index and update the button text
-  function setSearchIndex(index) {
+// Set the selected index and update the button text
+function setSearchIndex(index) {
     selectedIndex = index;
     document.getElementById('dropdown-button').innerText = index.charAt(0).toUpperCase() + index.slice(1); // Update button text with selected index
     document.getElementById('dropdown').classList.add('hidden'); // Close dropdown after selection
-  }
+}
 
-  // Show or hide the dropdown menu
-  document.getElementById('dropdown-button').addEventListener('click', () => {
+// Show or hide the dropdown menu
+document.getElementById('dropdown-button').addEventListener('click', () => {
     document.getElementById('dropdown').classList.toggle('hidden');
-  });
+});
 
-  // Perform search when the search button is clicked
-  async function searchNotes(event) {
+// Perform search when the search button is clicked
+async function searchNotes(event) {
     const searchText = document.getElementById('search-dropdown').value.trim();
 
     if (!searchText) {
-      alert('Please enter search text');
-      return;
+        alert('Please enter search text');
+        return;
     }
 
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/note/search/${selectedIndex}/${searchText}`);
-      console.log('Search Results:', response.data);
-      // Handle results (e.g., display them on the page)
-    } catch (error) {
-      console.error('Search failed:', error);
-      alert('An error occurred while searching');
-    }
-  }
+        const response = await axios.get(`http://localhost:3000/api/v1/note/search/${selectedIndex}/${searchText}`);
+        // console.log('Search Results:', response.data.notes);
+        
+        const dataRes = response.data.notes
 
-  // Bind click event to the search button
-  document.getElementById('search-button').addEventListener('click', searchNotes);
+        notesID = dataRes.map(note => note.noteID);
+        arrayImages = dataRes.map(note => note.imageURI);
+        titles = dataRes.map(note => note.title);
+        descs = dataRes.map(note => note.desc);
+        updatedAt = dataRes.map(note => note.updatedAt);
+        createdAt = dataRes.map(note => note.createdAt);
+
+        renderContentToTable()
+        
+        // Handle results (e.g., display them on the page)
+    } catch (error) {
+        console.error('Search failed:', error);
+        alert('An error occurred while searching');
+    }
+}
+
+// Bind click event to the search button
+document.getElementById('search-button').addEventListener('click', searchNotes);
