@@ -107,14 +107,26 @@ class AuthController {
         email: user.email,
         role: user.role
       };
+
+      const payloadConfig = {
+        email: user.email,
+        password: user.password
+      }
       
       // Sign JWT Token
       const token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
       
+      const config = jwt.sign(payloadConfig, process.env.ACCESS_CONFIG_SECRET, { expiresIn: '1h' });
       
       // Set the token in a cookie
       res.cookie('token', token, {
         httpOnly: true, // Prevent access from JavaScript
+        secure: process.env.NODE_ENV === 'production', // Set secure flag for production
+        sameSite: 'strict', // Prevent CSRF
+        maxAge: 3600000, // 1 hour
+      });
+
+      res.cookie('config', config, {
         secure: process.env.NODE_ENV === 'production', // Set secure flag for production
         sameSite: 'strict', // Prevent CSRF
         maxAge: 3600000, // 1 hour
@@ -143,9 +155,16 @@ class UserController {
   async showAdminManageUserPage(req, res) {
     try {
    
-      checkRole.checkAdmin(req.usersession.role, res)
-
-      res.render('admin/admin.dashboard.pug')
+      // Gọi checkAdmin để kiểm tra quyền Admin
+      const isAdmin = await checkRole.checkAdmin(req.usersession.role, res);
+      if (!isAdmin) {
+          return;  // Nếu không phải admin, dừng luôn và không tiếp tục render trang khác
+      }
+      
+      // Nếu kiểm tra thành công, render trang dashboard
+      console.log('Checked 2');
+      res.render('admin/admin.dashboard.pug');
+      
     } 
     catch (error) {
       res.render('404')

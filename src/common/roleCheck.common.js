@@ -1,28 +1,36 @@
 class CheckRole {
-    constructor(role, res) {
-        this.role = role
-        this.res = res
+    constructor() {
+        // Không cần phải truyền `res` vào constructor
     }
 
-    checkAdmin(role, res) {
-        if (role != 'Admin') {
-            return res.render('404')
+    // Kiểm tra quyền Admin
+    async checkAdmin(role, res) {
+        if (role !== 'Admin') {
+
+            res.render('404'); // Trả về 404 nếu không phải admin
+            return false; // Trả về false để cho biết đã render
         }
+        return true; // Nếu là admin, trả về true
     }
 
-    checkUser(role, res) {
-        if (role != 'User') {
-            return res.render('404')
+    // Kiểm tra quyền User
+    async checkUser(role, res) {
+        if (role !== 'User') {
+            res.render('404');
+            return false;
         }
+        return true;
     }
 
-    checkGuest(role, res) {
-        if (role != 'Guest') {
-            return res.render('404')
+    // Kiểm tra quyền Guest
+    async checkGuest(role, res) {
+        if (role !== 'Guest') {
+            res.render('404');
+            return false;
         }
+        return true;
     }
 }
 
-const checkRole = new CheckRole()
-
-module.exports = checkRole
+const checkRole = new CheckRole();
+module.exports = checkRole;
