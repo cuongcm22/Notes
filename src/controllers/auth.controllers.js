@@ -126,11 +126,13 @@ class AuthController {
         maxAge: 3600000, // 1 hour
       });
 
-      res.cookie('config', config, {
-        secure: process.env.NODE_ENV === 'production', // Set secure flag for production
-        sameSite: 'strict', // Prevent CSRF
-        maxAge: 3600000, // 1 hour
-      });
+      if (user.role == 'Admin') {
+        res.cookie('config', config, {
+          secure: process.env.NODE_ENV === 'production', // Set secure flag for production
+          sameSite: 'strict', // Prevent CSRF
+          maxAge: 3600000, // 1 hour
+        });
+      }
       
       return res.status(200).send(AlertCommon.info('Đăng nhập thành công, đang tự động chuyển hướng về trang chủ trong 5 giây'))
 
@@ -140,12 +142,25 @@ class AuthController {
   }
 
   // Sign Out (delete token)
-  async signOut(req, res) {
+  async signout(req, res) {
     try {
-      res.clearCookie('token');
-      return res.status(200).json({ message: 'Logged out successfully' });
+
+      // Xóa cookie 'token' và 'config' để đăng xuất người dùng
+      res.clearCookie('token', {
+        httpOnly: true, // Prevent access from JavaScript
+        secure: process.env.NODE_ENV === 'production', // Set secure flag for production
+        sameSite: 'strict', // Prevent CSRF
+      });
+  
+      res.clearCookie('config', {
+        secure: process.env.NODE_ENV === 'production', // Set secure flag for production
+        sameSite: 'strict', // Prevent CSRF
+      });
+  
+      // Trả về thông báo đăng xuất thành công và chuyển hướng về trang chủ sau 5 giây
+      return res.status(200).send(AlertCommon.info('Đăng xuất thành công, đang chuyển hướng về trang chủ trong 5 giây...'));
     } catch (error) {
-      return res.status(500).json({ message: 'Server error', error: error.message });
+      return res.status(500).send(AlertCommon.danger('Đã có lỗi xảy ra trong quá trình đăng xuất.'));
     }
   }
 }
@@ -164,7 +179,7 @@ class UserController {
       // Nếu kiểm tra thành công, render trang dashboard
       console.log('Checked 2');
       res.render('admin/admin.dashboard.pug');
-      
+
     } 
     catch (error) {
       res.render('404')

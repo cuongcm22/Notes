@@ -650,6 +650,58 @@ html
       block content
     //- Script
     script(src='https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.js' integrity='sha512-LThUFuq6Y8DTeSxG7VgJQu+3slKAhZ1u3z1EJdZESaVuQIEJ7TXC/DV8xNNEDFW01iWF4tUuzeC4RdiyrRPdRw==' crossorigin='anonymous' referrerpolicy='no-referrer')
+
+    include ../common/retreiveAlertFromBE
+
+    //- Script check config 
+
+    script.
+      // Hàm để kiểm tra xem cookie có key 'config' không
+      function checkCookie() {
+        // Lấy tất cả cookies dưới dạng chuỗi
+        const cookies = document.cookie;
+        
+        // Kiểm tra nếu có cookie với key 'config'
+        const configCookie = cookies.split(';').find(cookie => cookie.trim().startsWith('config='));
+        
+        if (configCookie) {
+          // Nếu có cookie với key 'config', log ra
+          //- console.log('Cookie config:', configCookie);
+          // Lấy tất cả các phần tử có class 'configHidden'
+          document.querySelectorAll('.configHidden').forEach(element => {
+            // Bỏ thuộc tính 'hidden' vào mỗi phần tử
+            element.classList.remove('hidden');
+          });
+
+        } else {
+          // Nếu không có cookie với key 'config', log không có cookie
+          //- console.log('Không có cookie với key "config"');
+          //- window.location.href = '/api/'
+        }
+      }
+
+      // Gọi hàm kiểm tra cookie
+      checkCookie();
+
+    script.
+      // Lắng nghe sự kiện click vào nút signout
+      document.getElementById('btnSignout').addEventListener('click', async function() {
+        try {
+          // Gửi yêu cầu POST tới route signout
+          const response = await axios.post('/api/v1/auth/signout');
+
+          retreiveAlertData(response)
+          // Chuyển hướng về trang chủ sau 5 giây
+          setTimeout(() => {
+            window.location.href = '/'; // Chuyển hướng về trang chủ
+          }, 3500);
+       
+        } catch (error) {
+          // Xử lý lỗi nếu có
+          console.error('Đã có lỗi xảy ra khi đăng xuất:', error);
+          alert('Đã có lỗi xảy ra, vui lòng thử lại!');
+        }
+      });
     //- Bao gồm footer
     block footer
       include footer

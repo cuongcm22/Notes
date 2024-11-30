@@ -320,3 +320,4 @@ async function searchNotes(event) {
 
 // Bind click event to the search button
 document.getElementById('search-button').addEventListener('click', searchNotes);
+

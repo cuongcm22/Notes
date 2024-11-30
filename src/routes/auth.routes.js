@@ -24,6 +24,8 @@ router.post('/login', authController.signIn)
 // Register route
 router.post('/register', authController.register)
 
+// Sign out
+router.post('/signout', authController.signout)
 // 
 
 // ====#==== User ====#====
