@@ -271,3 +271,40 @@ function deleteNote(noteID) {
             retreiveAlertData(response)
         });
 }
+
+// ==== Search =====
+let selectedIndex = 'title'; // Default index is 'title'
+
+  // Set the selected index and update the button text
+  function setSearchIndex(index) {
+    selectedIndex = index;
+    document.getElementById('dropdown-button').innerText = index.charAt(0).toUpperCase() + index.slice(1); // Update button text with selected index
+    document.getElementById('dropdown').classList.add('hidden'); // Close dropdown after selection
+  }
+
+  // Show or hide the dropdown menu
+  document.getElementById('dropdown-button').addEventListener('click', () => {
+    document.getElementById('dropdown').classList.toggle('hidden');
+  });
+
+  // Perform search when the search button is clicked
+  async function searchNotes(event) {
+    const searchText = document.getElementById('search-dropdown').value.trim();
+
+    if (!searchText) {
+      alert('Please enter search text');
+      return;
+    }
+
+    try {
+      const response = await axios.get(`http://localhost:3000/api/v1/note/search/${selectedIndex}/${searchText}`);
+      console.log('Search Results:', response.data);
+      // Handle results (e.g., display them on the page)
+    } catch (error) {
+      console.error('Search failed:', error);
+      alert('An error occurred while searching');
+    }
+  }
+
+  // Bind click event to the search button
+  document.getElementById('search-button').addEventListener('click', searchNotes);
