@@ -106,14 +106,14 @@ document.addEventListener("scroll", async function () {
  
     // Kiểm tra xem người dùng đã cuộn đến cuối bảng chưa
     if (tableContainer.scrollTop + tableContainer.clientHeight >= tableContent.clientHeight) {
-        console.log('Checked cuoi trang');
+
         if (!isLoading && hasMore) {
             isLoading = true; // Đánh dấu đang tải
             currentPage++; // Tăng số trang
 
             // Gửi yêu cầu đến API
             try {
-                console.log('Checked axios');
+  
                 const response = await axios.get(`/api/v1/note/read/${currentPage}`);
                 const { notes, pagination } = response.data;
                 // Nếu không có thêm dữ liệu, dừng tải

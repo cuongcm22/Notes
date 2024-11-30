@@ -33,5 +33,7 @@ router.post('/edit/:noteid', authServer, noteControllers.updateContentNotes)
 // Delete route notes
 router.delete('/delete/:noteid', authServer, noteControllers.deleteNotes)
 
+// Searcg notes route
+router.get('/search/:_indexName/:value', noteControllers.searchNotes)
 
 module.exports = router
