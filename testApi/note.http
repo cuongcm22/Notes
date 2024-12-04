@@ -39,10 +39,17 @@ Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVXNlciAzIiwiZW1ha
 GET http://localhost:3000/api/v1/note/read/1
 Accept: application/json
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVXNlciAzIiwiZW1haWwiOiJ1c2VyM0BleGFtcGxlLmNvbSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNzMzMjgyMDUxLCJleHAiOjE3MzMyODU2NTF9.e4TmIGl-uy-wHwSVnxa0mzFoWvmEzpZw-MpGyUX1Bfc
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVXNlciAzIiwiZW1haWwiOiJ1c2VyM0BleGFtcGxlLmNvbSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNzMzMzA4NTAyLCJleHAiOjE3MzMzMTIxMDJ9.sRxw4nd26CRAf7v3qDA4bw8-zlMVpkbN5hE4AVgCDAI
 
 ### Search note test
 ### Tìm kiếm theo tiêu đề (title)
 GET http://localhost:3000/api/v1/note/search/title/aa
 Accept: application/json
 Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVXNlciAzIiwiZW1haWwiOiJ1c2VyM0BleGFtcGxlLmNvbSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNzMzMjgyMDUxLCJleHAiOjE3MzMyODU2NTF9.e4TmIGl-uy-wHwSVnxa0mzFoWvmEzpZw-MpGyUX1Bfc
+
+### Test Route: Search Notes by Value on All Fields
+# 1. Test searching for "aaa" across all title and description fields
+GET http://localhost:3000/api/v1/note/search/aaa HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVXNlciAzIiwiZW1haWwiOiJ1c2VyM0BleGFtcGxlLmNvbSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNzMzMzA4NTAyLCJleHAiOjE3MzMzMTIxMDJ9.sRxw4nd26CRAf7v3qDA4bw8-zlMVpkbN5hE4AVgCDAI

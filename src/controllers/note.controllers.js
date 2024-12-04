@@ -252,54 +252,36 @@ class NoteControllers {
 
     async searchNotes(req, res) {
         try {
-            // Lấy noteID từ params hoặc body
+            // Lấy thông tin người dùng từ session
             const usersession = req.usersession;
-     
             const user = await User.findOne({ email: usersession.email });
-     
-            const { _indexName, value } = req.params;
-
-            // Check if _indexName is valid and corresponds to a field in noteSchema
-            const validFields = ['title', 'title1', 'title2', 'title3', 'desc', 'desc1', 'desc2', 'desc3', 'editorURI'];
-
-            if (!validFields.includes(_indexName)) {
-                return res.status(400).json({ message: 'Invalid search field' });
-            }
-
-            let query = {};
-
-            // If we're searching in editorURI, we need to fetch HTML content and search within it
-            if (_indexName === 'editorURI') {
-                const notes = await Note.find({userID: user}).exec(); // Fetch all notes to inspect their HTML content
-                const matchedNotes = [];
-
-                // Iterate over each note to check if the HTML content contains the search term
-                for (const note of notes) {
-                    try {
-                        const htmlContent = await getContentHtmlFile(note.noteID);
-                        if (htmlContent.includes(value)) {
-                            matchedNotes.push(note);
-                        }
-                    } catch (err) {
-                        console.error('Error reading HTML file for note', note.noteID);
-                    }
-                }
-
-                // Return the matched notes based on HTML content search
-                return res.status(200).json({ notes: matchedNotes });
-
-            } else {
-                // If not searching in editorURI, search directly in the specified field
-                query[_indexName] = new RegExp(value, 'i'); // Case-insensitive search using regular expression
-                query.userID = user
     
-                const notes = await Note.find(query).exec();
-                return res.status(200).json({ notes });
-            }
-
+            const { value } = req.params; // Lấy giá trị tìm kiếm từ params
+    
+            // Tạo query tìm kiếm trong tất cả các trường title và desc (chỉ trong trường content)
+            let query = {
+                userID: user._id, // Lọc theo userID
+                $or: [
+                    { 'title.content': new RegExp(value, 'i') },   // Tìm trong trường title.content
+                    { 'title1.content': new RegExp(value, 'i') },  // Tìm trong trường title1.content
+                    { 'title2.content': new RegExp(value, 'i') },  // Tìm trong trường title2.content
+                    { 'title3.content': new RegExp(value, 'i') },  // Tìm trong trường title3.content
+                    { 'desc.content': new RegExp(value, 'i') },    // Tìm trong trường desc.content
+                    { 'desc1.content': new RegExp(value, 'i') },   // Tìm trong trường desc1.content
+                    { 'desc2.content': new RegExp(value, 'i') },   // Tìm trong trường desc2.content
+                    { 'desc3.content': new RegExp(value, 'i') },   // Tìm trong trường desc3.content
+                ]
+            };
+    
+            // Thực hiện tìm kiếm
+            const notes = await Note.find(query).exec();
+    
+            // Trả về kết quả tìm kiếm
+            return res.status(200).json({ notes });
+            
         } catch (error) {
             console.error(error);
-            return res.status(500).json({ message: 'An error occurred while fetching the notes' });
+            return res.status(500).json({ message: 'Đã xảy ra lỗi khi tìm kiếm ghi chú' });
         }
     }
 }

@@ -6,6 +6,27 @@ function truncateText(text, maxLength) {
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 }
 
+async function searchNotes(query) {
+  try {
+    const response = await axios.get(`/api/v1/note/search/${query}`);
+    const data = response.data;
+
+    // Cập nhật bảng với dữ liệu tìm kiếm
+    updateTable(data.notes);
+  } catch (error) {
+    console.error('Lỗi khi tìm kiếm:', error);
+  }
+}
+
+document.getElementById('search-dropdown').addEventListener('input', function (event) {
+  const query = event.target.value.trim();
+  if (query) {
+    searchNotes(query);
+  } else {
+    // Nếu ô tìm kiếm trống, tải lại dữ liệu mặc định (có thể là trang đầu tiên)
+    fetchNotes(1);
+  }
+});
 
 // Hàm để lấy dữ liệu từ server
 async function fetchNotes(page) {
@@ -172,14 +193,11 @@ async function openModalAndRetrieveContent(
     contentDesc2, 
     keyDesc3, 
     contentDesc3, 
-    id) 
-    {
-    // const spinner = document.getElementById('spinner'); // Giả sử bạn có spinner để hiển thị khi loading
-
+    id
+) {
     // Reset modal content trước khi mở
     document.getElementById('modal-title').innerText = '';
     document.getElementById('modal-content').innerHTML = '';
-    // spinner.classList.remove('hidden'); // Hiển thị spinner
 
     // Tạo URL API từ noteID
     const apiUrl = `/api/v1/note/get/${id}`;
@@ -187,16 +205,26 @@ async function openModalAndRetrieveContent(
     // Sử dụng axios để gửi request GET
     try {
         const response = await axios.get(apiUrl);
-        
-        const htmlContent = response.data; // Giả sử dữ liệu trả về có dạng { note: {...} }
-        // spinner.classList.add('hidden'); // Ẩn spinner khi nhận dữ liệu
+
+        // Lấy dữ liệu từ response
+        const note = response.data; // Giả sử response trả về là { note: {...} }
+
         // Cập nhật nội dung modal với thông tin từ note
-        document.getElementById('modal-title').innerText = title;
+        document.getElementById('modal-title').innerText = contentTitle; // Ví dụ: Title của note
         document.getElementById('modal-content').innerHTML = `
-            <h3 class="text-lg font-semibold text-gray-800">${note.title.content}</h3>
-            <p class="text-sm text-gray-600 mt-2">${note.desc.content}</p>
+            <h3 class="text-lg font-semibold text-gray-800">${contentTitle}</h3>
+            <p class="text-sm text-gray-600 mt-2">${contentDesc}</p>
+            <p class="text-sm text-gray-600 mt-2"><strong>${keyTitle1}: </strong>${contentTitle1}</p>
+            <p class="text-sm text-gray-600 mt-2"><strong>${keyTitle2}: </strong>${contentTitle2}</p>
+            <p class="text-sm text-gray-600 mt-2"><strong>${keyTitle3}: </strong>${contentTitle3}</p>
+            <p class="text-sm text-gray-600 mt-2"><strong>${keyDesc}: </strong>${contentDesc}</p>
+            <p class="text-sm text-gray-600 mt-2"><strong>${keyDesc1}: </strong>${contentDesc1}</p>
+            <p class="text-sm text-gray-600 mt-2"><strong>${keyDesc2}: </strong>${contentDesc2}</p>
+            <p class="text-sm text-gray-600 mt-2"><strong>${keyDesc3}: </strong>${contentDesc3}</p>
             <img src="${note.imageURI}" alt="Note Image" class="mt-4 w-full max-h-60 object-cover">
         `;
+
+        document.getElementById('modal-content').innerHTML = htmlContent;
 
         // Mở modal
         document.getElementById('modal').classList.remove('hidden');
@@ -210,6 +238,7 @@ async function openModalAndRetrieveContent(
         document.getElementById('btnCloseModal').addEventListener('click', () => {
             document.getElementById('modal').classList.add('hidden');
         });
+
     } catch (error) {
         console.error("Có lỗi xảy ra khi lấy nội dung note:", error);
     }
