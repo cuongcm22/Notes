@@ -2,23 +2,54 @@ const mongoose = require('mongoose');
 
 const noteSchema = new mongoose.Schema({
   noteID: {
-    type: String, require: true, unique: true
+    type: String,
+    required: true,
+    unique: true
   },
   userID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
-  title: {type: String},
-  title1: {type: String},
-  title2: {type: String},
-  title3: {type: String},
-  desc: {type: String},
-  desc1: {type: String},
-  desc2: {type: String},
-  desc3: {type: String},
-  editorURI: {type: String},
-  imageURI: {type: String},
+  title: {
+    type: Map,
+    of: String,
+    required: true
+  },
+  title1: {
+    type: Map,
+    of: String,
+  },
+  title2: {
+    type: Map,
+    of: String,
+  },
+  title3: {
+    type: Map,
+    of: String,
+  },
+  desc: {
+    type: Map,
+    of: String,
+  },
+  desc1: {
+    type: Map,
+    of: String,
+  },
+  desc2: {
+    type: Map,
+    of: String,
+  },
+  desc3: {
+    type: Map,
+    of: String,
+  },
+  editorURI: {
+    type: String,
+  },
+  imageURI: {
+    type: String,
+  },
   updatedAt: {
     type: Date,
   },

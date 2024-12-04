@@ -265,7 +265,9 @@ function deleteNote(noteID) {
         .then(response => {
             retreiveAlertData(response)
 
-
+            setTimeout(() => {
+                window.location.href = '/api/v1/note/crud'
+            }, 3500)
         })
         .catch(error => {
             retreiveAlertData(response)
@@ -297,7 +299,7 @@ async function searchNotes(event) {
     }
 
     try {
-        const response = await axios.get(`http://localhost:3000/api/v1/note/search/${selectedIndex}/${searchText}`);
+        const response = await axios.get(`/api/v1/note/search/${selectedIndex}/${searchText}`);
         // console.log('Search Results:', response.data.notes);
         
         const dataRes = response.data.notes

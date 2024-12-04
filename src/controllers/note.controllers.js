@@ -37,12 +37,11 @@ class NoteControllers {
         try {
 
             const userSession = req.usersession
-            // await checkRole.checkAdmin(userSession.role, res)
 
             const user = await User.findOne({ email: userSession.email })
 
             const { title, title1, title2, title3, desc, desc1, desc2, desc3, htmleditor } = req.body;
-
+      
             // Kiểm tra xem htmleditor có tồn tại trong request hay không
             if (!htmleditor) {
                 return res.status(201).render('500')
@@ -59,14 +58,14 @@ class NoteControllers {
                 const newNote = new Note({
                     noteID: noteID,
                     userID: user,
-                    title,
-                    title1,
-                    title2,
-                    title3,
-                    desc,
-                    desc1,
-                    desc2,
-                    desc3,
+                    title: JSON.parse(title), // Chuyển đổi JSON string thành object
+                    title1: JSON.parse(title1),
+                    title2: JSON.parse(title2),
+                    title3: JSON.parse(title3),
+                    desc: JSON.parse(desc),
+                    desc1: JSON.parse(desc1),
+                    desc2: JSON.parse(desc2),
+                    desc3: JSON.parse(desc3),
                     imageURI: randomImage(),
                     editorURI: htmlResponse.location, // Lưu đường dẫn file HTML vào editorURI
                 });

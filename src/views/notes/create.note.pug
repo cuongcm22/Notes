@@ -40,9 +40,9 @@ block content
         link(href='https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-bs4.min.css', rel='stylesheet')
         script(src='https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-bs4.min.js')
 
-        label.block.mb-2.text-sm.font-medium.text-gray-900(for='titleField', class='dark:text-white') Main Title
-        input#titleField.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')
+        input#keyTitleField.block.w-full.p-2.text-gray-900.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-4xl font-bold text-gray-900 dark:text-white' value="Main Title" style="border: none")
 
+        input#titleField.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-3')
      
         .collapse-container
             label.inline-flex.items-center.cursor-pointer.mt-3
@@ -59,21 +59,21 @@ block content
                 span.ms-3.text-sm.font-medium.text-gray-900(class='dark:text-gray-300') Title 3
             .collapse-content-title1
                 div
-                    label.block.mb-2.text-sm.font-medium.text-gray-900(for='small-input', class='dark:text-white') Title 1
-                    input#titleField1.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')
+                    input#keyTitleField1.block.w-full.p-2.text-gray-900.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-4xl font-bold text-gray-900 dark:text-white' value="Title 1" style="border: none")
+                    input#titleField1.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-3')
             .collapse-content-title2
                 div
-                    label.block.mb-2.text-sm.font-medium.text-gray-900(for='small-input', class='dark:text-white') Title 2
-                    input#titleField2.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')
+                    input#keyTitleField2.block.w-full.p-2.text-gray-900.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-4xl font-bold text-gray-900 dark:text-white' value="Title 2" style="border: none")
+                    input#titleField2.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-3')
             .collapse-content-title3
                 div
-                    label.block.mb-2.text-sm.font-medium.text-gray-900(for='small-input', class='dark:text-white') Title 3
-                    input#titleField3.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')
+                    input#keyTitleField3.block.w-full.p-2.text-gray-900.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-4xl font-bold text-gray-900 dark:text-white' value="Title 3" style="border: none")
+                    input#titleField3.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-3')
 
 
 
-        label.block.mb-2.text-sm.font-medium.text-gray-900.mt-3(for='descField', class='dark:text-white') Description
-        textarea#descField.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', placeholder='Write your thoughts here...')
+        input#keyDescField.block.w-full.p-2.text-gray-900.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-4xl font-bold text-gray-900 dark:text-white mt-3' value="Description" style="border: none")
+        textarea#descField.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-3', placeholder='Write your thoughts here...')
 
         .collapse-container
             label.inline-flex.items-center.cursor-pointer.mt-3
@@ -90,16 +90,16 @@ block content
                 span.ms-3.text-sm.font-medium.text-gray-900(class='dark:text-gray-300') Desc 3
             .collapse-content-desc1
                 div
-                    label.block.mb-2.text-sm.font-medium.text-gray-900(for='small-input', class='dark:text-white') Desc 1
-                    textarea#descField1.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', placeholder='Write your thoughts here...')
+                    input#keyDescField1.block.w-full.p-2.text-gray-900.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-4xl font-bold text-gray-900 dark:text-white' value="Desc 1" style="border: none")
+                    textarea#descField1.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-3', placeholder='Write your thoughts here...')
             .collapse-content-desc2
                 div
-                    label.block.mb-2.text-sm.font-medium.text-gray-900(for='small-input', class='dark:text-white') Desc 2
-                    textarea#descField2.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', placeholder='Write your thoughts here...')
+                    input#keyDescField2.block.w-full.p-2.text-gray-900.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-4xl font-bold text-gray-900 dark:text-white' value="Desc 2" style="border: none")
+                    textarea#descField2.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-3', placeholder='Write your thoughts here...')
             .collapse-content-desc3
                 div
-                    label.block.mb-2.text-sm.font-medium.text-gray-900(for='small-input', class='dark:text-white') Desc 3
-                    textarea#descField3.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', placeholder='Write your thoughts here...')
+                    input#keyDescField3.block.w-full.p-2.text-gray-900.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-4xl font-bold text-gray-900 dark:text-white' value="Desc 3" style="border: none")
+                    textarea#descField3.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-3', placeholder='Write your thoughts here...')
 
         #summernote(style="z-index:0")
 
@@ -143,6 +143,16 @@ block content
             document.getElementById('sendButton').disabled = true
             // Ngừng sự kiện mặc định (nếu có)
             event.preventDefault();
+            
+            //- Lấy giá trị từ các title
+            const keyTitle = document.getElementById('keyTitleField').value;
+            const keyTitle1 = document.getElementById('keyTitleField1').value;
+            const keyTitle2 = document.getElementById('keyTitleField2').value;
+            const keyTitle3 = document.getElementById('keyTitleField3').value;
+            const keyDesc = document.getElementById('keyDescField').value;
+            const keyDesc1 = document.getElementById('keyDescField1').value;
+            const keyDesc2 = document.getElementById('keyDescField2').value;
+            const keyDesc3 = document.getElementById('keyDescField3').value;
 
             // Lấy giá trị từ các input field
             const title = document.getElementById('titleField').value;
@@ -157,14 +167,14 @@ block content
             const htmleditor = document.querySelector('.note-editable').innerHTML; // Nếu summernote là textarea
             // Tạo dữ liệu để gửi đi (dạng x-www-form-urlencoded)
             const formData = new URLSearchParams();
-            formData.append('title', title);
-            formData.append('title1', title1);
-            formData.append('title2', title2);
-            formData.append('title3', title3);
-            formData.append('desc', desc);
-            formData.append('desc1', desc1);
-            formData.append('desc2', desc2);
-            formData.append('desc3', desc3);
+            formData.append('title', JSON.stringify({ key: keyTitle, content: title }));
+            formData.append('title1', JSON.stringify({ key: keyTitle1, content: title1 }));
+            formData.append('title2', JSON.stringify({ key: keyTitle2, content: title2 }));
+            formData.append('title3', JSON.stringify({ key: keyTitle3, content: title3 }));
+            formData.append('desc', JSON.stringify({ key: keyDesc, content: desc }));
+            formData.append('desc1', JSON.stringify({ key: keyDesc1, content: desc1 }));
+            formData.append('desc2', JSON.stringify({ key: keyDesc2, content: desc2 }));
+            formData.append('desc3', JSON.stringify({ key: keyDesc3, content: desc3 }));
             formData.append('htmleditor', htmleditor);
             // Gửi yêu cầu POST tới server với Axios
             axios.post('/api/v1/note/create', formData, {
@@ -179,7 +189,7 @@ block content
 
                     if (status) {
                         setTimeout(() => {
-                            window.location.href = "/api/v1/note/masonry"
+                            window.location.href = "/api/v1/note/crud"
                         }, 2500)
                     }
                 })
