@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#keyDescField3').value = note.desc3.key;
     document.querySelector('#descField3').value = note.desc3.content;
 
-
 });
 
 // Lắng nghe sự kiện click vào nút Save

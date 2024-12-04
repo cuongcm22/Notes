@@ -1,5 +1,8 @@
 const baseUrl = '/api/v1/note/read';
 
+const spinner = document.getElementById('spinner-modal')
+spinner.classList.add('hidden')
+
 function openModal() {
 
   const btnOpenModal = document.getElementById('btn-openmodal');
@@ -61,6 +64,7 @@ async function fetchNotes(page) {
 }
 
 function updateTable(notes) {
+
     const tableBody = document.getElementById('tableContent');
     tableBody.innerHTML = ''; // Xóa nội dung bảng hiện tại
   
@@ -129,6 +133,7 @@ function updateTable(notes) {
 
         openDeleteModal(note.noteID)
       })
+
     });
   }
 
@@ -218,6 +223,10 @@ async function openModalAndRetrieveContent(
     contentDesc3, 
     id
 ) {
+    spinner.classList.remove('hidden')
+    // Mở modal
+    openModal()
+
     // Reset modal content trước khi mở
     document.getElementById('modal-title').innerText = '';
     document.getElementById('modal-content').innerHTML = '';
@@ -247,13 +256,11 @@ async function openModalAndRetrieveContent(
 
         document.getElementById('modal-content').innerHTML = document.getElementById('modal-content').innerHTML + htmlContent;
 
-        // Mở modal
-        openModal()
-
         document.getElementById('btnEditNote').addEventListener('click', () => {
           window.location.href = `/api/v1/note/edit/${id}`;
         })
-
+        
+        spinner.classList.add('hidden')
     } catch (error) {
         console.error("Có lỗi xảy ra khi lấy nội dung note:", error);
     }
