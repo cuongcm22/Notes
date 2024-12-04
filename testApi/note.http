@@ -32,11 +32,11 @@ get http://localhost:3000/api/v1/note/get/5c68ca1f-1027-40d6-8dff-468d231f6dc8
 
 ###
 
-### Test for Page 4 (This should return no notes, since there are only 22 items in the database)
-GET http://localhost:3000/api/v1/note/read/3
+### Test for Page 1 (This should return no notes, since there are only 22 items in the database)
+GET http://localhost:3000/api/v1/note/read/1
 Accept: application/json
 Content-Type: application/json
-
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVXNlciAzIiwiZW1haWwiOiJ1c2VyM0BleGFtcGxlLmNvbSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNzMzMjc4MTkyLCJleHAiOjE3MzMyODE3OTJ9.vNEUi3bWYqABc4tZesBgpT9vKeVlBJL43-dgQBOPG0g
 
 ### Search note test
 ### Tìm kiếm theo tiêu đề (title)

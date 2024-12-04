@@ -122,32 +122,7 @@ class NoteControllers {
                 return res.render('404', { message: 'User not found' });
             }
 
-            // Get total items (notes count)
-            const totalItems = await Note.countDocuments({ userID: user._id });
-
-            // For now, let's assume pagination starts from page 1
-            const pagination = 1;
-
-            // Call getPaginationNote directly (without fetch)
-            const paginationData = await getPaginationNote({ params: { pagination, totalItems, user } }, res);
-
-            // Extract the notes and pagination info from paginationData
-            const { notes, pagination: paginationInfo } = paginationData;
-
-            // Prepare the data for rendering
-            const notesID = notes.map(note => note.noteID);
-            const arrayImages = notes.map(note => note.imageURI);
-            const titles = notes.map(note => note.title);
-            const descs = notes.map(note => note.desc);
-            const updatedAt = notes.map(note => note.updatedAt);
-            const createdAt = notes.map(note => note.createdAt);
-
-            // Render the table page with the notes and pagination info
-            res.render('notes/table.note.pug', {
-                notesID, arrayImages, titles, descs, updatedAt, createdAt,
-                pagination: paginationInfo.showing, totalPages: paginationInfo.totalPages,
-                currentPage: paginationInfo.currentPage
-            });
+            res.render('notes/table.note.pug');
         } catch (error) {
             console.error(error);
             res.render('500', { message: 'An error occurred while fetching the notes' });

@@ -8,7 +8,7 @@ async function getPaginationNote(req, res) {
         const { pagination, totalItems, user } = req.params;
         const page = parseInt(pagination);  // Current page
         const total = parseInt(totalItems); // Total items (passed from front-end or calculated)
-        const perPage = 10;  // Number of items per page
+        const perPage = 5;  // Number of items per page
         const skip = (page - 1) * perPage; // Number of items to skip
 
         // Query to get the notes based on the pagination and limit
