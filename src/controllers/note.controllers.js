@@ -164,14 +164,14 @@ class NoteControllers {
 
             // Kiểm tra dữ liệu có hợp lệ không
             if (!title || !desc || !htmleditor) {
-                return res.status(400).json({ message: 'Thiếu thông tin cần thiết!' });
+                return res.status(200).send(AlertCommon.danger('Thiếu thông tin cần thiết!' ));
             }
     
             // Tìm ghi chú trong database
             const note = await Note.findOne({ noteID: noteid });
     
             if (!note) {
-                return res.status(404).json({ message: 'Ghi chú không tồn tại!' });
+                return res.status(200).send(AlertCommon.danger('Ghi chú không tồn tại!' ));
             }
     
             // Cập nhật nội dung các trường trong database
@@ -192,14 +192,14 @@ class NoteControllers {
             const fileUpdateResponse = await updateHTMLEditor(note.editorURI, htmleditor);
     
             if (!fileUpdateResponse) {
-                return res.status(500).json({ message: 'An error occurred while updating the HTML content' });
+                res.status(200).send(AlertCommon.danger('An error occurred while updating the HTML content' ));
             }
     
             // Trả về thông báo thành công
-            return res.status(200).send({ message: 'Cập nhật ghi chú thành công!' });
+            return res.status(200).send(AlertCommon.info('Cập nhật ghi chú thành công!' ));
         } catch (error) {
             console.error(error);
-            return res.status(500).json({ message: 'Đã xảy ra lỗi khi cập nhật ghi chú.' });
+            return res.status(200).send(AlertCommon.danger( 'Đã xảy ra lỗi khi cập nhật ghi chú.' ));
         }
     }
 

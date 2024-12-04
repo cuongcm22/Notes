@@ -68,7 +68,7 @@ function updateTable(notes) {
     const tableBody = document.getElementById('tableContent');
     tableBody.innerHTML = ''; // Xóa nội dung bảng hiện tại
   
-    notes.forEach(note => {
+    notes.forEach((note, index) => {
       const row = document.createElement('tr');
       row.classList.add('hover:bg-gray-100', 'dark:hover:bg-gray-700');
       
@@ -77,6 +77,11 @@ function updateTable(notes) {
           <div class="flex items-center">
             <input id="checkbox-${note.noteID}" class="w-4 h-4 border-gray-300 rounded bg-gray-50" type="checkbox">
             <label class="sr-only" for="checkbox-${note.noteID}">checkbox</label>
+          </div>
+        </td>
+        <td class="w-4 p-4">
+          <div class="flex items-center">
+            <div class="text-base font-semibold text-gray-900 dark:text-white">${index + 1}</div>
           </div>
         </td>
         <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
@@ -272,7 +277,6 @@ async function openModalAndRetrieveContent(
 const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
 
 confirmDeleteBtn.addEventListener("click", () => {
-    console.log(noteIDDelete);
     deleteNote(noteIDDelete)
 })
 

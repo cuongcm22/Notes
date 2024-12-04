@@ -88,14 +88,15 @@ block content
                     th.p-4
                       .flex.items-center
                         input#checkbox-all.w-4.h-4.border-gray-300.rounded.bg-gray-50(type='checkbox')
+                    th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase(class='dark:text-gray-400') STT
                     th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase(class='dark:text-gray-400') Title
                     th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase(class='dark:text-gray-400') Description
                     th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase(class='dark:text-gray-400') Updated At
                     th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase(class='dark:text-gray-400') Actions
                 tbody#tableContent.bg-white.divide-y.divide-gray-200(class='dark:bg-gray-800 dark:divide-gray-700')
                   // Data rows will be inserted here by JavaScript
-        nav(aria-label='Page navigation example')
-          ul#paginationContainer.inline-flex.-space-x-px.text-sm
+        nav.flex.justify-center(aria-label='Page navigation example')
+          ul#paginationContainer.inline-flex.-space-x-px.text-sm.mt-3
             // Pagination sẽ được cập nhật ở đây
 
     //- Modal content
@@ -146,7 +147,4 @@ block content
               | Yes, I&apos;m sure
             button.px-5.ms-3.text-sm.font-medium.text-gray-900.bg-white.rounded-lg.border.border-gray-200(data-modal-hide='popup-modal', type='button', class='py-2.5 focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700') No, cancel
 
-    script.
-
-      
     script(src='/js/notes/table2.note.js')

@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Lắng nghe sự kiện click vào nút Save
 document.getElementById('saveButton').addEventListener('click', () => {
-    console.log(note.noteID);
+    document.getElementById('saveButton').disabled = true
     updateNoteContent(note.noteID)
 });
 
@@ -73,8 +73,12 @@ async function updateNoteContent(noteID) {
     // Gửi yêu cầu POST tới server với Axios
     try {
         const response = await axios.post(`/api/v1/note/edit/${noteID}`, formData);
-        console.log("Cập nhật thành công:", response.data);
-        alert("Ghi chú đã được cập nhật thành công!");
+        
+        retreiveAlertData(response)
+
+        setTimeout(() => {
+            window.location.href = '/api/v1/note/crud'
+        }, 3500)
     } catch (error) {
         console.error("Lỗi khi cập nhật ghi chú:", error);
         alert("Có lỗi xảy ra khi cập nhật ghi chú!");
