@@ -176,8 +176,6 @@ class UserController {
           return;  // Nếu không phải admin, dừng luôn và không tiếp tục render trang khác
       }
       
-      // Nếu kiểm tra thành công, render trang dashboard
-      console.log('Checked 2');
       res.render('admin/admin.dashboard.pug');
 
     } 

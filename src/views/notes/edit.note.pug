@@ -3,32 +3,7 @@ extends ../layouts/base
 block content
     include ../common/retreiveAlertFromBE
 
-    style.
-        .note-editor {
-            z-index: 0;
-            border-color: #eee !important;
-            margin-top: 20px
-        }
 
-        /* CSS để tạo hiệu ứng collapse */
-        .collapse-container {
-        width: 100%;
-        //- max-width: 600px;
-        //- margin: 20px auto;
-        }
-
-        .collapse-btn:hover {
-            outline: none;
-        }
-
-        [class^="collapse-content"] {
-        display: none; /* Ban đầu nội dung ẩn */
-        //- padding: 15px;
-        //- background-color: #f1f1f1;
-        margin-top: 10px;
-        border-radius: 5px;
-        //- border: 1px solid #ddd;
-        }
 
     #main-content.relative.w-full.h-full.overflow-y-auto.bg-gray-50.p-3.pt-5(class='lg:ml-64 dark:bg-gray-900' style="height: 100vh")
         script(src='https://code.jquery.com/jquery-3.5.1.min.js', crossorigin='anonymous')
@@ -40,79 +15,30 @@ block content
 
 
         input#keyTitleField.block.w-full.p-2.text-gray-900.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-4xl font-bold text-gray-900 dark:text-white' value="Main Title" style="border: none")
-
         input#titleField.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-3')
      
-        .collapse-container
-            label.inline-flex.items-center.cursor-pointer.mt-3
-                input.sr-only.peer(type='checkbox', value='')
-                .collapse-btn.relative.w-9.h-5.bg-gray-200.rounded-full.peer(class="peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" onclick=`toggleCollapse("collapse-content-title1")`)
-                span.ms-3.text-sm.font-medium.text-gray-900(class='dark:text-gray-300') Title 1
-            label.inline-flex.items-center.cursor-pointer.mt-3.ml-3
-                input.sr-only.peer(type='checkbox', value='')
-                .collapse-btn.relative.w-9.h-5.bg-gray-200.rounded-full.peer(class="peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" onclick=`toggleCollapse("collapse-content-title2")`)
-                span.ms-3.text-sm.font-medium.text-gray-900(class='dark:text-gray-300') Title 2
-            label.inline-flex.items-center.cursor-pointer.mt-3.ml-3
-                input.sr-only.peer(type='checkbox', value='')
-                .collapse-btn.relative.w-9.h-5.bg-gray-200.rounded-full.peer(class="peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" onclick=`toggleCollapse("collapse-content-title3")`)
-                span.ms-3.text-sm.font-medium.text-gray-900(class='dark:text-gray-300') Title 3
-            .collapse-content-title1
-                div
-                    input#keyTitleField1.block.w-full.p-2.text-gray-900.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-4xl font-bold text-gray-900 dark:text-white' value="Title 1" style="border: none")
-                    input#titleField1.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-3')
-            .collapse-content-title2
-                div
-                    input#keyTitleField2.block.w-full.p-2.text-gray-900.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-4xl font-bold text-gray-900 dark:text-white' value="Title 2" style="border: none")
-                    input#titleField2.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-3')
-            .collapse-content-title3
-                div
-                    input#keyTitleField3.block.w-full.p-2.text-gray-900.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-4xl font-bold text-gray-900 dark:text-white' value="Title 3" style="border: none")
-                    input#titleField3.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-3')
+        input#keyTitleField1.block.w-full.p-2.text-gray-900.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-4xl font-bold text-gray-900 dark:text-white' value="Title 1" style="border: none")
+        input#titleField1.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-3')
+        input#keyTitleField2.block.w-full.p-2.text-gray-900.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-4xl font-bold text-gray-900 dark:text-white' value="Title 2" style="border: none")
+        input#titleField2.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-3')
+        input#keyTitleField3.block.w-full.p-2.text-gray-900.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-4xl font-bold text-gray-900 dark:text-white' value="Title 3" style="border: none")
+        input#titleField3.block.w-full.p-2.text-gray-900.border.border-gray-300.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-3')
 
 
 
         input#keyDescField.block.w-full.p-2.text-gray-900.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-4xl font-bold text-gray-900 dark:text-white mt-3' value="Description" style="border: none")
         textarea#descField.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-3', placeholder='Write your thoughts here...')
 
-        .collapse-container
-            label.inline-flex.items-center.cursor-pointer.mt-3
-                input.sr-only.peer(type='checkbox', value='')
-                .collapse-btn.relative.w-9.h-5.bg-gray-200.rounded-full.peer(class="peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" onclick=`toggleCollapse("collapse-content-desc1")`)
-                span.ms-3.text-sm.font-medium.text-gray-900(class='dark:text-gray-300') Desc 1
-            label.inline-flex.items-center.cursor-pointer.mt-3.ml-3
-                input.sr-only.peer(type='checkbox', value='')
-                .collapse-btn.relative.w-9.h-5.bg-gray-200.rounded-full.peer(class="peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" onclick=`toggleCollapse("collapse-content-desc2")`)
-                span.ms-3.text-sm.font-medium.text-gray-900(class='dark:text-gray-300') Desc 2
-            label.inline-flex.items-center.cursor-pointer.mt-3.ml-3
-                input.sr-only.peer(type='checkbox', value='')
-                .collapse-btn.relative.w-9.h-5.bg-gray-200.rounded-full.peer(class="peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" onclick=`toggleCollapse("collapse-content-desc3")`)
-                span.ms-3.text-sm.font-medium.text-gray-900(class='dark:text-gray-300') Desc 3
-            .collapse-content-desc1
-                div
-                    input#keyDescField1.block.w-full.p-2.text-gray-900.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-4xl font-bold text-gray-900 dark:text-white' value="Desc 1" style="border: none")
-                    textarea#descField1.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-3', placeholder='Write your thoughts here...')
-            .collapse-content-desc2
-                div
-                    input#keyDescField2.block.w-full.p-2.text-gray-900.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-4xl font-bold text-gray-900 dark:text-white' value="Desc 2" style="border: none")
-                    textarea#descField2.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-3', placeholder='Write your thoughts here...')
-            .collapse-content-desc3
-                div
-                    input#keyDescField3.block.w-full.p-2.text-gray-900.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-4xl font-bold text-gray-900 dark:text-white' value="Desc 3" style="border: none")
-                    textarea#descField3.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-3', placeholder='Write your thoughts here...')
+        input#keyDescField1.block.w-full.p-2.text-gray-900.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-4xl font-bold text-gray-900 dark:text-white' value="Desc 1" style="border: none")
+        textarea#descField1.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-3', placeholder='Write your thoughts here...')
+        input#keyDescField2.block.w-full.p-2.text-gray-900.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-4xl font-bold text-gray-900 dark:text-white' value="Desc 2" style="border: none")
+        textarea#descField2.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-3', placeholder='Write your thoughts here...')
+        input#keyDescField3.block.w-full.p-2.text-gray-900.rounded-lg.bg-gray-50.text-xs(type='text', class='focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-4xl font-bold text-gray-900 dark:text-white' value="Desc 3" style="border: none")
+        textarea#descField3.block.w-full.text-sm.text-gray-900.bg-gray-50.rounded-lg.border.border-gray-300(rows='4', class='p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-3', placeholder='Write your thoughts here...')
 
 
         #summernote(style="z-index:0")
 
-        script.
-            function toggleCollapse(content) {
-                //- var content = document.querySelector('.collapse-content');
-                var content = document.querySelector(`.${content}`);
-                if (content.style.display === 'none' || content.style.display === '') {
-                    content.style.display = 'block';
-                } else {
-                    content.style.display = 'none';
-                }
-                }
 
         script.
             $('#summernote').summernote({

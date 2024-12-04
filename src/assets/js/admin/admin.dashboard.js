@@ -192,8 +192,8 @@ function handlePageClick(page) {
 }
 
 // Initial data fetch
-fetchUsers(1, 5);
-
+// fetchUsers(1, 5);
+handlePageClick(1)
 
 // =========== Add user ==========
 
