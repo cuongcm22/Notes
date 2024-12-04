@@ -1,5 +1,21 @@
 const baseUrl = '/api/v1/note/read';
 
+function openModal() {
+
+  const btnOpenModal = document.getElementById('btn-openmodal');
+
+  btnOpenModal.click()
+}
+
+function openDeleteModal(noteID) {
+  console.log(noteID);
+  noteIDDelete = noteID
+  const btnOpenModal = document.getElementById('btn-open-delete-modal');
+
+  btnOpenModal.click()
+}
+
+
 // Function to truncate text to a specified length
 function truncateText(text, maxLength) {
     if (!text) return '';  // If text is null or empty, return an empty string
@@ -96,7 +112,7 @@ function updateTable(notes) {
             </svg>
             Edit
           </button>
-          <button id="deleteProductButton" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
+          <button id="deleteProductButton-${note.noteID}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
             </svg>
@@ -106,6 +122,13 @@ function updateTable(notes) {
       `;
       
       tableBody.appendChild(row);
+
+      
+      // Add event listener
+      document.getElementById(`deleteProductButton-${note.noteID}`).addEventListener("click", function () {
+
+        openDeleteModal(note.noteID)
+      })
     });
   }
 
@@ -207,12 +230,11 @@ async function openModalAndRetrieveContent(
         const response = await axios.get(apiUrl);
 
         // Lấy dữ liệu từ response
-        const note = response.data; // Giả sử response trả về là { note: {...} }
-
+        const htmlContent = response.data.htmlContent; // Giả sử response trả về là { note: {...} }
+   
         // Cập nhật nội dung modal với thông tin từ note
         document.getElementById('modal-title').innerText = contentTitle; // Ví dụ: Title của note
         document.getElementById('modal-content').innerHTML = `
-            <h3 class="text-lg font-semibold text-gray-800">${contentTitle}</h3>
             <p class="text-sm text-gray-600 mt-2">${contentDesc}</p>
             <p class="text-sm text-gray-600 mt-2"><strong>${keyTitle1}: </strong>${contentTitle1}</p>
             <p class="text-sm text-gray-600 mt-2"><strong>${keyTitle2}: </strong>${contentTitle2}</p>
@@ -221,25 +243,47 @@ async function openModalAndRetrieveContent(
             <p class="text-sm text-gray-600 mt-2"><strong>${keyDesc1}: </strong>${contentDesc1}</p>
             <p class="text-sm text-gray-600 mt-2"><strong>${keyDesc2}: </strong>${contentDesc2}</p>
             <p class="text-sm text-gray-600 mt-2"><strong>${keyDesc3}: </strong>${contentDesc3}</p>
-            <img src="${note.imageURI}" alt="Note Image" class="mt-4 w-full max-h-60 object-cover">
         `;
 
-        document.getElementById('modal-content').innerHTML = htmlContent;
+        document.getElementById('modal-content').innerHTML = document.getElementById('modal-content').innerHTML + htmlContent;
 
         // Mở modal
-        document.getElementById('modal').classList.remove('hidden');
+        openModal()
 
-        // Thêm event listener cho nút "Edit"
         document.getElementById('btnEditNote').addEventListener('click', () => {
-            window.location.href = `/api/v1/note/edit/${id}`;
-        });
-
-        // Thêm event listener cho nút "Close" để đóng modal
-        document.getElementById('btnCloseModal').addEventListener('click', () => {
-            document.getElementById('modal').classList.add('hidden');
-        });
+          window.location.href = `/api/v1/note/edit/${id}`;
+        })
 
     } catch (error) {
         console.error("Có lỗi xảy ra khi lấy nội dung note:", error);
     }
+}
+
+
+// Delete note
+
+const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+confirmDeleteBtn.addEventListener("click", () => {
+    console.log(noteIDDelete);
+    deleteNote(noteIDDelete)
+})
+
+function deleteNote(noteID) {
+
+    if (!noteID || noteID == "") {
+        alert('Please enter a note ID!');
+        return;
+    }
+
+    // Gửi yêu cầu DELETE đến API
+    axios.delete(`/api/v1/note/delete/${noteID}`)
+        .then(response => {
+            retreiveAlertData(response)
+
+            fetchNotes(1);
+        })
+        .catch(error => {
+            retreiveAlertData(response)
+        });
 }
