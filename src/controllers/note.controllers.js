@@ -150,7 +150,7 @@ class NoteControllers {
 
             const htmlContent = await getContentHtmlFileModule(noteId)
 
-            res.render('notes/edit.note.pug', { title: note.title, desc: note.desc, htmlContent: htmlContent, noteid: noteId })
+            res.render('notes/edit.note.pug', { note: note, htmlContent: htmlContent, noteid: noteId })
         } catch (error) {
             console.error(error);
             res.render('500', { message: 'An error occurred while fetching the notes' });
@@ -160,40 +160,46 @@ class NoteControllers {
     async updateContentNotes(req, res) {
         try {
             const noteid = req.params.noteid;  // Lấy noteid từ route parameter
-            const { title, description, content } = req.body;  // Lấy dữ liệu từ request body
+            const { title, title1, title2, title3, desc, desc1, desc2, desc3, htmleditor } = req.body;  // Lấy dữ liệu từ request body
 
             // Kiểm tra dữ liệu có hợp lệ không
-            if (!title || !description || !content) {
+            if (!title || !desc || !htmleditor) {
                 return res.status(400).json({ message: 'Thiếu thông tin cần thiết!' });
             }
-
+    
             // Tìm ghi chú trong database
             const note = await Note.findOne({ noteID: noteid });
-
+    
             if (!note) {
                 return res.status(404).json({ message: 'Ghi chú không tồn tại!' });
             }
-
-            // Cập nhật nội dung ghi chú vào database
-            note.title = title;
-            note.desc = description;
-            note.updatedAt = Date.now();
-
+    
+            // Cập nhật nội dung các trường trong database
+            note.title = JSON.parse(title);     // Chuyển đổi từ JSON string thành object
+            note.title1 = JSON.parse(title1);
+            note.title2 = JSON.parse(title2);
+            note.title3 = JSON.parse(title3);
+            note.desc = JSON.parse(desc);
+            note.desc1 = JSON.parse(desc1);
+            note.desc2 = JSON.parse(desc2);
+            note.desc3 = JSON.parse(desc3);
+            note.updatedAt = Date.now();  // Cập nhật thời gian sửa đổi
+    
             // Lưu thông tin mới vào MongoDB
             await note.save();
-
+    
             // Cập nhật nội dung HTML trong file sử dụng module updateHTMLEditor
-            const fileUpdateResponse = await updateHTMLEditor(note.editorURI, content)
-
+            const fileUpdateResponse = await updateHTMLEditor(note.editorURI, htmleditor);
+    
             if (!fileUpdateResponse) {
-                res.render('500', { message: 'An error occurred while fetching the notes' });
+                return res.status(500).json({ message: 'An error occurred while updating the HTML content' });
             }
-
+    
             // Trả về thông báo thành công
-            res.status(200).send(AlertCommon.info('Cập nhật ghi chú thành công!'))
+            return res.status(200).send({ message: 'Cập nhật ghi chú thành công!' });
         } catch (error) {
             console.error(error);
-            res.render('500', { message: 'An error occurred while fetching the notes' });
+            return res.status(500).json({ message: 'Đã xảy ra lỗi khi cập nhật ghi chú.' });
         }
     }
 
