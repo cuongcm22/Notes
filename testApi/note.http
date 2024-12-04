@@ -28,7 +28,10 @@ title=title1&desc=desc1&htmleditor=<h1>Hello World!</h1><p>This is a test conten
 
 ### Test get html content
 
-get http://localhost:3000/api/v1/note/get/5c68ca1f-1027-40d6-8dff-468d231f6dc8
+get http://localhost:3000/api/v1/note/get/24070966-45ff-410f-b34b-3634adfc4075
+Accept: application/json
+Content-Type: application/json
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVXNlciAzIiwiZW1haWwiOiJ1c2VyM0BleGFtcGxlLmNvbSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNzMzMjgyMDUxLCJleHAiOjE3MzMyODU2NTF9.e4TmIGl-uy-wHwSVnxa0mzFoWvmEzpZw-MpGyUX1Bfc
 
 ###
 
@@ -36,9 +39,10 @@ get http://localhost:3000/api/v1/note/get/5c68ca1f-1027-40d6-8dff-468d231f6dc8
 GET http://localhost:3000/api/v1/note/read/1
 Accept: application/json
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVXNlciAzIiwiZW1haWwiOiJ1c2VyM0BleGFtcGxlLmNvbSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNzMzMjc4MTkyLCJleHAiOjE3MzMyODE3OTJ9.vNEUi3bWYqABc4tZesBgpT9vKeVlBJL43-dgQBOPG0g
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVXNlciAzIiwiZW1haWwiOiJ1c2VyM0BleGFtcGxlLmNvbSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNzMzMjgyMDUxLCJleHAiOjE3MzMyODU2NTF9.e4TmIGl-uy-wHwSVnxa0mzFoWvmEzpZw-MpGyUX1Bfc
 
 ### Search note test
 ### Tìm kiếm theo tiêu đề (title)
 GET http://localhost:3000/api/v1/note/search/title/aa
 Accept: application/json
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVXNlciAzIiwiZW1haWwiOiJ1c2VyM0BleGFtcGxlLmNvbSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNzMzMjgyMDUxLCJleHAiOjE3MzMyODU2NTF9.e4TmIGl-uy-wHwSVnxa0mzFoWvmEzpZw-MpGyUX1Bfc
