@@ -1,5 +1,6 @@
 const { 
-  User
+  User,
+  Note
 } = require('../models/models'); // Đường dẫn đến User Model
 
 const checkRole = require('../common/roleCheck.common')
@@ -10,6 +11,10 @@ const AlertCommon = require('../common/alert.common')
 const errorServer = AlertCommon.danger('Có lỗi xảy ra, vui lòng liên hệ admin để giải quyết!')
 const dotenv = require('dotenv');
 dotenv.config();
+
+// ====#==== COMMON ====#====
+
+const getPaginationNoteAdmin = require('../common/getPagiantionsNote.admin.js')
 
 class AuthController {
   
@@ -288,6 +293,48 @@ class UserController {
       // Nếu có lỗi trong quá trình thực hiện
       // console.error(error);
       return res.send(AlertCommon.danger('Đã có lỗi xảy ra khi cập nhật người dùng'));
+    }
+  }
+
+
+  async showNotesManagePage(req, res) {
+    try {
+        // Gọi checkAdmin để kiểm tra quyền Admin
+        const isAdmin = await checkRole.checkAdmin(req.usersession.role, res);
+        if (!isAdmin) {
+            return;  // Nếu không phải admin, dừng luôn và không tiếp tục render trang khác
+        }
+
+        res.render('admin/admin.table.note.pug');
+    } catch (error) {
+        console.error(error);
+        res.render('500', { message: 'An error occurred while fetching the notes' });
+    }
+  }
+
+  async getAllNoteRoute(req, res) {
+    try {
+
+      // Gọi checkAdmin để kiểm tra quyền Admin
+      const isAdmin = await checkRole.checkAdmin(req.usersession.role, res);
+      if (!isAdmin) {
+          return;  // Nếu không phải admin, dừng luôn và không tiếp tục render trang khác
+      }
+      
+      // Get total items (notes count)
+      const totalItems = await Note.countDocuments();
+
+      // For now, let's assume pagination starts from page 1
+      const { pagination } = req.params
+
+      const paginationData = await getPaginationNoteAdmin({ params: { pagination, totalItems } }, res);
+
+      // Extract the notes and pagination info from paginationData
+      const { notes, pagination: paginationInfo } = paginationData;
+
+      return res.status(200).json({ notes, pagination: paginationInfo })
+    } catch {
+
     }
   }
   

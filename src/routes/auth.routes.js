@@ -45,4 +45,10 @@ router.put('/update', authServer, userController.updateUser);
 // Route để xóa một người dùng dựa trên email
 router.delete('/delete/:email', authServer, userController.deleteUser);
 
+// ====#==== Note ====#====
+router.get('/management/notes', authServer, userController.showNotesManagePage)
+
+// Read note (pagination:total item)
+router.get('/read/:pagination', authServer, userController.getAllNoteRoute)
+
 module.exports = router;
