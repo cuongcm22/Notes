@@ -163,7 +163,7 @@ async function fetchUsers(page = 1, limit = 5) {
       }
       paginationContainer.appendChild(li);
     });
-
+    
     // Create a "Next" button
     const nextLi = document.createElement('li');
     nextLi.classList.add('page-item');
@@ -177,24 +177,21 @@ async function fetchUsers(page = 1, limit = 5) {
     </a>
   `;
     paginationContainer.appendChild(nextLi);
-
+    
     window.arrayUser = arrayUser;
-
   } catch (error) {
     console.error('Error fetching users:', error);
   }
 }
 
-function handlePageClick(page) {
+async function handlePageClick(page) {
   checkClickPagination = true
   currentPage = page
-  fetchUsers(page, 5);
+  const fetch = await fetchUsers(page, 5);
 }
 
 // Initial data fetch
 // fetchUsers(1, 5);
-handlePageClick(1)
-
 // =========== Add user ==========
 
 function confirmAddUser() {
@@ -281,7 +278,7 @@ function confirmUpdateUser() {
   const phone = document.getElementById('modal-phone').value;
   const email = document.getElementById('modal-email').value;
   const role = document.getElementById('modal-role').value;
-  const password = document.getElementById('modal-password').value;
+  const password = document.getElementById('new-password').value;
   const address = document.getElementById('modal-address') ? document.getElementById('modal-address').value : '';
 
   // Kiểm tra nếu thông tin cần thiết đã có
@@ -330,3 +327,7 @@ function retreiveAlertData(response) {
     // window.location.reload()
   }, 2500); // Ẩn sau 5 giây
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  handlePageClick(1)
+})
