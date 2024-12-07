@@ -25,6 +25,10 @@ function truncateText(text, maxLength) {
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 }
 
+// Đặt một biến để lưu timeout và ngăn gửi request liên tục
+let debounceTimeout;
+
+// Hàm tìm kiếm ghi nhận theo yêu cầu, chỉ gửi request khi không có thay đổi trong 2 giây
 async function searchNotes(query) {
   try {
     const response = await axios.get(`/api/v1/note/search/${query}`);
@@ -37,10 +41,18 @@ async function searchNotes(query) {
   }
 }
 
+// Lắng nghe sự thay đổi của trường input và áp dụng debounce
 document.getElementById('search-dropdown').addEventListener('input', function (event) {
   const query = event.target.value.trim();
+
+  // Nếu có query, sẽ xóa timeout cũ và đặt timeout mới
+  clearTimeout(debounceTimeout);
+
+  // Kiểm tra nếu có giá trị tìm kiếm
   if (query) {
-    searchNotes(query);
+    debounceTimeout = setTimeout(() => {
+      searchNotes(query);
+    }, 2000); // Sau 2 giây thì gửi yêu cầu
   } else {
     // Nếu ô tìm kiếm trống, tải lại dữ liệu mặc định (có thể là trang đầu tiên)
     fetchNotes(1);
