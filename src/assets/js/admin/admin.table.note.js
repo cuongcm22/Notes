@@ -18,6 +18,36 @@ function openDeleteModal(noteID) {
   btnOpenModal.click()
 }
 
+// HTML encode function (handles quotes and other special characters)
+function htmlEncode(str) {
+  // console.log('Html encode: ', htmlDecode(str));
+  if (typeof str !== 'string') return str;
+  str = htmlDecode(str)
+  // Thay thế các ký tự đặc biệt bằng các mã HTML tương ứng
+  return str.replace(/[&<>"'`=\/]/g, function(match) {
+      switch (match) {
+          case '&': return '&amp;';
+          case '<': return '&lt;';
+          case '>': return '&gt;';
+          case '"': return '`';
+          case "'": return '`';
+          case '`': return '&#96;';
+          case '=': return '&#61;';
+          case '/': return '&#47;';
+          default: return match
+      }
+  });
+}
+
+// HTML decode function (converts HTML entities back to normal characters)
+function htmlDecode(str) {
+  if (typeof str !== 'string') return str;
+
+  // Use DOMParser to decode the HTML entities
+  var doc = new DOMParser().parseFromString(str, 'text/html');
+  return doc.documentElement.textContent || doc.documentElement.innerText;
+}
+
 
 // Function to truncate text to a specified length
 function truncateText(text, maxLength) {
@@ -114,22 +144,22 @@ function updateTable(notes) {
           <!-- Nút Edit sẽ mở modal -->
           <button type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
             onclick="openModalAndRetrieveContent(
-            '${note.title.key}', 
-            '${note.title.content}', 
-            '${note.title1.key}', 
-            '${note.title1.content}', 
-            '${note.title2.key}', 
-            '${note.title2.content}', 
-            '${note.title3.key}', 
-            '${note.title3.content}', 
-            '${note.desc.key}', 
-            '${note.desc.content}', 
-            '${note.desc1.key}', 
-            '${note.desc1.content}', 
-            '${note.desc2.key}', 
-            '${note.desc2.content}', 
-            '${note.desc3.key}', 
-            '${note.desc3.content}', 
+            '${htmlEncode(note.title.key)}', 
+            '${htmlEncode(note.title.content)}', 
+            '${htmlEncode(note.title1.key)}', 
+            '${htmlEncode(note.title1.content)}', 
+            '${htmlEncode(note.title2.key)}', 
+            '${htmlEncode(note.title2.content)}', 
+            '${htmlEncode(note.title3.key)}', 
+            '${htmlEncode(note.title3.content)}', 
+            '${htmlEncode(note.desc.key)}', 
+            '${htmlEncode(note.desc.content)}', 
+            '${htmlEncode(note.desc1.key)}', 
+            '${htmlEncode(note.desc1.content)}', 
+            '${htmlEncode(note.desc2.key)}', 
+            '${htmlEncode(note.desc2.content)}', 
+            '${htmlEncode(note.desc3.key)}', 
+            '${htmlEncode(note.desc3.content)}', 
             '${note.noteID}')">
             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"/>
